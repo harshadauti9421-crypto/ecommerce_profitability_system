@@ -1114,3 +1114,19 @@
 2026-08-19 13:51:45,473 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
 2026-08-19 13:51:46,506 - ecommerce_system - INFO - Starting product analysis for: Wireless Bluetooth Earbuds
 2026-08-19 13:51:46,516 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 13:52:09,801 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 13:52:10,196 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 13:52:10,302 - ecommerce_system - INFO - Starting product analysis for: Advanced Accessories
+2026-08-19 13:52:10,319 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 13:52:10,451 - ecommerce_system - INFO - Saved prediction record for 'Advanced Accessories' to history.
+2026-08-19 13:52:11,315 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 13:52:11,987 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 13:52:11,993 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 13:52:12,016 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 13:52:12,350 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 13:52:14,000 - ecommerce_system - INFO - Starting product analysis for: Advanced Accessories
+2026-08-19 13:52:14,018 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 13:52:14,110 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 13:52:14,115 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 13:52:14,140 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 13:52:14,501 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
