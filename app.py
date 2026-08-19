@@ -1,5 +1,7 @@
 import os
 import sys
+import warnings
+warnings.filterwarnings("ignore")
 
 # Ensure root project directory is in sys.path for Streamlit Cloud and deployment environments
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -120,6 +122,28 @@ if "analysis_result" not in st.session_state:
 if "current_input" not in st.session_state:
     st.session_state["current_input"] = None
 
+# Pre-initialize widget keys safely
+default_keys = {
+    "p_cat": list(CATEGORY_SUBCATEGORIES.keys())[0],
+    "p_subcat": list(CATEGORY_SUBCATEGORIES.values())[0][0],
+    "p_sp": 3499.0,
+    "p_cp": 1400.0,
+    "p_disc": 15.0,
+    "p_ad": 12000.0,
+    "p_ship": 120.0,
+    "p_ret": 6.0,
+    "p_rating": 4.4,
+    "p_season": SEASONS[0],
+    "p_channel": MARKETING_CHANNELS[0],
+    "p_comp": COMPETITION_LEVELS[1],
+    "p_plat": PLATFORMS[0],
+    "p_reg": REGIONS[0],
+    "p_pay": PAYMENT_METHODS[0]
+}
+for dk, dv in default_keys.items():
+    if dk not in st.session_state:
+        st.session_state[dk] = dv
+
 # Sidebar Controls
 st.sidebar.title("🎮 Business Controls")
 st.sidebar.markdown("---")
@@ -217,20 +241,21 @@ with tabs[0]:
             product_category = st.selectbox("Category", options=list(CATEGORY_SUBCATEGORIES.keys()), key="p_cat")
             subcats = CATEGORY_SUBCATEGORIES.get(product_category, list(CATEGORY_SUBCATEGORIES.values())[0])
             
-            # Ensure subcategory stays valid if category is changed
-            current_subcat = st.session_state.get("p_subcat", subcats[0])
-            subcat_idx = subcats.index(current_subcat) if current_subcat in subcats else 0
-            product_subcategory = st.selectbox("Subcategory", options=subcats, index=subcat_idx, key="p_subcat")
+            # Ensure subcategory in session_state is valid for the current category
+            if st.session_state.get("p_subcat") not in subcats:
+                st.session_state["p_subcat"] = subcats[0]
+
+            st.session_state["p_subcat"]
             
-            selling_price = st.number_input("Selling Price (₹)", min_value=1.0, value=st.session_state.get("p_sp", 3499.0), step=50.0, key="p_sp")
-            cost_price = st.number_input("Cost Price / COGS (₹)", min_value=1.0, value=st.session_state.get("p_cp", 1400.0), step=50.0, key="p_cp")
+            selling_price = st.number_input("Selling Price (₹)", min_value=1.0, step=50.0, key="p_sp")
+            cost_price = st.number_input("Cost Price / COGS (₹)", min_value=1.0, step=50.0, key="p_cp")
 
         with col2:
-            discount_percent = st.slider("Discount %", min_value=0.0, max_value=80.0, value=st.session_state.get("p_disc", 15.0), step=1.0, key="p_disc")
-            advertising_cost = st.number_input("Advertising Budget (₹)", min_value=0.0, value=st.session_state.get("p_ad", 12000.0), step=500.0, key="p_ad")
-            shipping_cost = st.number_input("Shipping Cost per Unit (₹)", min_value=0.0, value=st.session_state.get("p_ship", 120.0), step=10.0, key="p_ship")
-            return_rate = st.slider("Expected Return Rate %", min_value=0.0, max_value=40.0, value=st.session_state.get("p_ret", 6.0), step=0.5, key="p_ret")
-            product_rating = st.slider("Product Rating (Stars)", min_value=1.0, max_value=5.0, value=st.session_state.get("p_rating", 4.4), step=0.1, key="p_rating")
+            discount_percent = st.slider("Discount %", min_value=0.0, max_value=80.0, step=1.0, key="p_disc")
+            advertising_cost = st.number_input("Advertising Budget (₹)", min_value=0.0, step=500.0, key="p_ad")
+            shipping_cost = st.number_input("Shipping Cost per Unit (₹)", min_value=0.0, step=10.0, key="p_ship")
+            return_rate = st.slider("Expected Return Rate %", min_value=0.0, max_value=40.0, step=0.5, key="p_ret")
+            product_rating = st.slider("Product Rating (Stars)", min_value=1.0, max_value=5.0, step=0.1, key="p_rating")
 
         with col3:
             season = st.selectbox("Launch Season / Event", options=SEASONS, key="p_season")
@@ -240,7 +265,7 @@ with tabs[0]:
             region = st.selectbox("Region", options=REGIONS, key="p_reg")
             payment_method = st.selectbox("Payment Method", options=PAYMENT_METHODS, key="p_pay")
 
-        analyze_btn = st.button("🚀 ANALYZE PRODUCT BUSINESS MODEL", use_container_width=True, type="primary")
+        analyze_btn = st.button("🚀 ANALYZE PRODUCT BUSINESS MODEL", width="stretch", type="primary")
 
     # Determine input signature to detect real-time changes
     current_input_tuple = (

@@ -58,8 +58,16 @@ def run_product_analysis(input_data):
         raise FileNotFoundError("Trained models or preprocessor pipeline missing in 'models/'. Please run training step first.")
         
     pipeline = load_pipeline(pipeline_path)
-    demand_model = joblib.load(demand_model_path)
-    profit_model = joblib.load(profit_model_path)
+    try:
+        demand_model = joblib.load(demand_model_path)
+        profit_model = joblib.load(profit_model_path)
+    except Exception as model_err:
+        logger.warning(f"Model unpickling error due to environment package version difference ({str(model_err)}). Retraining models in current environment...")
+        from src.train_models import train_and_evaluate_all
+        train_and_evaluate_all()
+        pipeline = load_pipeline(pipeline_path)
+        demand_model = joblib.load(demand_model_path)
+        profit_model = joblib.load(profit_model_path)
     
     # Transform input
     X_transformed = pipeline.transform(X_input)

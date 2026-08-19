@@ -38,9 +38,29 @@ def save_pipeline(pipeline, file_path):
     logger.info(f"Preprocessing pipeline saved to {file_path}")
 
 def load_pipeline(file_path):
-    """Load preprocessing pipeline object from disk."""
+    """
+    Load preprocessing pipeline object from disk.
+    If unpickling fails due to a scikit-learn version mismatch across environments
+    (e.g., _RemainderColsList AttributeError), refits and updates the pipeline in-environment.
+    """
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"Preprocessing pipeline file not found at {file_path}")
-    pipeline = joblib.load(file_path)
-    logger.info(f"Loaded preprocessing pipeline from {file_path}")
-    return pipeline
+    
+    try:
+        pipeline = joblib.load(file_path)
+        logger.info(f"Loaded preprocessing pipeline from {file_path}")
+        return pipeline
+    except Exception as e:
+        logger.warning(f"Failed to unpickle pipeline ({str(e)}). Rebuilding and refitting pipeline for current environment...")
+        from src.data_loader import load_and_validate_data
+        from src.feature_engineering import add_engineered_features, prepare_feature_matrices
+        
+        data_path = os.path.join("data", "ecommerce_data.csv")
+        df = load_and_validate_data(data_path)
+        df_engineered = add_engineered_features(df)
+        X, _ = prepare_feature_matrices(df_engineered, "profit")
+        
+        pipeline = build_preprocessing_pipeline()
+        pipeline.fit(X)
+        save_pipeline(pipeline, file_path)
+        return pipeline

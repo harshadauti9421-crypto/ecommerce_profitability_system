@@ -11,6 +11,48 @@
     "risk_level": "Medium Risk",
     "business_score": 56,
     "launch_decision": "🟡 LAUNCH WITH MODIFICATIONS",
+    "timestamp": "2026-08-19 13:52:10"
+  },
+  {
+    "product_name": "Advanced Accessories",
+    "category": "Electronics",
+    "selling_price": 21888.99,
+    "cost_price": 16252.34,
+    "predicted_demand": 875,
+    "predicted_revenue": 15391243.32,
+    "predicted_profit": 636902.875,
+    "profit_margin": 4.14,
+    "risk_level": "Medium Risk",
+    "business_score": 56,
+    "launch_decision": "🟡 LAUNCH WITH MODIFICATIONS",
+    "timestamp": "2026-08-19 13:27:34"
+  },
+  {
+    "product_name": "Advanced Accessories",
+    "category": "Electronics",
+    "selling_price": 21888.99,
+    "cost_price": 16252.34,
+    "predicted_demand": 875,
+    "predicted_revenue": 15391243.32,
+    "predicted_profit": 636902.875,
+    "profit_margin": 4.14,
+    "risk_level": "Medium Risk",
+    "business_score": 56,
+    "launch_decision": "🟡 LAUNCH WITH MODIFICATIONS",
+    "timestamp": "2026-08-19 13:07:53"
+  },
+  {
+    "product_name": "Advanced Accessories",
+    "category": "Electronics",
+    "selling_price": 21888.99,
+    "cost_price": 16252.34,
+    "predicted_demand": 875,
+    "predicted_revenue": 15391243.32,
+    "predicted_profit": 636902.875,
+    "profit_margin": 4.14,
+    "risk_level": "Medium Risk",
+    "business_score": 56,
+    "launch_decision": "🟡 LAUNCH WITH MODIFICATIONS",
     "timestamp": "2026-08-19 12:24:00"
   },
   {
