@@ -1,0 +1,124 @@
+{
+  "demand": {
+    "models": {
+      "Multiple Linear Regression": {
+        "val": {
+          "R2": 0.8185,
+          "MAE": 277.39,
+          "RMSE": 388.47,
+          "MAPE": 25.82
+        },
+        "test": {
+          "R2": 0.8076,
+          "MAE": 285.6,
+          "RMSE": 411.3,
+          "MAPE": 26.37
+        }
+      },
+      "Random Forest": {
+        "val": {
+          "R2": 0.9046,
+          "MAE": 199.6,
+          "RMSE": 281.62,
+          "MAPE": 14.31
+        },
+        "test": {
+          "R2": 0.9009,
+          "MAE": 205.46,
+          "RMSE": 295.08,
+          "MAPE": 14.64
+        }
+      },
+      "XGBoost": {
+        "val": {
+          "R2": 0.9354,
+          "MAE": 162.14,
+          "RMSE": 231.78,
+          "MAPE": 11.27
+        },
+        "test": {
+          "R2": 0.9317,
+          "MAE": 167.25,
+          "RMSE": 245.08,
+          "MAPE": 11.53
+        }
+      },
+      "Artificial Neural Network": {
+        "val": {
+          "R2": 0.9366,
+          "MAE": 159.25,
+          "RMSE": 229.54,
+          "MAPE": 10.91
+        },
+        "test": {
+          "R2": 0.9304,
+          "MAE": 164.53,
+          "RMSE": 247.36,
+          "MAPE": 11.07
+        }
+      }
+    },
+    "best_model": "Artificial Neural Network"
+  },
+  "profit": {
+    "models": {
+      "Multiple Linear Regression": {
+        "val": {
+          "R2": 0.7563,
+          "MAE": 328901.09,
+          "RMSE": 666257.92,
+          "MAPE": 215.74
+        },
+        "test": {
+          "R2": 0.7807,
+          "MAE": 331411.63,
+          "RMSE": 610355.17,
+          "MAPE": 143.95
+        }
+      },
+      "Random Forest": {
+        "val": {
+          "R2": 0.9086,
+          "MAE": 191170.6,
+          "RMSE": 408068.06,
+          "MAPE": 111.14
+        },
+        "test": {
+          "R2": 0.9231,
+          "MAE": 193201.78,
+          "RMSE": 361508.98,
+          "MAPE": 64.02
+        }
+      },
+      "XGBoost": {
+        "val": {
+          "R2": 0.9392,
+          "MAE": 165822.25,
+          "RMSE": 332739.66,
+          "MAPE": 113.17
+        },
+        "test": {
+          "R2": 0.9441,
+          "MAE": 169044.14,
+          "RMSE": 308131.23,
+          "MAPE": 65.1
+        }
+      },
+      "Artificial Neural Network": {
+        "val": {
+          "R2": 0.475,
+          "MAE": 497026.62,
+          "RMSE": 977787.12,
+          "MAPE": 534.02
+        },
+        "test": {
+          "R2": 0.5073,
+          "MAE": 497508.2,
+          "RMSE": 914910.91,
+          "MAPE": 334.58
+        }
+      }
+    },
+    "best_model": "XGBoost"
+  }
+}

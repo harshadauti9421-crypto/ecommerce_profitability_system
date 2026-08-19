@@ -1,0 +1,996 @@
+2026-08-17 19:24:47,197 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-17 19:24:47,202 - ecommerce_system - WARNING - File data\ecommerce_data.csv not found. Generating default synthetic dataset...
+2026-08-17 19:24:47,202 - ecommerce_system - INFO - Generating synthetic e-commerce dataset with 25000 records (seed=42)...
+2026-08-17 19:24:51,032 - ecommerce_system - INFO - Dataset successfully saved to data\ecommerce_data.csv
+2026-08-17 19:24:51,212 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 25000
+2026-08-17 19:24:51,230 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-17 19:26:05,979 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-17 19:26:05,981 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 19:26:06,235 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 25000
+2026-08-17 19:26:06,246 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-17 19:26:06,313 - ecommerce_system - INFO - Data Split shapes -> Train: (17500, 17), Val: (3750, 17), Test: (3750, 17)
+2026-08-17 19:26:06,569 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-17 19:26:06,647 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:26:06,899 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8109 | Test R2: 0.8104 | Test MAE: 286.57
+2026-08-17 19:26:06,899 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:26:25,471 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9011 | Test R2: 0.9043 | Test MAE: 200.64
+2026-08-17 19:26:25,471 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:26:26,973 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9339 | Test R2: 0.9345 | Test MAE: 163.52
+2026-08-17 19:26:26,973 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:26:28,238 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.9376 | Test R2: 0.9375 | Test MAE: 161.13
+2026-08-17 19:26:28,238 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:26:30,817 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.9408 | Test R2: 0.9416 | Test MAE: 154.91
+2026-08-17 19:26:30,817 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:27:11,798 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.9332 | Test R2: 0.9366 | Test MAE: 163.62
+2026-08-17 19:27:11,798 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'CatBoost' (Val R2: 0.9408) ***
+2026-08-17 19:27:12,182 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-17 19:27:12,254 - ecommerce_system - INFO - Data Split shapes -> Train: (17500, 17), Val: (3750, 17), Test: (3750, 17)
+2026-08-17 19:27:12,483 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:27:12,688 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7385 | Test R2: 0.7802 | Test MAE: 327260.96
+2026-08-17 19:27:12,688 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:27:30,065 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9086 | Test R2: 0.9122 | Test MAE: 189152.28
+2026-08-17 19:27:30,067 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:27:32,008 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.945 | Test R2: 0.9367 | Test MAE: 160883.24
+2026-08-17 19:27:32,009 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:27:33,412 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.945 | Test R2: 0.9368 | Test MAE: 167458.88
+2026-08-17 19:27:33,412 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:27:35,171 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.9451 | Test R2: 0.9412 | Test MAE: 156456.47
+2026-08-17 19:27:35,172 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:29:39,187 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-17 19:29:39,189 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 19:29:39,513 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 25000
+2026-08-17 19:29:39,523 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-17 19:29:39,590 - ecommerce_system - INFO - Data Split shapes -> Train: (17500, 17), Val: (3750, 17), Test: (3750, 17)
+2026-08-17 19:29:39,840 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-17 19:29:39,925 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:29:40,162 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8109 | Test R2: 0.8104 | Test MAE: 286.57
+2026-08-17 19:29:40,162 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:29:59,485 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9011 | Test R2: 0.9043 | Test MAE: 200.64
+2026-08-17 19:29:59,485 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:30:03,019 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9339 | Test R2: 0.9345 | Test MAE: 163.52
+2026-08-17 19:30:03,020 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:30:06,019 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.9376 | Test R2: 0.9375 | Test MAE: 161.13
+2026-08-17 19:30:06,019 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:30:09,291 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.9408 | Test R2: 0.9416 | Test MAE: 154.91
+2026-08-17 19:30:09,291 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:30:50,829 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-17 19:30:50,830 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 19:30:51,172 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 25000
+2026-08-17 19:30:51,182 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-17 19:30:51,262 - ecommerce_system - INFO - Data Split shapes -> Train: (17500, 17), Val: (3750, 17), Test: (3750, 17)
+2026-08-17 19:30:51,641 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-17 19:30:51,745 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:30:52,043 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8109 | Test R2: 0.8104 | Test MAE: 286.57
+2026-08-17 19:30:52,044 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:31:00,444 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.8947 | Test R2: 0.8974 | Test MAE: 208.94
+2026-08-17 19:31:00,445 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:31:02,498 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9286 | Test R2: 0.9313 | Test MAE: 168.35
+2026-08-17 19:31:02,500 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:31:05,174 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.9338 | Test R2: 0.9349 | Test MAE: 164.14
+2026-08-17 19:31:05,176 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:31:07,354 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.9354 | Test R2: 0.9374 | Test MAE: 159.81
+2026-08-17 19:31:07,354 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:31:25,560 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.9204 | Test R2: 0.922 | Test MAE: 174.56
+2026-08-17 19:31:25,560 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'CatBoost' (Val R2: 0.9354) ***
+2026-08-17 19:31:25,740 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-17 19:31:25,831 - ecommerce_system - INFO - Data Split shapes -> Train: (17500, 17), Val: (3750, 17), Test: (3750, 17)
+2026-08-17 19:31:26,108 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:31:26,386 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7385 | Test R2: 0.7802 | Test MAE: 327260.96
+2026-08-17 19:31:26,387 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:31:33,529 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9032 | Test R2: 0.9078 | Test MAE: 199062.19
+2026-08-17 19:31:33,532 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:31:34,886 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.9325 | Test R2: 0.936 | Test MAE: 163.3
+2026-08-17 19:31:34,886 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'CatBoost' (Val R2: 0.9408) ***
+2026-08-17 19:31:35,341 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-17 19:31:35,413 - ecommerce_system - INFO - Data Split shapes -> Train: (17500, 17), Val: (3750, 17), Test: (3750, 17)
+2026-08-17 19:31:35,754 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:31:35,932 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9396 | Test R2: 0.9318 | Test MAE: 172064.3
+2026-08-17 19:31:35,932 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:31:36,052 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7385 | Test R2: 0.7802 | Test MAE: 327260.96
+2026-08-17 19:31:36,052 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:31:56,764 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9086 | Test R2: 0.9122 | Test MAE: 189152.28
+2026-08-17 19:31:56,765 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:32:04,495 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.9336 | Test R2: 0.9297 | Test MAE: 181397.75
+2026-08-17 19:32:04,495 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:32:05,521 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.945 | Test R2: 0.9367 | Test MAE: 160883.24
+2026-08-17 19:32:05,521 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:32:06,642 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.922 | Test R2: 0.9241 | Test MAE: 181761.32
+2026-08-17 19:32:06,643 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:32:21,267 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.945 | Test R2: 0.9368 | Test MAE: 167458.88
+2026-08-17 19:32:21,268 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:32:24,164 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.9451 | Test R2: 0.9412 | Test MAE: 156456.47
+2026-08-17 19:32:24,166 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:32:51,876 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.9694 | Test R2: 0.9703 | Test MAE: 117500.05
+2026-08-17 19:32:51,883 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'Artificial Neural Network' (Val R2: 0.9694) ***
+2026-08-17 19:32:53,967 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-17 19:32:55,729 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.2341 | Test R2: 0.2573 | Test MAE: 595305.57
+2026-08-17 19:32:55,731 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'XGBoost' (Val R2: 0.9396) ***
+2026-08-17 19:32:56,030 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-17 19:33:09,152 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-17 19:33:09,155 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 19:33:09,497 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 25000
+2026-08-17 19:33:09,518 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-17 19:33:09,607 - ecommerce_system - INFO - Data Split shapes -> Train: (17500, 17), Val: (3750, 17), Test: (3750, 17)
+2026-08-17 19:33:09,941 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-17 19:33:10,065 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:33:10,423 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8109 | Test R2: 0.8104 | Test MAE: 286.57
+2026-08-17 19:33:10,423 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:33:20,078 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.8947 | Test R2: 0.8974 | Test MAE: 208.94
+2026-08-17 19:33:20,079 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:33:23,912 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9286 | Test R2: 0.9313 | Test MAE: 168.35
+2026-08-17 19:33:23,912 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:33:33,300 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.9338 | Test R2: 0.9349 | Test MAE: 164.14
+2026-08-17 19:33:33,302 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:33:35,355 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.9354 | Test R2: 0.9374 | Test MAE: 159.81
+2026-08-17 19:33:35,355 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:33:40,880 - ecommerce_system - INFO - Generating synthetic e-commerce dataset with 1000 records (seed=42)...
+2026-08-17 19:33:41,179 - ecommerce_system - INFO - Dataset successfully saved to data\ecommerce_data.csv
+2026-08-17 19:33:41,181 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-17 19:33:41,181 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 19:33:41,212 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 1000
+2026-08-17 19:33:41,221 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-17 19:33:41,248 - ecommerce_system - INFO - Data Split shapes -> Train: (700, 17), Val: (150, 17), Test: (150, 17)
+2026-08-17 19:33:41,326 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-17 19:33:41,380 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:33:41,425 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8162 | Test R2: 0.7954 | Test MAE: 335.52
+2026-08-17 19:33:41,427 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:33:42,301 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.7827 | Test R2: 0.7822 | Test MAE: 340.34
+2026-08-17 19:33:42,301 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:33:46,771 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.8593 | Test R2: 0.8715 | Test MAE: 252.42
+2026-08-17 19:33:46,771 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:33:53,531 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.8759 | Test R2: 0.8781 | Test MAE: 242.38
+2026-08-17 19:33:53,533 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:33:54,863 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.9006 | Test R2: 0.8749 | Test MAE: 217.94
+2026-08-17 19:33:54,865 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:33:56,391 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: -2.2537 | Test R2: -2.1837 | Test MAE: 1503.12
+2026-08-17 19:33:56,391 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'CatBoost' (Val R2: 0.9006) ***
+2026-08-17 19:33:56,543 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-17 19:33:56,568 - ecommerce_system - INFO - Data Split shapes -> Train: (700, 17), Val: (150, 17), Test: (150, 17)
+2026-08-17 19:33:56,678 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:33:56,726 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7532 | Test R2: 0.8426 | Test MAE: 361295.82
+2026-08-17 19:33:56,728 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:33:57,464 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.8185 | Test R2: 0.8528 | Test MAE: 290402.88
+2026-08-17 19:33:57,464 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:34:00,740 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.8304 | Test R2: 0.8799 | Test MAE: 250840.57
+2026-08-17 19:34:00,740 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:34:03,639 - ecommerce_system - INFO - Generating synthetic e-commerce dataset with 1000 records (seed=42)...
+2026-08-17 19:34:03,977 - ecommerce_system - INFO - Dataset successfully saved to data\ecommerce_data.csv
+2026-08-17 19:34:03,979 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-17 19:34:03,985 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 19:34:04,027 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 1000
+2026-08-17 19:34:04,036 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-17 19:34:04,078 - ecommerce_system - INFO - Data Split shapes -> Train: (700, 17), Val: (150, 17), Test: (150, 17)
+2026-08-17 19:34:04,181 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-17 19:34:04,254 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:34:04,307 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8162 | Test R2: 0.7954 | Test MAE: 335.52
+2026-08-17 19:34:04,307 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:34:05,129 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.7827 | Test R2: 0.7822 | Test MAE: 340.34
+2026-08-17 19:34:05,130 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:34:08,329 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.8394 | Test R2: 0.9094 | Test MAE: 239360.16
+2026-08-17 19:34:08,331 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:34:09,786 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.8458 | Test R2: 0.8888 | Test MAE: 273202.73
+2026-08-17 19:34:09,788 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:34:10,026 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.8593 | Test R2: 0.8715 | Test MAE: 252.42
+2026-08-17 19:34:10,027 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:34:11,453 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: -0.0111 | Test R2: -0.0067 | Test MAE: 739659.83
+2026-08-17 19:34:11,453 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'CatBoost' (Val R2: 0.8458) ***
+2026-08-17 19:34:11,593 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-17 19:34:11,625 - ecommerce_system - INFO - Starting product analysis for: Test Item
+2026-08-17 19:34:11,663 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 19:34:11,719 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-17 19:34:11,732 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 19:34:11,764 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 19:34:11,793 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 1000
+2026-08-17 19:34:15,403 - ecommerce_system - INFO - Starting product analysis for: Wireless Bluetooth Earbuds
+2026-08-17 19:34:15,446 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 19:34:18,328 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.8759 | Test R2: 0.8781 | Test MAE: 242.38
+2026-08-17 19:34:18,330 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:34:19,756 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.9006 | Test R2: 0.8749 | Test MAE: 217.94
+2026-08-17 19:34:19,756 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:34:20,181 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.9204 | Test R2: 0.922 | Test MAE: 174.56
+2026-08-17 19:34:20,184 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'CatBoost' (Val R2: 0.9354) ***
+2026-08-17 19:34:20,375 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-17 19:34:20,451 - ecommerce_system - INFO - Data Split shapes -> Train: (17500, 17), Val: (3750, 17), Test: (3750, 17)
+2026-08-17 19:34:20,747 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:34:20,797 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: -2.2537 | Test R2: -2.1837 | Test MAE: 1503.12
+2026-08-17 19:34:20,797 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'CatBoost' (Val R2: 0.9006) ***
+2026-08-17 19:34:20,985 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-17 19:34:21,011 - ecommerce_system - INFO - Data Split shapes -> Train: (700, 17), Val: (150, 17), Test: (150, 17)
+2026-08-17 19:34:21,070 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7385 | Test R2: 0.7802 | Test MAE: 327260.96
+2026-08-17 19:34:21,071 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:34:21,110 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:34:21,148 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7532 | Test R2: 0.8426 | Test MAE: 361295.82
+2026-08-17 19:34:21,148 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:34:24,175 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.8185 | Test R2: 0.8528 | Test MAE: 290402.88
+2026-08-17 19:34:24,177 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:34:29,713 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9032 | Test R2: 0.9078 | Test MAE: 199062.19
+2026-08-17 19:34:29,715 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:34:33,674 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.8304 | Test R2: 0.8799 | Test MAE: 250840.57
+2026-08-17 19:34:33,674 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:34:34,768 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9396 | Test R2: 0.9318 | Test MAE: 172064.3
+2026-08-17 19:34:34,768 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:34:38,499 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.8394 | Test R2: 0.9094 | Test MAE: 239360.16
+2026-08-17 19:34:38,501 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:34:39,744 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.8458 | Test R2: 0.8888 | Test MAE: 273202.73
+2026-08-17 19:34:39,744 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:34:40,886 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.9336 | Test R2: 0.9297 | Test MAE: 181397.75
+2026-08-17 19:34:40,886 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:34:41,020 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: -0.0111 | Test R2: -0.0067 | Test MAE: 739659.83
+2026-08-17 19:34:41,022 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'CatBoost' (Val R2: 0.8458) ***
+2026-08-17 19:34:41,160 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-17 19:34:41,190 - ecommerce_system - INFO - Starting product analysis for: Test Item
+2026-08-17 19:34:41,222 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 19:34:41,284 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-17 19:34:41,290 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 19:34:41,353 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 19:34:41,397 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 1000
+2026-08-17 19:34:42,756 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.922 | Test R2: 0.9241 | Test MAE: 181761.32
+2026-08-17 19:34:42,756 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:34:43,754 - ecommerce_system - INFO - Starting product analysis for: Wireless Bluetooth Earbuds
+2026-08-17 19:34:43,783 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 19:34:44,312 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-17 19:34:44,314 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 19:34:44,352 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 1000
+2026-08-17 19:34:44,360 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-17 19:34:44,388 - ecommerce_system - INFO - Data Split shapes -> Train: (700, 17), Val: (150, 17), Test: (150, 17)
+2026-08-17 19:34:44,474 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-17 19:34:44,540 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:34:44,585 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8162 | Test R2: 0.7954 | Test MAE: 335.52
+2026-08-17 19:34:44,585 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:34:45,286 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.7827 | Test R2: 0.7822 | Test MAE: 340.34
+2026-08-17 19:34:45,287 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:34:47,626 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.8593 | Test R2: 0.8715 | Test MAE: 252.42
+2026-08-17 19:34:47,626 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:34:48,941 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.8759 | Test R2: 0.8781 | Test MAE: 242.38
+2026-08-17 19:34:48,942 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:34:50,069 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.9006 | Test R2: 0.8749 | Test MAE: 217.94
+2026-08-17 19:34:50,069 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:34:51,462 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: -2.2537 | Test R2: -2.1837 | Test MAE: 1503.12
+2026-08-17 19:34:51,462 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'CatBoost' (Val R2: 0.9006) ***
+2026-08-17 19:34:51,612 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-17 19:34:51,638 - ecommerce_system - INFO - Data Split shapes -> Train: (700, 17), Val: (150, 17), Test: (150, 17)
+2026-08-17 19:34:51,766 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:34:51,820 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7532 | Test R2: 0.8426 | Test MAE: 361295.82
+2026-08-17 19:34:51,820 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:34:52,659 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.8185 | Test R2: 0.8528 | Test MAE: 290402.88
+2026-08-17 19:34:52,659 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:34:55,334 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.8304 | Test R2: 0.8799 | Test MAE: 250840.57
+2026-08-17 19:34:55,336 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:34:56,903 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.8394 | Test R2: 0.9094 | Test MAE: 239360.16
+2026-08-17 19:34:56,906 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:34:57,810 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.8458 | Test R2: 0.8888 | Test MAE: 273202.73
+2026-08-17 19:34:57,811 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:34:58,771 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: -0.0111 | Test R2: -0.0067 | Test MAE: 739659.83
+2026-08-17 19:34:58,773 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'CatBoost' (Val R2: 0.8458) ***
+2026-08-17 19:34:59,038 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-17 19:35:07,956 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.2341 | Test R2: 0.2573 | Test MAE: 595305.57
+2026-08-17 19:35:07,958 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'XGBoost' (Val R2: 0.9396) ***
+2026-08-17 19:35:08,142 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-17 19:35:32,805 - ecommerce_system - INFO - Generating synthetic e-commerce dataset with 25000 records (seed=42)...
+2026-08-17 19:35:35,514 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.7816 | Test R2: 0.8212 | Test MAE: 321782.9
+2026-08-17 19:35:35,521 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'CatBoost' (Val R2: 0.9451) ***
+2026-08-17 19:35:36,835 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-17 19:35:37,403 - ecommerce_system - INFO - Dataset successfully saved to data/ecommerce_data.csv
+2026-08-17 19:35:37,418 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-17 19:35:37,420 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 19:35:37,693 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 25000
+2026-08-17 19:35:37,710 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-17 19:35:37,772 - ecommerce_system - INFO - Data Split shapes -> Train: (17500, 17), Val: (3750, 17), Test: (3750, 17)
+2026-08-17 19:35:37,993 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-17 19:35:38,084 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:35:38,342 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8109 | Test R2: 0.8104 | Test MAE: 286.57
+2026-08-17 19:35:38,342 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:35:45,130 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.8947 | Test R2: 0.8974 | Test MAE: 208.94
+2026-08-17 19:35:45,131 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:35:47,661 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9286 | Test R2: 0.9313 | Test MAE: 168.35
+2026-08-17 19:35:47,664 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:35:48,624 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.9338 | Test R2: 0.9349 | Test MAE: 164.14
+2026-08-17 19:35:48,624 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:35:50,154 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.9354 | Test R2: 0.9374 | Test MAE: 159.81
+2026-08-17 19:35:50,154 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:36:06,526 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.9204 | Test R2: 0.922 | Test MAE: 174.56
+2026-08-17 19:36:06,526 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'CatBoost' (Val R2: 0.9354) ***
+2026-08-17 19:36:06,668 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-17 19:36:06,756 - ecommerce_system - INFO - Data Split shapes -> Train: (17500, 17), Val: (3750, 17), Test: (3750, 17)
+2026-08-17 19:36:06,966 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:36:07,210 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7385 | Test R2: 0.7802 | Test MAE: 327260.96
+2026-08-17 19:36:07,210 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:36:14,079 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9032 | Test R2: 0.9078 | Test MAE: 199062.19
+2026-08-17 19:36:14,081 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:36:15,145 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9396 | Test R2: 0.9318 | Test MAE: 172064.3
+2026-08-17 19:36:15,145 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:36:16,287 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.9336 | Test R2: 0.9297 | Test MAE: 181397.75
+2026-08-17 19:36:16,287 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:36:17,608 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.922 | Test R2: 0.9241 | Test MAE: 181761.32
+2026-08-17 19:36:17,608 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:36:32,627 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.2341 | Test R2: 0.2573 | Test MAE: 595305.57
+2026-08-17 19:36:32,627 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'XGBoost' (Val R2: 0.9396) ***
+2026-08-17 19:36:32,783 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-17 19:47:43,680 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-17 19:47:43,707 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 19:47:43,859 - ecommerce_system - INFO - Saved prediction record for 'Premium Noise-Cancelling Headphones' to history.
+2026-08-17 19:47:44,971 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-17 19:47:44,978 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 19:47:45,007 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 19:47:45,226 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 25000
+2026-08-17 19:54:46,165 - ecommerce_system - INFO - Generating synthetic e-commerce dataset with 1000 records (seed=42)...
+2026-08-17 19:54:46,250 - ecommerce_system - INFO - Dataset successfully saved to data\ecommerce_data.csv
+2026-08-17 19:54:46,251 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-17 19:54:46,251 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 19:54:46,264 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 1000
+2026-08-17 19:54:46,267 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-17 19:54:46,278 - ecommerce_system - INFO - Data Split shapes -> Train: (700, 17), Val: (150, 17), Test: (150, 17)
+2026-08-17 19:54:46,307 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-17 19:54:46,333 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:54:46,363 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8162 | Test R2: 0.7954 | Test MAE: 335.52
+2026-08-17 19:54:46,364 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:54:46,767 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.7827 | Test R2: 0.7822 | Test MAE: 340.34
+2026-08-17 19:54:46,767 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:54:47,043 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.8593 | Test R2: 0.8715 | Test MAE: 252.42
+2026-08-17 19:54:47,043 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:54:47,292 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.8759 | Test R2: 0.8781 | Test MAE: 242.38
+2026-08-17 19:54:47,293 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:54:48,161 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.9006 | Test R2: 0.8749 | Test MAE: 217.94
+2026-08-17 19:54:48,161 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:54:48,533 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: -2.2537 | Test R2: -2.1837 | Test MAE: 1503.12
+2026-08-17 19:54:48,533 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'CatBoost' (Val R2: 0.9006) ***
+2026-08-17 19:54:48,589 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-17 19:54:48,636 - ecommerce_system - INFO - Data Split shapes -> Train: (700, 17), Val: (150, 17), Test: (150, 17)
+2026-08-17 19:54:48,705 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 19:54:48,728 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7532 | Test R2: 0.8426 | Test MAE: 361295.82
+2026-08-17 19:54:48,728 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 19:54:49,093 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.8185 | Test R2: 0.8528 | Test MAE: 290402.88
+2026-08-17 19:54:49,094 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 19:54:49,362 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.8304 | Test R2: 0.8799 | Test MAE: 250840.57
+2026-08-17 19:54:49,362 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 19:54:49,550 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.8394 | Test R2: 0.9094 | Test MAE: 239360.16
+2026-08-17 19:54:49,550 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 19:54:49,957 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.8458 | Test R2: 0.8888 | Test MAE: 273202.73
+2026-08-17 19:54:49,957 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 19:54:50,345 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: -0.0111 | Test R2: -0.0067 | Test MAE: 739659.83
+2026-08-17 19:54:50,345 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'CatBoost' (Val R2: 0.8458) ***
+2026-08-17 19:54:50,411 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-17 19:54:50,428 - ecommerce_system - INFO - Starting product analysis for: Test Item
+2026-08-17 19:54:50,446 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 19:54:50,480 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-17 19:54:50,486 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 19:54:50,502 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 19:54:50,513 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 1000
+2026-08-17 19:54:51,617 - ecommerce_system - INFO - Starting product analysis for: Wireless Bluetooth Earbuds
+2026-08-17 19:54:51,634 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 19:55:15,867 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-17 19:55:15,885 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 19:55:15,928 - ecommerce_system - INFO - Saved prediction record for 'Premium Noise-Cancelling Headphones' to history.
+2026-08-17 19:55:17,053 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 21:13:10,412 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-17 21:13:10,549 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 21:13:10,652 - ecommerce_system - INFO - Saved prediction record for 'Premium Noise-Cancelling Headphones' to history.
+2026-08-17 21:13:10,811 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 21:15:57,656 - ecommerce_system - INFO - Generating synthetic e-commerce dataset with 1000 records (seed=42)...
+2026-08-17 21:15:57,747 - ecommerce_system - INFO - Dataset successfully saved to data\ecommerce_data.csv
+2026-08-17 21:15:57,747 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-17 21:15:57,751 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 21:15:57,777 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 1000
+2026-08-17 21:15:57,783 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-17 21:15:57,795 - ecommerce_system - INFO - Data Split shapes -> Train: (700, 17), Val: (150, 17), Test: (150, 17)
+2026-08-17 21:15:57,824 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-17 21:15:57,843 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 21:15:57,861 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8162 | Test R2: 0.7954 | Test MAE: 335.52
+2026-08-17 21:15:57,861 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 21:15:58,270 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.7827 | Test R2: 0.7822 | Test MAE: 340.34
+2026-08-17 21:15:58,270 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 21:15:58,504 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.8593 | Test R2: 0.8715 | Test MAE: 252.42
+2026-08-17 21:15:58,504 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 21:15:58,684 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.8759 | Test R2: 0.8781 | Test MAE: 242.38
+2026-08-17 21:15:58,684 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 21:15:59,205 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.9006 | Test R2: 0.8749 | Test MAE: 217.94
+2026-08-17 21:15:59,205 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 21:15:59,455 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: -2.2537 | Test R2: -2.1837 | Test MAE: 1503.12
+2026-08-17 21:15:59,455 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'CatBoost' (Val R2: 0.9006) ***
+2026-08-17 21:15:59,504 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-17 21:15:59,519 - ecommerce_system - INFO - Data Split shapes -> Train: (700, 17), Val: (150, 17), Test: (150, 17)
+2026-08-17 21:15:59,557 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-17 21:15:59,573 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7532 | Test R2: 0.8426 | Test MAE: 361295.82
+2026-08-17 21:15:59,573 - ecommerce_system - INFO - Training Random Forest...
+2026-08-17 21:15:59,826 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.8185 | Test R2: 0.8528 | Test MAE: 290402.88
+2026-08-17 21:15:59,826 - ecommerce_system - INFO - Training XGBoost...
+2026-08-17 21:16:00,042 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.8304 | Test R2: 0.8799 | Test MAE: 250840.57
+2026-08-17 21:16:00,044 - ecommerce_system - INFO - Training LightGBM...
+2026-08-17 21:16:00,172 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.8394 | Test R2: 0.9094 | Test MAE: 239360.16
+2026-08-17 21:16:00,172 - ecommerce_system - INFO - Training CatBoost...
+2026-08-17 21:16:00,447 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.8458 | Test R2: 0.8888 | Test MAE: 273202.73
+2026-08-17 21:16:00,447 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-17 21:16:00,725 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: -0.0111 | Test R2: -0.0067 | Test MAE: 739659.83
+2026-08-17 21:16:00,725 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'CatBoost' (Val R2: 0.8458) ***
+2026-08-17 21:16:00,766 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-17 21:16:00,777 - ecommerce_system - INFO - Starting product analysis for: Test Item
+2026-08-17 21:16:00,790 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 21:16:00,815 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-17 21:16:00,821 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 21:16:00,836 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 21:16:00,850 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 1000
+2026-08-17 21:16:01,888 - ecommerce_system - INFO - Starting product analysis for: Wireless Bluetooth Earbuds
+2026-08-17 21:16:01,899 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 21:16:29,629 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-17 21:16:29,680 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 21:16:29,801 - ecommerce_system - INFO - Saved prediction record for 'Premium Noise-Cancelling Headphones' to history.
+2026-08-17 21:16:30,411 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 21:16:31,083 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-17 21:16:31,086 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-17 21:16:31,108 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-17 21:16:31,127 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 1000
+2026-08-17 21:16:32,322 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-17 21:16:32,340 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:06:27,604 - ecommerce_system - INFO - Generating synthetic e-commerce dataset with 43893 records (seed=42)...
+2026-08-19 11:06:31,331 - ecommerce_system - INFO - Dataset successfully saved to data/ecommerce_data.csv
+2026-08-19 11:06:31,345 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-19 11:06:31,346 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:06:31,609 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:06:31,622 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-19 11:06:31,680 - ecommerce_system - INFO - Data Split shapes -> Train: (30725, 17), Val: (6584, 17), Test: (6584, 17)
+2026-08-19 11:06:31,955 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-19 11:06:32,041 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-19 11:06:32,342 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8185 | Test R2: 0.8076 | Test MAE: 285.6
+2026-08-19 11:06:32,344 - ecommerce_system - INFO - Training Random Forest...
+2026-08-19 11:06:42,075 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9046 | Test R2: 0.9009 | Test MAE: 205.46
+2026-08-19 11:06:42,075 - ecommerce_system - INFO - Training XGBoost...
+2026-08-19 11:06:43,352 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9354 | Test R2: 0.9317 | Test MAE: 167.25
+2026-08-19 11:06:43,352 - ecommerce_system - INFO - Training LightGBM...
+2026-08-19 11:06:43,872 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.9377 | Test R2: 0.9353 | Test MAE: 164.92
+2026-08-19 11:06:43,872 - ecommerce_system - INFO - Training CatBoost...
+2026-08-19 11:06:45,178 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.9373 | Test R2: 0.9346 | Test MAE: 161.67
+2026-08-19 11:06:45,179 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-19 11:06:58,580 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.9366 | Test R2: 0.9304 | Test MAE: 164.53
+2026-08-19 11:06:58,588 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'LightGBM' (Val R2: 0.9377) ***
+2026-08-19 11:06:58,718 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-19 11:06:58,802 - ecommerce_system - INFO - Data Split shapes -> Train: (30725, 17), Val: (6584, 17), Test: (6584, 17)
+2026-08-19 11:06:59,122 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-19 11:06:59,455 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7563 | Test R2: 0.7807 | Test MAE: 331411.63
+2026-08-19 11:06:59,457 - ecommerce_system - INFO - Training Random Forest...
+2026-08-19 11:07:11,665 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9086 | Test R2: 0.9231 | Test MAE: 193201.78
+2026-08-19 11:07:11,665 - ecommerce_system - INFO - Training XGBoost...
+2026-08-19 11:07:12,604 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9392 | Test R2: 0.9441 | Test MAE: 169044.14
+2026-08-19 11:07:12,604 - ecommerce_system - INFO - Training LightGBM...
+2026-08-19 11:07:13,402 - ecommerce_system - INFO - -> LightGBM | Val R2: 0.9353 | Test R2: 0.9376 | Test MAE: 183059.93
+2026-08-19 11:07:13,402 - ecommerce_system - INFO - Training CatBoost...
+2026-08-19 11:07:14,416 - ecommerce_system - INFO - -> CatBoost | Val R2: 0.9268 | Test R2: 0.9363 | Test MAE: 178514.84
+2026-08-19 11:07:14,418 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-19 11:07:28,975 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.475 | Test R2: 0.5073 | Test MAE: 497508.2
+2026-08-19 11:07:28,975 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'XGBoost' (Val R2: 0.9392) ***
+2026-08-19 11:07:29,055 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-19 11:08:30,807 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:08:30,834 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:08:30,995 - ecommerce_system - INFO - Saved prediction record for 'Premium Noise-Cancelling Headphones' to history.
+2026-08-19 11:08:31,927 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:08:32,846 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:08:32,856 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:08:32,896 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:08:33,347 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:08:35,059 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:08:35,072 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:13:17,465 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-19 11:13:17,470 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:13:17,853 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:13:17,864 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-19 11:13:17,974 - ecommerce_system - INFO - Data Split shapes -> Train: (30725, 17), Val: (6584, 17), Test: (6584, 17)
+2026-08-19 11:13:18,329 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-19 11:13:18,442 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-19 11:13:18,802 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8185 | Test R2: 0.8076 | Test MAE: 285.6
+2026-08-19 11:13:18,802 - ecommerce_system - INFO - Training Random Forest...
+2026-08-19 11:13:30,826 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9046 | Test R2: 0.9009 | Test MAE: 205.46
+2026-08-19 11:13:30,826 - ecommerce_system - INFO - Training XGBoost...
+2026-08-19 11:13:31,504 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9354 | Test R2: 0.9317 | Test MAE: 167.25
+2026-08-19 11:13:31,504 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-19 11:13:43,570 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.9366 | Test R2: 0.9304 | Test MAE: 164.53
+2026-08-19 11:13:43,570 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'Artificial Neural Network' (Val R2: 0.9366) ***
+2026-08-19 11:13:43,633 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-19 11:13:43,691 - ecommerce_system - INFO - Data Split shapes -> Train: (30725, 17), Val: (6584, 17), Test: (6584, 17)
+2026-08-19 11:13:43,837 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-19 11:13:44,083 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7563 | Test R2: 0.7807 | Test MAE: 331411.63
+2026-08-19 11:13:44,083 - ecommerce_system - INFO - Training Random Forest...
+2026-08-19 11:13:50,308 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9086 | Test R2: 0.9231 | Test MAE: 193201.78
+2026-08-19 11:13:50,309 - ecommerce_system - INFO - Training XGBoost...
+2026-08-19 11:13:51,516 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9392 | Test R2: 0.9441 | Test MAE: 169044.14
+2026-08-19 11:13:51,516 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-19 11:14:07,087 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.475 | Test R2: 0.5073 | Test MAE: 497508.2
+2026-08-19 11:14:07,087 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'XGBoost' (Val R2: 0.9392) ***
+2026-08-19 11:14:07,211 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-19 11:14:44,534 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:14:44,564 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:14:44,641 - ecommerce_system - INFO - Saved prediction record for 'Premium Noise-Cancelling Headphones' to history.
+2026-08-19 11:14:45,485 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:14:46,532 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:14:46,537 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:14:46,560 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:14:47,013 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:14:49,217 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:14:49,232 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:15:48,418 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:15:48,432 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:15:48,480 - ecommerce_system - INFO - Saved prediction record for 'Premium Noise-Cancelling Headphones' to history.
+2026-08-19 11:15:48,667 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:15:49,365 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:15:49,371 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:15:49,387 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:15:49,776 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:15:51,607 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:15:51,632 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:18:01,352 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:18:02,097 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:18:02,101 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:18:02,116 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:18:02,489 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:18:04,141 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:18:04,158 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:18:23,449 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:18:24,220 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:18:24,233 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:18:24,274 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:18:24,614 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:18:26,107 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:18:26,121 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:13,116 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:15,732 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:16,158 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:17,018 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:21:17,022 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:17,037 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:21:17,412 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:21:18,913 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:21:18,925 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:19,880 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:21:19,897 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:19,931 - ecommerce_system - INFO - Saved prediction record for '' to history.
+2026-08-19 11:21:20,040 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:20,570 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:21:20,574 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:20,590 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:21:20,930 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:21:22,621 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:21:22,635 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:25,899 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:27,736 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:28,301 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:21:28,306 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:28,323 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:21:28,620 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:21:29,329 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:21:29,342 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:29,389 - ecommerce_system - INFO - Saved prediction record for '' to history.
+2026-08-19 11:21:29,501 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:29,795 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:21:29,841 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:29,973 - ecommerce_system - INFO - Saved prediction record for '' to history.
+2026-08-19 11:21:30,456 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:30,636 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:21:30,667 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:30,813 - ecommerce_system - INFO - Saved prediction record for '' to history.
+2026-08-19 11:21:31,206 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:31,308 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:21:31,362 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:31,510 - ecommerce_system - INFO - Saved prediction record for '' to history.
+2026-08-19 11:21:32,022 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:32,055 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:21:32,085 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:32,230 - ecommerce_system - INFO - Saved prediction record for '' to history.
+2026-08-19 11:21:33,145 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:21:33,170 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:33,233 - ecommerce_system - INFO - Saved prediction record for '' to history.
+2026-08-19 11:21:33,341 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:33,544 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:21:33,591 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:33,954 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:21:34,012 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:34,224 - ecommerce_system - INFO - Saved prediction record for '' to history.
+2026-08-19 11:21:34,329 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:34,846 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:21:34,852 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:34,871 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:21:34,891 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:21:34,904 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:34,937 - ecommerce_system - INFO - Saved prediction record for '' to history.
+2026-08-19 11:21:35,050 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:35,635 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:21:35,894 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:21:35,897 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:35,912 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:21:36,571 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:21:38,134 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:21:38,147 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:38,337 - ecommerce_system - INFO - Saved prediction record for '' to history.
+2026-08-19 11:21:38,537 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:39,284 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:21:39,295 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:21:39,320 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:21:39,681 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:21:41,300 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:21:41,316 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:22:03,130 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:22:03,143 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:22:03,178 - ecommerce_system - INFO - Saved prediction record for '' to history.
+2026-08-19 11:22:03,448 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:22:03,469 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:22:03,716 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:22:03,733 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:22:03,925 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:22:03,943 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:22:03,994 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:22:04,156 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:22:04,212 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:22:04,401 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:22:04,747 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:22:04,781 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:22:04,829 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:22:04,981 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:22:05,028 - ecommerce_system - INFO - Saved prediction record for '' to history.
+2026-08-19 11:22:05,136 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:22:05,224 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:22:05,254 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:22:05,423 - ecommerce_system - INFO - Saved prediction record for '' to history.
+2026-08-19 11:22:05,874 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:22:06,483 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:22:06,499 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:22:06,545 - ecommerce_system - INFO - Saved prediction record for '' to history.
+2026-08-19 11:22:06,692 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:22:07,227 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:22:07,232 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:22:07,246 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:22:07,545 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:22:09,167 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:22:09,182 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:27,120 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:28,087 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:29,004 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:29,651 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:23:29,654 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:29,669 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:23:30,047 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:30,136 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:23:30,864 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:32,067 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:32,791 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:23:32,804 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:32,826 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:23:32,991 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:34,032 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:23:34,177 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:34,806 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:35,767 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:23:35,774 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:35,804 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:23:36,454 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:23:38,019 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:23:38,035 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:41,990 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:42,826 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:44,077 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:44,645 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:23:44,651 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:44,668 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:23:44,983 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:23:45,375 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:46,153 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:46,891 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:23:46,895 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:23:46,919 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:23:47,485 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:23:49,199 - ecommerce_system - INFO - Starting product analysis for: 
+2026-08-19 11:23:49,214 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:45:26,822 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-19 11:45:26,828 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:45:27,244 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:45:27,257 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-19 11:45:27,305 - ecommerce_system - INFO - Data Split shapes -> Train: (30725, 17), Val: (6584, 17), Test: (6584, 17)
+2026-08-19 11:45:27,491 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-19 11:45:27,574 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-19 11:45:27,888 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8185 | Test R2: 0.8076 | Test MAE: 285.6
+2026-08-19 11:45:27,888 - ecommerce_system - INFO - Training Random Forest...
+2026-08-19 11:45:34,222 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9046 | Test R2: 0.9009 | Test MAE: 205.46
+2026-08-19 11:45:34,222 - ecommerce_system - INFO - Training XGBoost...
+2026-08-19 11:45:34,802 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9354 | Test R2: 0.9317 | Test MAE: 167.25
+2026-08-19 11:45:34,802 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-19 11:45:45,404 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.9366 | Test R2: 0.9304 | Test MAE: 164.53
+2026-08-19 11:45:45,404 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'Artificial Neural Network' (Val R2: 0.9366) ***
+2026-08-19 11:45:45,477 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-19 11:45:45,533 - ecommerce_system - INFO - Data Split shapes -> Train: (30725, 17), Val: (6584, 17), Test: (6584, 17)
+2026-08-19 11:45:45,678 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-19 11:45:45,950 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7563 | Test R2: 0.7807 | Test MAE: 331411.63
+2026-08-19 11:45:45,950 - ecommerce_system - INFO - Training Random Forest...
+2026-08-19 11:45:52,411 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9086 | Test R2: 0.9231 | Test MAE: 193201.78
+2026-08-19 11:45:52,411 - ecommerce_system - INFO - Training XGBoost...
+2026-08-19 11:45:53,019 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9392 | Test R2: 0.9441 | Test MAE: 169044.14
+2026-08-19 11:45:53,019 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-19 11:46:03,157 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.475 | Test R2: 0.5073 | Test MAE: 497508.2
+2026-08-19 11:46:03,157 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'XGBoost' (Val R2: 0.9392) ***
+2026-08-19 11:46:03,236 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-19 11:46:03,485 - ecommerce_system - INFO - Starting product analysis for: Test Item
+2026-08-19 11:46:03,498 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:46:03,529 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:46:03,533 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:46:03,553 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:46:03,833 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:46:05,306 - ecommerce_system - INFO - Starting product analysis for: Wireless Bluetooth Earbuds
+2026-08-19 11:46:05,314 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:46:33,930 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:46:33,946 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:46:33,990 - ecommerce_system - INFO - Saved prediction record for 'Premium Noise-Cancelling Headphones' to history.
+2026-08-19 11:46:34,814 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:46:35,633 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:46:35,637 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:46:35,654 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:46:35,906 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:46:37,234 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:46:37,250 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:48:18,803 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:48:18,828 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:48:18,901 - ecommerce_system - INFO - Saved prediction record for 'Premium Noise-Cancelling Headphones' to history.
+2026-08-19 11:48:19,519 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:48:20,642 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:48:20,648 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:48:20,682 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:48:21,201 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:48:23,519 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:48:23,550 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:48:33,837 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-19 11:48:33,845 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:48:34,102 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:48:34,110 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-19 11:48:34,187 - ecommerce_system - INFO - Data Split shapes -> Train: (30725, 17), Val: (6584, 17), Test: (6584, 17)
+2026-08-19 11:48:34,436 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-19 11:48:34,493 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-19 11:48:34,798 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8185 | Test R2: 0.8076 | Test MAE: 285.6
+2026-08-19 11:48:34,799 - ecommerce_system - INFO - Training Random Forest...
+2026-08-19 11:48:41,485 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9046 | Test R2: 0.9009 | Test MAE: 205.46
+2026-08-19 11:48:41,485 - ecommerce_system - INFO - Training XGBoost...
+2026-08-19 11:48:42,202 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9354 | Test R2: 0.9317 | Test MAE: 167.25
+2026-08-19 11:48:42,202 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-19 11:48:52,602 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.9366 | Test R2: 0.9304 | Test MAE: 164.53
+2026-08-19 11:48:52,604 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'Artificial Neural Network' (Val R2: 0.9366) ***
+2026-08-19 11:48:52,664 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-19 11:48:52,735 - ecommerce_system - INFO - Data Split shapes -> Train: (30725, 17), Val: (6584, 17), Test: (6584, 17)
+2026-08-19 11:48:52,886 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-19 11:48:53,130 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7563 | Test R2: 0.7807 | Test MAE: 331411.63
+2026-08-19 11:48:53,130 - ecommerce_system - INFO - Training Random Forest...
+2026-08-19 11:48:59,775 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9086 | Test R2: 0.9231 | Test MAE: 193201.78
+2026-08-19 11:48:59,777 - ecommerce_system - INFO - Training XGBoost...
+2026-08-19 11:49:00,488 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9392 | Test R2: 0.9441 | Test MAE: 169044.14
+2026-08-19 11:49:00,488 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-19 11:49:09,263 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-19 11:49:09,264 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:49:09,610 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:49:09,620 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-19 11:49:09,685 - ecommerce_system - INFO - Data Split shapes -> Train: (30725, 17), Val: (6584, 17), Test: (6584, 17)
+2026-08-19 11:49:09,955 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-19 11:49:10,029 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-19 11:49:10,408 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8185 | Test R2: 0.8076 | Test MAE: 285.6
+2026-08-19 11:49:10,410 - ecommerce_system - INFO - Training Random Forest...
+2026-08-19 11:49:17,228 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9046 | Test R2: 0.9009 | Test MAE: 205.46
+2026-08-19 11:49:17,228 - ecommerce_system - INFO - Training XGBoost...
+2026-08-19 11:49:18,046 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9354 | Test R2: 0.9317 | Test MAE: 167.25
+2026-08-19 11:49:18,046 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-19 11:49:21,395 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.475 | Test R2: 0.5073 | Test MAE: 497508.2
+2026-08-19 11:49:21,395 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'XGBoost' (Val R2: 0.9392) ***
+2026-08-19 11:49:21,533 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-19 11:49:21,984 - ecommerce_system - INFO - Starting product analysis for: Test Item
+2026-08-19 11:49:22,008 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:49:22,067 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:49:22,077 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:49:22,112 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:49:22,601 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:49:24,135 - ecommerce_system - INFO - Starting product analysis for: Wireless Bluetooth Earbuds
+2026-08-19 11:49:24,149 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:49:31,097 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.9366 | Test R2: 0.9304 | Test MAE: 164.53
+2026-08-19 11:49:31,097 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'Artificial Neural Network' (Val R2: 0.9366) ***
+2026-08-19 11:49:31,217 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-19 11:49:31,308 - ecommerce_system - INFO - Data Split shapes -> Train: (30725, 17), Val: (6584, 17), Test: (6584, 17)
+2026-08-19 11:49:31,449 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-19 11:49:31,775 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7563 | Test R2: 0.7807 | Test MAE: 331411.63
+2026-08-19 11:49:31,775 - ecommerce_system - INFO - Training Random Forest...
+2026-08-19 11:49:43,872 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9086 | Test R2: 0.9231 | Test MAE: 193201.78
+2026-08-19 11:49:43,872 - ecommerce_system - INFO - Training XGBoost...
+2026-08-19 11:49:44,914 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9392 | Test R2: 0.9441 | Test MAE: 169044.14
+2026-08-19 11:49:44,914 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-19 11:50:01,472 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.475 | Test R2: 0.5073 | Test MAE: 497508.2
+2026-08-19 11:50:01,472 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'XGBoost' (Val R2: 0.9392) ***
+2026-08-19 11:50:01,620 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-19 11:50:02,039 - ecommerce_system - INFO - Starting product analysis for: Test Item
+2026-08-19 11:50:02,054 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:50:02,094 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:50:02,101 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:50:02,141 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:50:02,566 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:50:04,256 - ecommerce_system - INFO - Starting product analysis for: Wireless Bluetooth Earbuds
+2026-08-19 11:50:04,283 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:50:08,900 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:50:08,918 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:50:08,959 - ecommerce_system - INFO - Saved prediction record for 'Premium Noise-Cancelling Headphones' to history.
+2026-08-19 11:50:09,634 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:50:10,476 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:50:10,480 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:50:10,503 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:50:10,807 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:50:12,182 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:50:12,196 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:50:12,262 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:50:12,267 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:50:12,288 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:50:12,611 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:55:40,314 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:55:40,992 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:55:40,997 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:55:41,014 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:55:41,415 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:55:43,152 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:55:43,173 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:55:43,233 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:55:43,237 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:55:43,253 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:55:43,595 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:55:51,616 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:55:51,629 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:55:51,674 - ecommerce_system - INFO - Saved prediction record for 'Premium Noise-Cancelling Headphones' to history.
+2026-08-19 11:55:51,780 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:55:52,304 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:55:52,308 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:55:52,323 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:55:52,698 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:55:54,365 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:55:54,375 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:55:54,430 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:55:54,434 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:55:54,450 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:55:54,834 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:56:14,101 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:56:14,115 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:56:14,153 - ecommerce_system - INFO - Saved prediction record for 'Premium Noise-Cancelling Headphones' to history.
+2026-08-19 11:56:14,295 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:56:14,897 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:56:14,901 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:56:14,917 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:56:15,303 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 11:56:17,058 - ecommerce_system - INFO - Starting product analysis for: Premium Noise-Cancelling Headphones
+2026-08-19 11:56:17,083 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:56:17,142 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 11:56:17,147 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 11:56:17,161 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 11:56:17,508 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 12:00:07,410 - ecommerce_system - INFO - Generating synthetic e-commerce dataset with 43893 records (seed=42)...
+2026-08-19 12:00:29,047 - ecommerce_system - INFO - Generating synthetic e-commerce dataset with 43893 records (seed=42)...
+2026-08-19 12:01:10,652 - ecommerce_system - INFO - Generating synthetic e-commerce dataset with 43893 records (seed=42)...
+2026-08-19 12:02:00,996 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 12:02:01,274 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 12:03:47,223 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-19 12:03:47,224 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 12:03:47,558 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 12:03:47,565 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-19 12:03:47,610 - ecommerce_system - INFO - Data Split shapes -> Train: (30725, 17), Val: (6584, 17), Test: (6584, 17)
+2026-08-19 12:03:47,823 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-19 12:03:47,864 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-19 12:03:48,140 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8185 | Test R2: 0.8076 | Test MAE: 285.6
+2026-08-19 12:03:48,140 - ecommerce_system - INFO - Training Random Forest...
+2026-08-19 12:03:54,071 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9046 | Test R2: 0.9009 | Test MAE: 205.46
+2026-08-19 12:03:54,071 - ecommerce_system - INFO - Training XGBoost...
+2026-08-19 12:03:54,710 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9354 | Test R2: 0.9317 | Test MAE: 167.25
+2026-08-19 12:03:54,710 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-19 12:04:04,266 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.9366 | Test R2: 0.9304 | Test MAE: 164.53
+2026-08-19 12:04:04,266 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'Artificial Neural Network' (Val R2: 0.9366) ***
+2026-08-19 12:04:04,325 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-19 12:04:04,383 - ecommerce_system - INFO - Data Split shapes -> Train: (30725, 17), Val: (6584, 17), Test: (6584, 17)
+2026-08-19 12:04:04,532 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-19 12:04:04,758 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7563 | Test R2: 0.7807 | Test MAE: 331411.63
+2026-08-19 12:04:04,758 - ecommerce_system - INFO - Training Random Forest...
+2026-08-19 12:04:10,417 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9086 | Test R2: 0.9231 | Test MAE: 193201.78
+2026-08-19 12:04:10,417 - ecommerce_system - INFO - Training XGBoost...
+2026-08-19 12:04:10,937 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9392 | Test R2: 0.9441 | Test MAE: 169044.14
+2026-08-19 12:04:10,937 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-19 12:04:19,790 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.475 | Test R2: 0.5073 | Test MAE: 497508.2
+2026-08-19 12:04:19,790 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'XGBoost' (Val R2: 0.9392) ***
+2026-08-19 12:04:19,865 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-19 12:04:20,077 - ecommerce_system - INFO - Starting product analysis for: Test Item
+2026-08-19 12:04:20,094 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 12:04:20,117 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 12:04:20,122 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 12:04:20,135 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 12:04:20,366 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 12:04:21,416 - ecommerce_system - INFO - Starting product analysis for: Wireless Bluetooth Earbuds
+2026-08-19 12:04:21,425 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 12:04:49,724 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 12:04:50,098 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 12:04:50,255 - ecommerce_system - INFO - Starting product analysis for: Advanced Accessories
+2026-08-19 12:04:50,276 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 12:04:50,333 - ecommerce_system - INFO - Saved prediction record for 'Advanced Accessories' to history.
+2026-08-19 12:04:51,121 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 12:04:51,857 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 12:04:51,860 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 12:04:51,878 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 12:04:52,163 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 12:04:53,450 - ecommerce_system - INFO - Starting product analysis for: Advanced Accessories
+2026-08-19 12:04:53,471 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 12:04:53,540 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 12:04:53,545 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 12:04:53,561 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 12:04:53,915 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 12:05:11,885 - ecommerce_system - INFO - Starting product analysis for: Smart Haircare
+2026-08-19 12:05:11,895 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 12:05:11,926 - ecommerce_system - INFO - Saved prediction record for 'Smart Haircare' to history.
+2026-08-19 12:05:12,043 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 12:05:12,589 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 12:05:12,596 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 12:05:12,615 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 12:05:13,001 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 12:05:14,721 - ecommerce_system - INFO - Starting product analysis for: Smart Haircare
+2026-08-19 12:05:14,740 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 12:05:14,810 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 12:05:14,814 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 12:05:14,831 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 12:05:15,234 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 12:22:25,395 - ecommerce_system - INFO - --- Starting Model Training & Evaluation Workflow ---
+2026-08-19 12:22:25,398 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 12:22:25,930 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 12:22:25,941 - ecommerce_system - INFO - 
+================ Training Models for Target: 'DEMAND' ================
+2026-08-19 12:22:26,037 - ecommerce_system - INFO - Data Split shapes -> Train: (30725, 17), Val: (6584, 17), Test: (6584, 17)
+2026-08-19 12:22:26,483 - ecommerce_system - INFO - Preprocessing pipeline saved to models\preprocessing_pipeline.pkl
+2026-08-19 12:22:26,611 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-19 12:22:27,079 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.8185 | Test R2: 0.8076 | Test MAE: 285.6
+2026-08-19 12:22:27,079 - ecommerce_system - INFO - Training Random Forest...
+2026-08-19 12:22:38,525 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9046 | Test R2: 0.9009 | Test MAE: 205.46
+2026-08-19 12:22:38,525 - ecommerce_system - INFO - Training XGBoost...
+2026-08-19 12:22:39,414 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9354 | Test R2: 0.9317 | Test MAE: 167.25
+2026-08-19 12:22:39,416 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-19 12:22:57,184 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.9366 | Test R2: 0.9304 | Test MAE: 164.53
+2026-08-19 12:22:57,184 - ecommerce_system - INFO - *** WINNING MODEL for DEMAND: 'Artificial Neural Network' (Val R2: 0.9366) ***
+2026-08-19 12:22:57,261 - ecommerce_system - INFO - 
+================ Training Models for Target: 'PROFIT' ================
+2026-08-19 12:22:57,350 - ecommerce_system - INFO - Data Split shapes -> Train: (30725, 17), Val: (6584, 17), Test: (6584, 17)
+2026-08-19 12:22:57,595 - ecommerce_system - INFO - Training Multiple Linear Regression...
+2026-08-19 12:22:57,904 - ecommerce_system - INFO - -> Multiple Linear Regression | Val R2: 0.7563 | Test R2: 0.7807 | Test MAE: 331411.63
+2026-08-19 12:22:57,904 - ecommerce_system - INFO - Training Random Forest...
+2026-08-19 12:23:05,613 - ecommerce_system - INFO - -> Random Forest | Val R2: 0.9086 | Test R2: 0.9231 | Test MAE: 193201.78
+2026-08-19 12:23:05,613 - ecommerce_system - INFO - Training XGBoost...
+2026-08-19 12:23:06,284 - ecommerce_system - INFO - -> XGBoost | Val R2: 0.9392 | Test R2: 0.9441 | Test MAE: 169044.14
+2026-08-19 12:23:06,285 - ecommerce_system - INFO - Training Artificial Neural Network...
+2026-08-19 12:23:22,497 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.475 | Test R2: 0.5073 | Test MAE: 497508.2
+2026-08-19 12:23:22,497 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'XGBoost' (Val R2: 0.9392) ***
+2026-08-19 12:23:22,610 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-08-19 12:23:22,835 - ecommerce_system - INFO - Starting product analysis for: Test Item
+2026-08-19 12:23:22,852 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 12:23:22,889 - ecommerce_system - INFO - Generating SHAP explanation for model type: 'profit'
+2026-08-19 12:23:22,895 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-08-19 12:23:22,916 - ecommerce_system - INFO - Loading dataset from data\ecommerce_data.csv...
+2026-08-19 12:23:23,327 - ecommerce_system - INFO - Dataset loaded and validated successfully. Total rows: 43893
+2026-08-19 12:23:24,838 - ecommerce_system - INFO - Starting product analysis for: Wireless Bluetooth Earbuds
+2026-08-19 12:23:24,870 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
