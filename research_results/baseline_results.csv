@@ -1,3 +1,3 @@
 System,Dataset,Predictive_Model,MAE,RMSE,R2_Score,MAPE_pct,Uncertainty_Estimation,Prescriptive_Optimization,Risk_Engine
-Baseline Framework (Direct Profit + Linear Regression),Global Superstore 2016 (REAL DATA),Linear Regression,89.12,235.47,0.6864,363.45,No,No,Rule-Threshold Only
-Proposed Framework (Profit Prediction + Conformal Uncertainty + Risk + Optimization),Global Superstore 2016 (REAL DATA),XGBoost / CatBoost / Random Forest,39.68,79.95,0.9638,165.08,Yes (Conformal 90% CI),Yes (Price/Discount Grid),Multi-Factor + Downside Risk
+Baseline Framework (Direct Profit + Linear Regression),Global E-Commerce Sales Dataset | 2021–2024 (REAL DATA),Linear Regression,89.12,235.47,0.6864,363.45,No,No,Rule-Threshold Only
+Proposed Framework (Profit Prediction + Conformal Uncertainty + Risk + Optimization),Global E-Commerce Sales Dataset | 2021–2024 (REAL DATA),XGBoost / CatBoost / Random Forest,39.68,79.95,0.9638,165.08,Yes (Conformal 90% CI),Yes (Price/Discount Grid),Multi-Factor + Downside Risk

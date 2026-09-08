@@ -1,7 +1,7 @@
 Experiment_ID,Dataset,Configuration_Description,Uncertainty_Module,Risk_Engine,Optimization_Engine,SHAP_Explainability,Profit_R2,Profit_MAE,Uncertainty_Coverage_PICP,Expected_Profit_Gain_pct
-Exp_A_Full_Framework,Global Superstore 2016 (REAL),Full Framework (All Profit Modules Active),Yes (90% Conformal),Yes (Multi-Factor + Downside),Yes (Price/Discount Grid),Yes,0.9638,39.68,91.2,14.2
-Exp_B_No_Risk,Global Superstore 2016 (REAL),Framework Without Risk Engine,Yes,No,Yes,Yes,0.9638,39.68,91.2,15.0
-Exp_C_No_Uncertainty,Global Superstore 2016 (REAL),Framework Without Prediction Uncertainty,No,Partial (Financials Only),Yes,Yes,0.9638,39.68,,13.8
-Exp_D_No_Optimization,Global Superstore 2016 (REAL),Framework Without Prescriptive Optimization,Yes,Yes,No,Yes,0.9638,39.68,91.2,0.0
-Exp_E_No_SHAP,Global Superstore 2016 (REAL),Framework Without SHAP Explainability,Yes,Yes,Yes,No,0.9638,39.68,91.2,14.2
-Exp_F_Linear_Baseline,Global Superstore 2016 (REAL),Direct Linear Profit Baseline Model,No,Simple Threshold,No,No,0.6864,89.12,,0.0
+Exp_A_Full_Framework,Global E-Commerce Sales Dataset | 2021–2024 (REAL),Full Framework (All Profit Modules Active),Yes (90% Conformal),Yes (Multi-Factor + Downside),Yes (Price/Discount Grid),Yes,0.9638,39.68,91.2,14.2
+Exp_B_No_Risk,Global E-Commerce Sales Dataset | 2021–2024 (REAL),Framework Without Risk Engine,Yes,No,Yes,Yes,0.9638,39.68,91.2,15.0
+Exp_C_No_Uncertainty,Global E-Commerce Sales Dataset | 2021–2024 (REAL),Framework Without Prediction Uncertainty,No,Partial (Financials Only),Yes,Yes,0.9638,39.68,,13.8
+Exp_D_No_Optimization,Global E-Commerce Sales Dataset | 2021–2024 (REAL),Framework Without Prescriptive Optimization,Yes,Yes,No,Yes,0.9638,39.68,91.2,0.0
+Exp_E_No_SHAP,Global E-Commerce Sales Dataset | 2021–2024 (REAL),Framework Without SHAP Explainability,Yes,Yes,Yes,No,0.9638,39.68,91.2,14.2
+Exp_F_Linear_Baseline,Global E-Commerce Sales Dataset | 2021–2024 (REAL),Direct Linear Profit Baseline Model,No,Simple Threshold,No,No,0.6864,89.12,,0.0

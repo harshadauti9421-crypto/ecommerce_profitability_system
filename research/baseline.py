@@ -15,7 +15,7 @@ from utils.helpers import logger
 
 def run_baseline_comparison():
     """
-    Evaluates Simple Rule-Based Baseline System on REAL-WORLD DATA (Global Superstore 2016 - 51,290 records):
+    Evaluates Simple Rule-Based Baseline System on REAL-WORLD DATA (Global E-Commerce Sales Dataset | 2021–2024 - 10,000 records):
     Real Features -> Direct Linear Regression Profit -> Simple Positive Profit Decision.
     Compares against Proposed Framework (Multi-Stage Demand + Conformal Uncertainty + Risk + Prescriptive Optimization).
     Exports research_results/baseline_results.csv.
@@ -48,7 +48,7 @@ def run_baseline_comparison():
     comparison_data = [
         {
             "System": "Baseline Framework (Direct Profit + Linear Regression)",
-            "Dataset": "Global Superstore 2016 (REAL DATA)",
+            "Dataset": "Global E-Commerce Sales Dataset | 2021–2024 (REAL DATA)",
             "Predictive_Model": "Linear Regression",
             "MAE": round(baseline_metrics["MAE"], 2),
             "RMSE": round(baseline_metrics["RMSE"], 2),
@@ -60,7 +60,7 @@ def run_baseline_comparison():
         },
         {
             "System": "Proposed Framework (Profit Prediction + Conformal Uncertainty + Risk + Optimization)",
-            "Dataset": "Global Superstore 2016 (REAL DATA)",
+            "Dataset": "Global E-Commerce Sales Dataset | 2021–2024 (REAL DATA)",
             "Predictive_Model": "XGBoost / CatBoost / Random Forest",
             "MAE": round(proposed_metrics["MAE"], 2),
             "RMSE": round(proposed_metrics["RMSE"], 2),

@@ -2,7 +2,7 @@
   {
     "experiment_id": "Ablation_Study_RealData",
     "timestamp": "2026-09-08T17:18:52.735564",
-    "dataset_name": "Global Superstore 2016 (51,290 records)",
+    "dataset_name": "Global E-Commerce Sales Dataset | 2021–2024 (10,000 records)",
     "dataset_type": "REAL-WORLD DATA",
     "random_seed": 42,
     "metrics": {
@@ -37,7 +37,7 @@
   {
     "experiment_id": "Ablation_Study_RealData",
     "timestamp": "2026-09-08T20:01:10.102221",
-    "dataset_name": "Global Superstore 2016 (51,290 records)",
+    "dataset_name": "Global E-Commerce Sales Dataset | 2021–2024 (10,000 records)",
     "dataset_type": "REAL-WORLD DATA",
     "random_seed": 42,
     "metrics": {
