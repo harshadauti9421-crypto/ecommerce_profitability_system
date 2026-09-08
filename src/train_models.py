@@ -20,7 +20,7 @@ from src.preprocessing import build_preprocessing_pipeline, save_pipeline
 from src.evaluate_models import calculate_metrics
 from utils.helpers import logger
 
-DATA_PATH = os.path.join("data", "ecommerce_data.csv")
+DATA_PATH = os.path.join("data", "ecommerce_sales_dataset.csv")
 MODELS_DIR = "models"
 
 def train_and_evaluate_all():
@@ -31,7 +31,7 @@ def train_and_evaluate_all():
     os.makedirs(MODELS_DIR, exist_ok=True)
     
     # 1. Load dataset
-    df = load_and_validate_data(DATA_PATH)
+    df = load_and_validate_data(DATA_PATH if os.path.exists(DATA_PATH) else None)
     generate_data_quality_report(df, dataset_name="Global E-Commerce Sales Dataset | 2021–2024", dataset_type="REAL-WORLD DATA")
     df_engineered = add_engineered_features(df)
     

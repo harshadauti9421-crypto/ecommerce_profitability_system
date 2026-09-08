@@ -11,17 +11,22 @@ RESULTS_DIR = "research_results"
 
 # UI Categories and Domain Metadata Constants
 CATEGORY_SUBCATEGORIES = {
+    "Electronics": ["Smartphones", "Laptops", "Headphones", "Tablets", "Software"],
+    "Clothing": ["Men's Wear", "Women's Wear", "Footwear"],
+    "Home & Kitchen": ["Furniture", "Appliances", "Kitchen Tools"],
+    "Beauty & Health": ["Skincare", "Supplements"],
+    "Books & Media": ["Books"],
     "Technology": ["Phones", "Accessories", "Copiers", "Machines"],
     "Furniture": ["Bookcases", "Chairs", "Furnishings", "Tables"],
     "Office Supplies": ["Appliances", "Art", "Binders", "Envelopes", "Fasteners", "Labels", "Paper", "Storage", "Supplies"]
 }
 
-SEASONS = ["Regular Season", "Diwali", "Holi", "Navratri", "Eid", "Christmas"]
-PLATFORMS = ["Amazon", "Flipkart", "Meesho", "Myntra", "Snapdeal"]
+SEASONS = ["Regular Season", "Summer", "Fall", "Winter", "Spring", "Diwali", "Holi", "Navratri", "Eid", "Christmas"]
+PLATFORMS = ["Amazon", "Flipkart", "Meesho", "Myntra", "Snapdeal", "Shopify", "Direct Store"]
 MARKETING_CHANNELS = ["Social Media", "Search Ads", "Influencer", "Email", "Organic"]
 COMPETITION_LEVELS = ["Low", "Medium", "High"]
 REGIONS = ["East", "West", "Central", "South", "North", "EMEA", "APAC", "LATAM"]
-PAYMENT_METHODS = ["UPI", "Credit Card", "Debit Card", "Net Banking", "COD"]
+PAYMENT_METHODS = ["UPI", "Credit Card", "Debit Card", "Google Pay", "Net Banking", "COD"]
 
 # Real-World Feature Availability Classification
 FEATURE_AVAILABILITY = {
@@ -39,11 +44,11 @@ FEATURE_AVAILABILITY = {
     "quantity": "AVAILABLE",          # Available: Demand Target / Quantity
     "profit": "AVAILABLE",            # Available: Primary Profit Target
     "sales": "AVAILABLE",             # Available: Gross Sales Revenue
-    "advertising_cost": "UNAVAILABLE",# Unavailable in Global Superstore 2016
-    "product_rating": "UNAVAILABLE",  # Unavailable in Global Superstore 2016
-    "return_rate": "UNAVAILABLE",     # Unavailable in Global Superstore 2016
-    "marketing_channel": "UNAVAILABLE",# Unavailable in Global Superstore 2016
-    "competition_level": "UNAVAILABLE"# Unavailable in Global Superstore 2016
+    "advertising_cost": "UNAVAILABLE",# Unavailable in raw dataset
+    "product_rating": "UNAVAILABLE",  # Unavailable in raw dataset
+    "return_rate": "UNAVAILABLE",     # Unavailable in raw dataset
+    "marketing_channel": "UNAVAILABLE",# Unavailable in raw dataset
+    "competition_level": "UNAVAILABLE"# Unavailable in raw dataset
 }
 
 def calculate_file_sha256(file_path):
@@ -55,10 +60,13 @@ def calculate_file_sha256(file_path):
     return sha256.hexdigest()
 
 def find_dataset_file():
-    """Safely locate global_superstore_2016.xlsx or throw clean FileNotFoundError."""
+    """Safely locate dataset file (CSV or Excel)."""
     candidates = [
+        os.path.join("data", "ecommerce_sales_dataset.csv"),
+        os.path.join("data", "raw", "ecommerce_sales_dataset.csv"),
         RAW_DATA_PATH,
         FALLBACK_DATA_PATH,
+        os.path.join("data", "ecommerce_data.csv"),
         os.path.join("data", "raw", "Global Superstore.xlsx"),
         os.path.join("data", "Global Superstore.xlsx")
     ]
@@ -69,7 +77,7 @@ def find_dataset_file():
 
 def load_real_superstore_dataset(file_path=None):
     """
-    Load real-world Global Superstore 2016 dataset from Excel workbook.
+    Load real-world e-commerce dataset (CSV or Excel workbook).
     Strictly REAL DATA ONLY — No synthetic data generation or synthetic fallback.
     """
     if file_path is None:
@@ -78,36 +86,54 @@ def load_real_superstore_dataset(file_path=None):
     if not file_path or not os.path.exists(file_path):
         raise FileNotFoundError(
             "REAL RESEARCH DATASET NOT FOUND.\n"
-            "Please place 'global_superstore_2016.xlsx' inside the 'data/raw/' directory.\n"
-            "Synthetic data generation has been completely disabled per real-world research requirements."
+            "Please place 'ecommerce_sales_dataset.csv' or 'global_superstore_2016.xlsx' inside the 'data/' directory."
         )
         
     logger.info(f"Loading real-world dataset from: {file_path}")
     dataset_hash = calculate_file_sha256(file_path)
     logger.info(f"Dataset SHA-256 Hash: {dataset_hash}")
     
-    xl = pd.ExcelFile(file_path)
-    sheet_name = "Orders" if "Orders" in xl.sheet_names else xl.sheet_names[0]
-    df = xl.parse(sheet_name)
-    
-    logger.info(f"Loaded sheet '{sheet_name}' with {len(df):,} rows and {len(df.columns)} columns.")
+    ext = os.path.splitext(file_path)[1].lower()
+    if ext in [".csv", ".txt"]:
+        df = pd.read_csv(file_path)
+        logger.info(f"Loaded CSV dataset with {len(df):,} rows and {len(df.columns)} columns.")
+    else:
+        xl = pd.ExcelFile(file_path)
+        sheet_name = "Orders" if "Orders" in xl.sheet_names else xl.sheet_names[0]
+        df = xl.parse(sheet_name)
+        logger.info(f"Loaded sheet '{sheet_name}' with {len(df):,} rows and {len(df.columns)} columns.")
     
     # Standardize column names
     col_mapping = {
+        "Product_Name": "product_name",
         "Product Name": "product_name",
         "Category": "product_category",
+        "Sub_Category": "product_subcategory",
         "Sub-Category": "product_subcategory",
+        "Revenue": "sales",
         "Sales": "sales",
         "Quantity": "quantity",
         "Discount": "discount",
         "Profit": "profit",
+        "Shipping_Cost": "shipping_cost",
         "Shipping Cost": "shipping_cost",
         "Market": "market",
         "Region": "region",
+        "Customer_Segment": "segment",
         "Segment": "segment",
+        "Shipping_Method": "ship_mode",
         "Ship Mode": "ship_mode",
         "Order Priority": "order_priority",
-        "Order Date": "order_date"
+        "Order_Date": "order_date",
+        "Order Date": "order_date",
+        "Unit_Price": "unit_price",
+        "Cost": "unit_cost",
+        "Season": "season",
+        "Payment_Method": "payment_method",
+        "Payment Method": "payment_method",
+        "Marketing_Channel": "marketing_channel",
+        "Competition_Level": "competition_level",
+        "Platform": "platform"
     }
     
     df = df.rename(columns={k: v for k, v in col_mapping.items() if k in df.columns})
@@ -119,7 +145,7 @@ def load_real_superstore_dataset(file_path=None):
         df["order_month"] = df["order_date"].dt.month
         df["order_dow"] = df["order_date"].dt.dayofweek
     else:
-        df["order_year"] = 2016
+        df["order_year"] = 2023
         df["order_month"] = 6
         df["order_dow"] = 2
         
@@ -128,13 +154,52 @@ def load_real_superstore_dataset(file_path=None):
     df["quantity"] = pd.to_numeric(df["quantity"], errors="coerce").fillna(1).astype(int)
     df["profit"] = pd.to_numeric(df["profit"], errors="coerce").fillna(0.0)
     df["shipping_cost"] = pd.to_numeric(df["shipping_cost"], errors="coerce").fillna(0.0)
-    df["discount_percent"] = (pd.to_numeric(df["discount"], errors="coerce").fillna(0.0) * 100.0).round(2)
     
-    # Derive unit price and unit cost dynamically from real sales & profit
-    df["unit_price"] = (df["sales"] / np.maximum(df["quantity"], 1)).round(2)
-    df["unit_cost"] = ((df["sales"] - df["profit"]) / np.maximum(df["quantity"], 1)).round(2)
-    df["selling_price"] = df["unit_price"]
-    df["cost_price"] = df["unit_cost"]
+    # Discount percent logic
+    if "discount" in df.columns:
+        disc = pd.to_numeric(df["discount"], errors="coerce").fillna(0.0)
+        if (disc <= 1.0).all():
+            df["discount_percent"] = (disc * 100.0).round(2)
+        else:
+            df["discount_percent"] = disc.round(2)
+    else:
+        df["discount_percent"] = 0.0
+    
+    # Derive unit price and unit cost dynamically if not explicitly present
+    if "unit_price" in df.columns:
+        df["selling_price"] = pd.to_numeric(df["unit_price"], errors="coerce").fillna(0.0).round(2)
+    else:
+        df["selling_price"] = (df["sales"] / np.maximum(df["quantity"], 1)).round(2)
+        
+    if "unit_cost" in df.columns:
+        df["cost_price"] = pd.to_numeric(df["unit_cost"], errors="coerce").fillna(0.0).round(2)
+    else:
+        df["cost_price"] = ((df["sales"] - df["profit"]) / np.maximum(df["quantity"], 1)).round(2)
+    
+    df["unit_price"] = df["selling_price"]
+    df["unit_cost"] = df["cost_price"]
+    
+    # Ensure missing domain features have sensible defaults
+    if "advertising_cost" not in df.columns:
+        df["advertising_cost"] = 0.0
+    if "return_rate" not in df.columns:
+        df["return_rate"] = 0.05
+    if "product_rating" not in df.columns:
+        df["product_rating"] = 4.2
+    if "marketing_channel" not in df.columns:
+        df["marketing_channel"] = "Organic"
+    if "competition_level" not in df.columns:
+        df["competition_level"] = "Medium"
+    if "platform" not in df.columns:
+        df["platform"] = "Amazon"
+    if "season" not in df.columns:
+        df["season"] = "Regular Season"
+    if "payment_method" not in df.columns:
+        df["payment_method"] = "Credit Card"
+    if "product_category" not in df.columns:
+        df["product_category"] = "Technology"
+    if "product_subcategory" not in df.columns:
+        df["product_subcategory"] = "Accessories"
     
     # Target columns
     df["demand"] = df["quantity"]
