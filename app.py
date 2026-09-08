@@ -65,11 +65,8 @@ from src.ui.theme import COLORS
 from src.ui.styles import inject_custom_styles
 
 from src.ui.components import (
-
-    render_top_header, render_hero_launch_card, 
-
+    render_top_header, render_kpi_summary_grid, render_hero_launch_card, 
     render_business_score_gauge, render_recommendation_cards
-
 )
 
 from src.ui.charts import (
