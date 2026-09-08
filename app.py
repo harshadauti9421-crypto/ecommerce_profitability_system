@@ -59,13 +59,9 @@ from src.optimization import (
 )
 
 from research.baseline import run_baseline_comparison
-
 from research.ablation import run_ablation_study
-
 from utils.helpers import format_currency, save_prediction_to_history, load_prediction_history, logger
-
-
-
+from src.ui.theme import COLORS
 from src.ui.styles import inject_custom_styles
 
 from src.ui.components import (
