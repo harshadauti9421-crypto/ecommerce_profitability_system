@@ -1,6 +1,4 @@
 def analyze_product_risk(
-    predicted_demand,
-    predicted_revenue,
     predicted_profit,
     profit_margin,
     selling_price,
@@ -13,7 +11,7 @@ def analyze_product_risk(
     uncertainty_dict=None
 ):
     """
-    Calculate dynamic multi-factor risk score incorporating prediction uncertainty & downside loss probability.
+    Calculate dynamic multi-factor risk score incorporating prediction uncertainty & downside loss probability for PROFIT ONLY.
     Does NOT use random numbers. Fully deterministic based on business financial metrics & conformal prediction intervals.
     """
     positive_factors = []
@@ -22,7 +20,7 @@ def analyze_product_risk(
     
     # 1. Profitability & Margin Risk
     if profit_margin >= 30.0:
-        positive_factors.append(f"Strong profit margin ({profit_margin:.1f}%) provides a healthy buffer.")
+        positive_factors.append(f"Strong profit margin ({profit_margin:.1f}%) provides a healthy financial buffer.")
     elif profit_margin >= 15.0:
         risk_score += 15
         positive_factors.append(f"Acceptable profit margin ({profit_margin:.1f}%).")
@@ -31,27 +29,16 @@ def analyze_product_risk(
         negative_factors.append(f"Thin profit margin ({profit_margin:.1f}%), susceptible to cost overruns.")
     else:
         risk_score += 55
-        negative_factors.append(f"Negative profitability ({profit_margin:.1f}%), product operates at a loss.")
+        negative_factors.append(f"Negative profitability ({profit_margin:.1f}%), product operates at a net financial loss.")
 
-    # 2. Demand Potential
-    if predicted_demand >= 1000:
-        positive_factors.append(f"Robust predicted demand ({predicted_demand:,} units).")
-    elif predicted_demand >= 300:
-        positive_factors.append(f"Moderate predicted demand ({predicted_demand:,} units).")
-    else:
-        risk_score += 25
-        negative_factors.append(f"Low predicted demand ({predicted_demand:,} units), risking inventory stagnation.")
+    # 2. Cost Price vs Selling Price (Unit Economics Safety)
+    if cost_price >= selling_price:
+        risk_score += 30
+        negative_factors.append(f"Cost price (₹{cost_price:,.2f}) exceeds selling price (₹{selling_price:,.2f}), causing instant loss.")
+    elif selling_price > 0 and (cost_price / selling_price) <= 0.50:
+        positive_factors.append(f"Favorable COGS ratio ({(cost_price/selling_price)*100:.1f}% of selling price).")
 
-    # 3. Ad Cost vs Revenue (Advertising Intensity)
-    if predicted_revenue > 0:
-        ad_ratio = (advertising_cost / predicted_revenue) * 100.0
-        if ad_ratio > 35.0:
-            risk_score += 25
-            negative_factors.append(f"High advertising expense relative to revenue ({ad_ratio:.1f}%).")
-        elif ad_ratio < 15.0:
-            positive_factors.append(f"Efficient advertising budget ratio ({ad_ratio:.1f}% of revenue).")
-            
-    # 4. Shipping Cost relative to Selling Price
+    # 3. Ad Cost & Shipping Intensity relative to Selling Price
     if selling_price > 0:
         ship_ratio = (shipping_cost / selling_price) * 100.0
         if ship_ratio > 20.0:
@@ -60,28 +47,28 @@ def analyze_product_risk(
         elif ship_ratio <= 10.0:
             positive_factors.append(f"Favorable shipping cost ratio ({ship_ratio:.1f}% of selling price).")
 
-    # 5. Discount Risk
+    # 4. Discount Risk
     if discount_percent > 40.0:
         risk_score += 20
         negative_factors.append(f"Heavy discount rate ({discount_percent:.1f}%) erodes unit margin.")
     elif discount_percent <= 15.0:
         positive_factors.append(f"Conservative discount strategy ({discount_percent:.1f}%).")
 
-    # 6. Return Rate Risk
+    # 5. Return Rate Risk
     if return_rate > 15.0:
         risk_score += 25
         negative_factors.append(f"High expected return rate ({return_rate:.1f}%), increasing reverse logistics loss.")
     elif return_rate <= 5.0:
         positive_factors.append(f"Low return rate ({return_rate:.1f}%), minimizing return handling costs.")
 
-    # 7. Competition Level
+    # 6. Competition Level
     if competition_level == "High":
         risk_score += 15
-        negative_factors.append("High market competition may trigger price wars.")
+        negative_factors.append("High market competition may trigger price pressure.")
     elif competition_level == "Low":
         positive_factors.append("Low competition offers market capture opportunity.")
 
-    # 8. Prediction Uncertainty & Downside Risk Incorporation
+    # 7. Prediction Uncertainty & Downside Risk Incorporation
     if uncertainty_dict:
         loss_prob = uncertainty_dict.get("loss_probability", 0.0)
         loss_prob_pct = uncertainty_dict.get("loss_probability_pct", loss_prob * 100.0)
@@ -122,3 +109,4 @@ def analyze_product_risk(
         "positive_factors": positive_factors,
         "negative_factors": negative_factors
     }
+

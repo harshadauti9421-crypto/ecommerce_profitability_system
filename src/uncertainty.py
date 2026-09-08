@@ -37,10 +37,29 @@ def calculate_prediction_interval(point_estimate, residual_quantile, lower_min=0
         "quantile_margin": float(residual_quantile)
     }
 
-def estimate_uncertainty_all(point_demand, point_profit, selling_price, discount_percent, confidence=0.90):
+def estimate_uncertainty_all(*args, **kwargs):
     """
-    End-to-end Split Conformal Prediction Interval calculation for Demand, Revenue, and Profit.
+    End-to-end Split Conformal Prediction Interval calculation for PROFIT ONLY.
+    Supports flexible arguments: estimate_uncertainty_all(point_profit, selling_price=..., discount_percent=..., confidence=0.90)
+    or legacy signature estimate_uncertainty_all(point_demand, point_profit, ...).
     """
+    if len(args) >= 2 and isinstance(args[0], (int, float, np.number)) and isinstance(args[1], (int, float, np.number)):
+        # Legacy signature: (point_demand, point_profit, ...)
+        point_profit = float(args[1])
+        selling_price = float(args[2]) if len(args) > 2 else kwargs.get("selling_price", 0.0)
+        discount_percent = float(args[3]) if len(args) > 3 else kwargs.get("discount_percent", 0.0)
+        confidence = float(args[4]) if len(args) > 4 else kwargs.get("confidence", 0.90)
+    elif len(args) >= 1:
+        point_profit = float(args[0])
+        selling_price = float(kwargs.get("selling_price", 0.0))
+        discount_percent = float(kwargs.get("discount_percent", 0.0))
+        confidence = float(kwargs.get("confidence", 0.90))
+    else:
+        point_profit = float(kwargs.get("point_profit", 0.0))
+        selling_price = float(kwargs.get("selling_price", 0.0))
+        discount_percent = float(kwargs.get("discount_percent", 0.0))
+        confidence = float(kwargs.get("confidence", 0.90))
+
     quantiles = load_conformal_quantiles()
     
     # Pick quantile key based on requested confidence level
@@ -51,32 +70,14 @@ def estimate_uncertainty_all(point_demand, point_profit, selling_price, discount
     else:
         q_key = "q_80"
         
-    demand_q = quantiles.get("demand", {}).get(q_key, 180.0)
-    profit_q = quantiles.get("profit", {}).get(q_key, 175000.0)
+    profit_q = quantiles.get("profit", {}).get(q_key, 110.0)
     
-    # 1. Demand Interval
-    demand_interval = calculate_prediction_interval(point_demand, demand_q, lower_min=1.0)
-    
-    # 2. Revenue Interval derived from Demand Interval & Net Unit Price
-    net_unit_price = max(1.0, selling_price * (1.0 - discount_percent / 100.0))
-    expected_revenue = point_demand * net_unit_price
-    rev_lower = demand_interval["lower_bound"] * net_unit_price
-    rev_upper = demand_interval["upper_bound"] * net_unit_price
-    
-    revenue_interval = {
-        "expected": float(expected_revenue),
-        "lower_bound": float(rev_lower),
-        "upper_bound": float(rev_upper),
-        "interval_width": float(rev_upper - rev_lower)
-    }
-    
-    # 3. Profit Interval
+    # Profit Interval
     profit_interval = calculate_prediction_interval(point_profit, profit_q, lower_min=-float("inf"))
     
-    # 4. Downside Risk & Loss Probability P(Profit < 0)
+    # Downside Risk & Loss Probability P(Profit < 0)
     std_prof_residual = quantiles.get("profit", {}).get("std_residual", profit_q / 1.645)
     if std_prof_residual > 0:
-        # Standard normal CDF approximation for empirical loss probability
         z_score = (0.0 - point_profit) / std_prof_residual
         loss_prob = float(norm.cdf(z_score))
     else:
@@ -86,15 +87,12 @@ def estimate_uncertainty_all(point_demand, point_profit, selling_price, discount
     
     # Expected Downside Loss
     if loss_prob > 0.001:
-        # Expected value of loss conditional on profit < 0
         expected_downside = float(abs(min(0.0, profit_interval["lower_bound"])))
     else:
         expected_downside = 0.0
         
     return {
         "confidence_level": confidence,
-        "demand": demand_interval,
-        "revenue": revenue_interval,
         "profit": profit_interval,
         "loss_probability": loss_prob,
         "loss_probability_pct": float(loss_prob * 100.0),

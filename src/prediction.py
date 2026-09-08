@@ -22,11 +22,10 @@ def run_product_analysis(input_data):
     """
     End-to-end product profitability analysis pipeline:
     1. Preprocess user input
-    2. Load trained models and preprocessing pipeline
-    3. Predict demand & profit
-    4. Calculate revenue & profit margin
-    5. Evaluate risk, business score, launch decision, recommendations
-    6. Generate automated executive conclusion
+    2. Load trained profit model and preprocessing pipeline
+    3. Predict profit & calculate profit margin
+    4. Evaluate risk, business score (0-100), launch decision, recommendations
+    5. Generate automated executive conclusion
     """
     logger.info(f"Starting product analysis for: {input_data.get('product_name', 'Unknown')}")
     
@@ -49,37 +48,31 @@ def run_product_analysis(input_data):
     df_engineered = add_engineered_features(df_input)
     X_input = df_engineered[ALL_INPUT_FEATURES].copy()
     
-    # Load pipeline and models
+    # Load pipeline and profit model
     pipeline_path = os.path.join(MODELS_DIR, "preprocessing_pipeline.pkl")
-    demand_model_path = os.path.join(MODELS_DIR, "best_demand_model.pkl")
     profit_model_path = os.path.join(MODELS_DIR, "best_profit_model.pkl")
     
-    if not os.path.exists(pipeline_path) or not os.path.exists(demand_model_path) or not os.path.exists(profit_model_path):
-        raise FileNotFoundError("Trained models or preprocessor pipeline missing in 'models/'. Please run training step first.")
+    if not os.path.exists(pipeline_path) or not os.path.exists(profit_model_path):
+        raise FileNotFoundError("Trained profit model or preprocessor pipeline missing in 'models/'. Please run training step first.")
         
     pipeline = load_pipeline(pipeline_path)
     try:
-        demand_model = joblib.load(demand_model_path)
         profit_model = joblib.load(profit_model_path)
     except Exception as model_err:
         logger.warning(f"Model unpickling error due to environment package version difference ({str(model_err)}). Retraining models in current environment...")
         from src.train_models import train_and_evaluate_all
         train_and_evaluate_all()
         pipeline = load_pipeline(pipeline_path)
-        demand_model = joblib.load(demand_model_path)
         profit_model = joblib.load(profit_model_path)
     
     # Transform input
     X_transformed = pipeline.transform(X_input)
     
-    # Make Predictions
-    predicted_demand_raw = demand_model.predict(X_transformed)[0]
-    predicted_demand = max(int(round(predicted_demand_raw)), 1)
-    
+    # Make Profit Prediction (ML Winner model)
     predicted_profit_raw = profit_model.predict(X_transformed)[0]
     predicted_profit = float(predicted_profit_raw)
     
-    # Financial Calculations
+    # Extract Financial Parameters
     selling_price = float(df_engineered["selling_price"].iloc[0])
     cost_price = float(df_engineered["cost_price"].iloc[0])
     discount_percent = float(df_engineered["discount_percent"].iloc[0])
@@ -88,6 +81,7 @@ def run_product_analysis(input_data):
     return_rate = float(df_engineered["return_rate"].iloc[0])
     product_rating = float(df_engineered["product_rating"].iloc[0])
     competition_level = str(df_engineered["competition_level"].iloc[0])
+    quantity = int(input_data.get("quantity", 1)) if isinstance(input_data, dict) and "quantity" in input_data else 1
     
     if "product_name" in df_input.columns:
         product_name = str(df_input["product_name"].iloc[0])
@@ -97,28 +91,27 @@ def run_product_analysis(input_data):
         product_name = "Commercial Product"
     
     net_price = selling_price * (1.0 - discount_percent / 100.0)
-    predicted_revenue = round(net_price * predicted_demand, 2)
+    predicted_revenue = round(net_price * quantity, 2)
     
-    # Profit Margin calculation with zero division safety
+    # Net Profit Margin calculation (%)
     if predicted_revenue > 0:
         profit_margin = round((predicted_profit / predicted_revenue) * 100.0, 2)
+    elif selling_price > 0:
+        profit_margin = round((predicted_profit / selling_price) * 100.0, 2)
     else:
         profit_margin = 0.0
         
-    # Prediction Uncertainty
+    # Conformal Prediction Uncertainty for Profit
     from src.uncertainty import estimate_uncertainty_all
     uncertainty_res = estimate_uncertainty_all(
-        point_demand=predicted_demand,
         point_profit=predicted_profit,
         selling_price=selling_price,
         discount_percent=discount_percent,
         confidence=0.90
     )
 
-    # Risk Analysis (incorporating uncertainty & downside risk)
+    # Risk Analysis (incorporating profit uncertainty & downside loss risk)
     risk_res = analyze_product_risk(
-        predicted_demand=predicted_demand,
-        predicted_revenue=predicted_revenue,
         predicted_profit=predicted_profit,
         profit_margin=profit_margin,
         selling_price=selling_price,
@@ -131,13 +124,14 @@ def run_product_analysis(input_data):
         uncertainty_dict=uncertainty_res
     )
     
-    # Business Score
+    # Business Score (0 - 100)
     score_res = calculate_business_score(
-        predicted_demand=predicted_demand,
-        predicted_revenue=predicted_revenue,
         predicted_profit=predicted_profit,
         profit_margin=profit_margin,
+        cost_price=cost_price,
+        selling_price=selling_price,
         advertising_cost=advertising_cost,
+        shipping_cost=shipping_cost,
         return_rate=return_rate,
         competition_level=competition_level
     )
@@ -150,7 +144,7 @@ def run_product_analysis(input_data):
         profit_margin=profit_margin
     )
     
-    # Recommendations
+    # Business Recommendations
     recommendations = generate_business_recommendations(
         selling_price=selling_price,
         cost_price=cost_price,
@@ -159,8 +153,6 @@ def run_product_analysis(input_data):
         shipping_cost=shipping_cost,
         return_rate=return_rate,
         product_rating=product_rating,
-        predicted_demand=predicted_demand,
-        predicted_revenue=predicted_revenue,
         predicted_profit=predicted_profit,
         profit_margin=profit_margin
     )
@@ -170,8 +162,6 @@ def run_product_analysis(input_data):
     # Conclusion
     conclusion = generate_business_conclusion(
         product_name=product_name,
-        predicted_demand=predicted_demand,
-        predicted_revenue=predicted_revenue,
         predicted_profit=predicted_profit,
         profit_margin=profit_margin,
         risk_level=risk_res["risk_level"],
@@ -181,10 +171,9 @@ def run_product_analysis(input_data):
     )
     
     financials = {
-        "predicted_demand": predicted_demand,
-        "predicted_revenue": predicted_revenue,
         "predicted_profit": predicted_profit,
         "net_profit_margin": profit_margin,
+        "predicted_revenue": predicted_revenue,
         "selling_price": selling_price,
         "cost_price": cost_price,
         "discount_percent": discount_percent
@@ -192,10 +181,9 @@ def run_product_analysis(input_data):
 
     return {
         "product_name": product_name,
-        "predicted_demand": predicted_demand,
-        "predicted_revenue": predicted_revenue,
         "predicted_profit": predicted_profit,
         "profit_margin": profit_margin,
+        "predicted_revenue": predicted_revenue,
         "risk_analysis": risk_res,
         "risk": risk_res,
         "business_score": score_res,
@@ -210,18 +198,16 @@ def run_product_analysis(input_data):
 
 def simulate_price_sensitivity(input_data, min_mult=0.6, max_mult=1.6, steps=15):
     """
-    Simulate demand, revenue, and profit across a range of selling prices to generate an interactive Price Elasticity Curve.
+    Simulate predicted profit and margin across a range of selling prices to generate an interactive Price vs Profit Curve.
     Finds the profit-maximizing optimal selling price.
     """
     base_sp = float(input_data["selling_price"])
     prices = np.linspace(base_sp * min_mult, base_sp * max_mult, steps)
     
     pipeline_path = os.path.join(MODELS_DIR, "preprocessing_pipeline.pkl")
-    demand_model_path = os.path.join(MODELS_DIR, "best_demand_model.pkl")
     profit_model_path = os.path.join(MODELS_DIR, "best_profit_model.pkl")
     
     pipeline = load_pipeline(pipeline_path)
-    demand_model = joblib.load(demand_model_path)
     profit_model = joblib.load(profit_model_path)
     
     records = []
@@ -239,18 +225,13 @@ def simulate_price_sensitivity(input_data, min_mult=0.6, max_mult=1.6, steps=15)
         X_input = df_engineered[ALL_INPUT_FEATURES].copy()
         X_transformed = pipeline.transform(X_input)
         
-        d_pred = max(int(round(demand_model.predict(X_transformed)[0])), 1)
         p_pred = float(profit_model.predict(X_transformed)[0])
-        
         disc = float(sim_dict["discount_percent"])
         net_p = sp * (1.0 - disc / 100.0)
-        rev = round(net_p * d_pred, 2)
-        margin = round((p_pred / rev) * 100.0, 2) if rev > 0 else 0.0
+        margin = round((p_pred / max(net_p, 1.0)) * 100.0, 2) if net_p > 0 else 0.0
         
         records.append({
             "Selling Price (₹)": round(sp, 2),
-            "Predicted Demand (Units)": d_pred,
-            "Predicted Revenue (₹)": rev,
             "Predicted Profit (₹)": round(p_pred, 2),
             "Profit Margin (%)": margin
         })
@@ -260,4 +241,5 @@ def simulate_price_sensitivity(input_data, min_mult=0.6, max_mult=1.6, steps=15)
     optimal_row = df_res.iloc[optimal_idx]
     
     return df_res, optimal_row
+
 

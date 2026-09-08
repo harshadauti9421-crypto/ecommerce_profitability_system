@@ -1,65 +1,4 @@
 {
-  "demand": {
-    "models": {
-      "Multiple Linear Regression": {
-        "val": {
-          "R2": 0.6658,
-          "MAE": 0.89,
-          "RMSE": 1.18,
-          "MAPE": 41.49
-        },
-        "test": {
-          "R2": 0.6643,
-          "MAE": 0.9,
-          "RMSE": 1.23,
-          "MAPE": 40.34
-        }
-      },
-      "Random Forest": {
-        "val": {
-          "R2": 0.9581,
-          "MAE": 0.22,
-          "RMSE": 0.42,
-          "MAPE": 5.21
-        },
-        "test": {
-          "R2": 0.9572,
-          "MAE": 0.23,
-          "RMSE": 0.44,
-          "MAPE": 5.3
-        }
-      },
-      "XGBoost": {
-        "val": {
-          "R2": 0.9541,
-          "MAE": 0.24,
-          "RMSE": 0.44,
-          "MAPE": 5.74
-        },
-        "test": {
-          "R2": 0.9537,
-          "MAE": 0.24,
-          "RMSE": 0.46,
-          "MAPE": 5.77
-        }
-      },
-      "Artificial Neural Network": {
-        "val": {
-          "R2": 0.9411,
-          "MAE": 0.34,
-          "RMSE": 0.5,
-          "MAPE": 12.37
-        },
-        "test": {
-          "R2": 0.939,
-          "MAE": 0.35,
-          "RMSE": 0.52,
-          "MAPE": 12.55
-        }
-      }
-    },
-    "best_model": "Random Forest"
-  },
   "profit": {
     "models": {
       "Multiple Linear Regression": {
@@ -122,12 +61,6 @@
     "best_model": "XGBoost"
   },
   "conformal": {
-    "demand": {
-      "q_80": 0.48144444444444506,
-      "q_90": 0.7370381468673097,
-      "q_95": 0.8970782045057432,
-      "std_residual": 0.41922594117738565
-    },
     "profit": {
       "q_80": 49.86914132690431,
       "q_90": 111.73553203582773,

@@ -620,31 +620,23 @@ else:
 
                 st.markdown("<div class='section-header-title'>📊 BUSINESS OVERVIEW (REAL DATA PREDICTIONS)</div>", unsafe_allow_html=True)
 
-                k_col1, k_col2, k_col3, k_col4, k_col5, k_col6 = st.columns(6)
+                k_col1, k_col2, k_col3, k_col4 = st.columns(4)
 
                 
 
                 with k_col1:
 
-                    st.metric("Predicted Demand", f"{res['predicted_demand']:,} units")
+                    st.metric("Predicted Net Profit", f"₹{res['predicted_profit']:,.2f}")
 
                 with k_col2:
 
-                    st.metric("Expected Revenue", f"${res['predicted_revenue']:,.2f}")
+                    st.metric("Profit Margin", f"{res['profit_margin']:.1f}%")
 
                 with k_col3:
 
-                    st.metric("Expected Profit", f"${res['predicted_profit']:,.2f}")
+                    st.metric("Overall Risk Rating", res["risk_analysis"]["risk_level"])
 
                 with k_col4:
-
-                    st.metric("Profit Margin", f"{res['profit_margin']:.1f}%")
-
-                with k_col5:
-
-                    st.metric("Overall Risk", res["risk_analysis"]["risk_level"])
-
-                with k_col6:
 
                     st.metric("Business Score", f"{res['business_score']['score']} / 100")
 
@@ -678,7 +670,7 @@ else:
 
                     for pillar_name, p_val in breakdown.items():
 
-                        st.progress(min(1.0, max(0.0, p_val / 40.0)), text=f"{pillar_name}: **{p_val} pts**")
+                        st.progress(min(1.0, max(0.0, p_val / 35.0)), text=f"{pillar_name}: **{p_val} pts**")
 
                         
 
@@ -708,7 +700,7 @@ else:
 
                     with u_c1:
 
-                        st.metric("Interval Width (MPIW)", f"${prof_unc.get('interval_width', 0):,.2f}")
+                        st.metric("Interval Width (MPIW)", f"₹{prof_unc.get('interval_width', 0):,.2f}")
 
                     with u_c2:
 
@@ -766,8 +758,6 @@ else:
 
             
 
-            demand = res["predicted_demand"]
-
             sp = float(inp.get("selling_price", 100.0))
 
             cp = float(inp.get("cost_price", 40.0))
@@ -778,15 +768,15 @@ else:
 
             
 
-            gross_rev = round(sp * demand, 2)
+            gross_rev = round(sp, 2)
 
-            discount_val = round(gross_rev * (disc / 100.0), 2)
+            discount_val = round(sp * (disc / 100.0), 2)
 
-            net_rev = res["predicted_revenue"]
+            net_rev = round(sp * (1.0 - disc / 100.0), 2)
 
-            total_cogs = round(cp * demand, 2)
+            total_cogs = round(cp, 2)
 
-            total_ship = round(ship * demand, 2)
+            total_ship = round(ship, 2)
 
             net_profit = res["predicted_profit"]
 
@@ -806,8 +796,6 @@ else:
 
             col_profit = [c for c in df_sens.columns if "Profit" in c and "Margin" not in c][0]
 
-            col_demand = [c for c in df_sens.columns if "Demand" in c][0]
-
 
 
             opt_sp = opt_row[col_sp]
@@ -820,13 +808,13 @@ else:
 
             <div style="background-color: #ECFDF5; border: 1px solid #A7F3D0; color: #065F46; padding: 14px 18px; border-radius: 10px; font-size: 15px; font-weight: 500; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
 
-                🎯 <b>Profit-Maximizing Price Point Found</b>: Set selling price to <b>${opt_sp:,.2f}</b>, maximizing predicted net profit at approximately <b>${opt_profit:,.2f}</b>.
+                🎯 <b>Profit-Maximizing Price Point Found</b>: Set selling price to <b>₹{opt_sp:,.2f}</b>, maximizing predicted net profit at approximately <b>₹{opt_profit:,.2f}</b>.
 
             </div>
 
             ''', unsafe_allow_html=True)
 
-            fig_sens = build_price_elasticity_chart(df_sens, col_sp, col_profit, col_demand, opt_sp, opt_profit)
+            fig_sens = build_price_elasticity_chart(df_sens, col_sp, col_profit, opt_sp, opt_profit)
 
             st.plotly_chart(fig_sens, use_container_width=True)
 
@@ -856,25 +844,9 @@ else:
 
             
 
-            u_c1, u_c2, u_c3 = st.columns(3)
+            u_c1, u_c2 = st.columns(2)
 
             with u_c1:
-
-                dem_unc = unc.get("demand", {})
-
-                dem_low = int(round(dem_unc.get("lower_bound", 0)))
-
-                dem_high = int(round(dem_unc.get("upper_bound", 0)))
-
-                st.metric("Expected Demand", f"{res['predicted_demand']:,} units")
-
-                st.caption(f"Range: {dem_low:,} to {dem_high:,} units")
-
-            with u_c2:
-
-                st.metric("Expected Revenue", f"${res['predicted_revenue']:,.2f}")
-
-            with u_c3:
 
                 prof_unc = unc.get("profit", {})
 
@@ -882,13 +854,19 @@ else:
 
                 prof_high = prof_unc.get("upper_bound", 0.0)
 
-                low_str = f"-${abs(prof_low):,.2f}" if prof_low < 0 else f"${prof_low:,.2f}"
+                low_str = f"-₹{abs(prof_low):,.2f}" if prof_low < 0 else f"₹{prof_low:,.2f}"
 
-                high_str = f"-${abs(prof_high):,.2f}" if prof_high < 0 else f"${prof_high:,.2f}"
+                high_str = f"-₹{abs(prof_high):,.2f}" if prof_high < 0 else f"₹{prof_high:,.2f}"
 
-                st.metric("Expected Profit", f"${res['predicted_profit']:,.2f}")
+                st.metric("Expected Net Profit", f"₹{res['predicted_profit']:,.2f}")
 
-                st.caption(f"Range: {low_str} to {high_str}")
+                st.caption(f"Conformal Range (90%): {low_str} to {high_str}")
+
+            with u_c2:
+
+                st.metric("Loss Probability $P(\\text{{Profit}} < 0)$", f"{unc.get('loss_probability_pct', 0.0):.1f}%")
+
+                st.caption(f"Interval Width: ₹{prof_unc.get('interval_width', 0):,.2f}")
 
 
 
@@ -900,7 +878,7 @@ else:
 
                 upper_val=prof_unc.get('upper_bound', 0.0),
 
-                title="Conformal Profit Uncertainty Interval ($)"
+                title="Conformal Profit Uncertainty Interval (₹)"
 
             )
 
@@ -996,11 +974,11 @@ else:
 
                     st.subheader("CURRENT STRATEGY")
 
-                    st.metric("Selling Price", f"${cur_s['price']:,.2f}")
+                    st.metric("Selling Price", f"₹{cur_s['price']:,.2f}")
 
                     st.metric("Discount %", f"{cur_s['discount']:.1f}%")
 
-                    st.metric("Expected Profit", f"${cur_s['expected_profit']:,.2f}")
+                    st.metric("Expected Profit", f"₹{cur_s['expected_profit']:,.2f}")
 
                     
 
@@ -1008,11 +986,11 @@ else:
 
                     st.subheader("RECOMMENDED STRATEGY")
 
-                    st.metric("Optimal Price", f"${opt_s['price']:,.2f}", delta=f"${opt_s['price'] - cur_s['price']:,.2f}")
+                    st.metric("Optimal Price", f"₹{opt_s['price']:,.2f}", delta=f"₹{opt_s['price'] - cur_s['price']:,.2f}")
 
                     st.metric("Optimal Discount", f"{opt_s['discount']:.1f}%", delta=f"{opt_s['discount'] - cur_s['discount']:.1f}%")
 
-                    st.metric("Optimized Profit", f"${opt_s['expected_profit']:,.2f}", delta=f"${imp['profit_change']:,.2f}")
+                    st.metric("Optimized Profit", f"₹{opt_s['expected_profit']:,.2f}", delta=f"₹{imp['profit_change']:,.2f}")
 
                     
 
@@ -1020,7 +998,7 @@ else:
 
                     st.subheader("EXPECTED CHANGE")
 
-                    st.metric("Profit Change", f"${imp['profit_change']:,.2f}")
+                    st.metric("Profit Change", f"₹{imp['profit_change']:,.2f}")
 
                     st.metric("Profit Lift %", f"+{imp['profit_change_pct']:.1f}%")
 
@@ -1054,15 +1032,15 @@ else:
 
             with s_col1:
 
-                sim_sp = st.slider("Simulated Price ($)", 1.0, 2000.0, float(base_input.get("selling_price", 100.0)))
+                sim_sp = st.slider("Simulated Price (₹)", 1.0, 50000.0, float(base_input.get("selling_price", 100.0)))
 
-                sim_cp = st.slider("Simulated Cost ($)", 1.0, 1500.0, float(base_input.get("cost_price", 40.0)))
+                sim_cp = st.slider("Simulated Cost (₹)", 1.0, 30000.0, float(base_input.get("cost_price", 40.0)))
 
             with s_col2:
 
                 sim_disc = st.slider("Simulated Discount %", 0.0, 85.0, float(base_input.get("discount_percent", 0.0)))
 
-                sim_ship = st.slider("Simulated Shipping Cost ($)", 0.0, 200.0, float(base_input.get("shipping_cost", 10.0)))
+                sim_ship = st.slider("Simulated Shipping Cost (₹)", 0.0, 2000.0, float(base_input.get("shipping_cost", 10.0)))
 
 
 
@@ -1086,11 +1064,9 @@ else:
 
             comp_df = pd.DataFrame([
 
-                {"Metric": "Predicted Demand", "Current": f"{base_res['predicted_demand']:,} units", "What-If": f"{sim_res['predicted_demand']:,} units", "Change": f"{sim_res['predicted_demand'] - base_res['predicted_demand']:,} units"},
+                {"Metric": "Predicted Net Profit", "Current": f"₹{base_res['predicted_profit']:,.2f}", "What-If": f"₹{sim_res['predicted_profit']:,.2f}", "Change": f"₹{sim_res['predicted_profit'] - base_res['predicted_profit']:,.2f}"},
 
-                {"Metric": "Predicted Revenue", "Current": f"${base_res['predicted_revenue']:,.2f}", "What-If": f"${sim_res['predicted_revenue']:,.2f}", "Change": f"${sim_res['predicted_revenue'] - base_res['predicted_revenue']:,.2f}"},
-
-                {"Metric": "Predicted Profit", "Current": f"${base_res['predicted_profit']:,.2f}", "What-If": f"${sim_res['predicted_profit']:,.2f}", "Change": f"${sim_res['predicted_profit'] - base_res['predicted_profit']:,.2f}"},
+                {"Metric": "Profit Margin", "Current": f"{base_res['profit_margin']:.1f}%", "What-If": f"{sim_res['profit_margin']:.1f}%", "Change": f"{sim_res['profit_margin'] - base_res['profit_margin']:+.1f}%"},
 
                 {"Metric": "Business Score", "Current": f"{base_res['business_score']['score']}/100", "What-If": f"{sim_res['business_score']['score']}/100", "Change": f"{sim_res['business_score']['score'] - base_res['business_score']['score']:+d} pts"}
 
@@ -1150,17 +1126,8 @@ else:
 
             
 
-            d_best = metrics.get("demand", {}).get("best_model", None)
+            st.success(f"🏆 **WINNING PROFIT PREDICTION MODEL**: **'{p_best}'** (Trained & Evaluated on 6 ML Regressors)")
 
-            
-
-            if d_best:
-
-                st.success(f"🏆 **WINNING PROFIT MODEL**: **'{p_best}'** &nbsp;|&nbsp; 🏆 **WINNING DEMAND MODEL**: **'{d_best}'**")
-
-            else:
-
-                st.success(f"🏆 **WINNING PROFIT PREDICTION MODEL**: **'{p_best}'** (Trained & Evaluated on 6 ML Regressors)")
 
             
 

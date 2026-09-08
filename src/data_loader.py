@@ -202,7 +202,6 @@ def load_real_superstore_dataset(file_path=None):
         df["product_subcategory"] = "Accessories"
     
     # Target columns
-    df["demand"] = df["quantity"]
     df["revenue"] = df["sales"]
     
     # Drop corrupt rows where quantity <= 0
@@ -211,6 +210,36 @@ def load_real_superstore_dataset(file_path=None):
     df.attrs["sha256"] = dataset_hash
     df.attrs["file_name"] = os.path.basename(file_path)
     return df
+
+def get_data_availability_report(df=None):
+    """
+    Generate Data Availability & Leakage Prevention Report for real-world dataset.
+    Categorizes features into AVAILABLE, DERIVABLE, and UNAVAILABLE.
+    """
+    if df is not None:
+        avail_summary = {}
+        for feat, category in FEATURE_AVAILABILITY.items():
+            if category == "AVAILABLE":
+                present = feat in df.columns or (feat == "profit" and ("profit" in df.columns or "Profit" in df.columns))
+            elif category == "DERIVABLE":
+                present = True
+            else:
+                present = False
+            avail_summary[feat] = {
+                "status": category,
+                "is_present": present,
+                "leakage_risk": "HIGH - Leakage Blocked" if feat in ["sales", "revenue"] else "SAFE"
+            }
+    else:
+        avail_summary = FEATURE_AVAILABILITY
+
+    return {
+        "report_type": "DATA_AVAILABILITY_LEAKAGE_REPORT",
+        "primary_ml_target": "profit",
+        "demand_prediction_status": "DISABLED (System Predicts Net Profit Exclusively)",
+        "feature_availability": FEATURE_AVAILABILITY,
+        "availability_details": avail_summary
+    }
 
 def generate_data_quality_report(df, dataset_name="Global E-Commerce Sales Dataset | 2021–2024", dataset_type="REAL-WORLD DATA"):
     """
@@ -246,7 +275,8 @@ def generate_data_quality_report(df, dataset_name="Global E-Commerce Sales Datas
         "numerical_columns": num_cols_list,
         "categorical_columns": cat_cols_list,
         "quality_score": quality_score,
-        "feature_availability": FEATURE_AVAILABILITY
+        "feature_availability": FEATURE_AVAILABILITY,
+        "data_availability_report": get_data_availability_report(df)
     }
     
     json_path = os.path.join(RESULTS_DIR, "data_quality_report.json")
@@ -283,3 +313,4 @@ def load_external_dataset(file_path_or_bytes, file_name, column_mapping=None):
     if column_mapping:
         df = df.rename(columns=column_mapping)
     return df
+

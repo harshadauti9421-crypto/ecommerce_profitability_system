@@ -116,130 +116,66 @@ def render_shap_explainability_section(analysis_result, df_dataset=None):
         st.warning(f"Unable to load feature pipeline: {e}")
         return
 
-    # Tabs for Net Profit Model vs Customer Demand Model
-    shap_tabs = st.tabs(["💰 PROFIT MODEL EXPLANATION (LightGBM)", "📦 DEMAND MODEL EXPLANATION (XGBoost)"])
+    # Profit Model Explanation
+    profit_model_path = os.path.join(MODELS_DIR, "best_profit_model.pkl")
+    if os.path.exists(profit_model_path):
+        try:
+            profit_model = joblib.load(profit_model_path)
+            p_exp = explain_model_prediction_shap(profit_model, X_transformed, feature_names)
 
-    # 1. PROFIT MODEL EXPLANATION
-    with shap_tabs[0]:
-        profit_model_path = os.path.join(MODELS_DIR, "best_profit_model.pkl")
-        if os.path.exists(profit_model_path):
-            try:
-                profit_model = joblib.load(profit_model_path)
-                p_exp = explain_model_prediction_shap(profit_model, X_transformed, feature_names)
+            if p_exp["status"] == "SUCCESS":
+                st.markdown(f"#### Net Profit Model Attribution &nbsp;|&nbsp; Base Output: `₹{p_exp['base_value']:,.2f}`")
+                
+                pos_col, neg_col = st.columns(2)
+                with pos_col:
+                    st.markdown("### 🟢 Top Positive Factors (Pushing Profit Higher)")
+                    for f in p_exp["pos_factors"]:
+                        st.markdown(f"- **{f['Feature']}**: <span style='color:#047857; font-weight:700;'>+₹{f['SHAP Value']:,.2f}</span>", unsafe_allow_html=True)
+                    if not p_exp["pos_factors"]:
+                        st.caption("None identified for this product scenario.")
 
-                if p_exp["status"] == "SUCCESS":
-                    st.markdown(f"#### Net Profit Model Attribution &nbsp;|&nbsp; Base Output: `${p_exp['base_value']:,.2f}`")
-                    
-                    pos_col, neg_col = st.columns(2)
-                    with pos_col:
-                        st.markdown("### 🟢 Top Positive Factors (Pushing Profit Higher)")
-                        for f in p_exp["pos_factors"]:
-                            st.markdown(f"- **{f['Feature']}**: <span style='color:#047857; font-weight:700;'>+${f['SHAP Value']:,.2f}</span>", unsafe_allow_html=True)
-                        if not p_exp["pos_factors"]:
-                            st.caption("None identified for this product scenario.")
+                with neg_col:
+                    st.markdown("### 🔴 Top Negative Factors (Pushing Profit Lower)")
+                    for f in p_exp["neg_factors"]:
+                        st.markdown(f"- **{f['Feature']}**: <span style='color:#B91C1C; font-weight:700;'>-₹{abs(f['SHAP Value']):,.2f}</span>", unsafe_allow_html=True)
+                    if not p_exp["neg_factors"]:
+                        st.caption("None identified for this product scenario.")
 
-                    with neg_col:
-                        st.markdown("### 🔴 Top Negative Factors (Pushing Profit Lower)")
-                        for f in p_exp["neg_factors"]:
-                            st.markdown(f"- **{f['Feature']}**: <span style='color:#B91C1C; font-weight:700;'>-${abs(f['SHAP Value']):,.2f}</span>", unsafe_allow_html=True)
-                        if not p_exp["neg_factors"]:
-                            st.caption("None identified for this product scenario.")
+                st.markdown("---")
 
-                    st.markdown("---")
+                # Local SHAP Contribution Bar Chart
+                st.markdown("### 📊 Local SHAP Feature Contribution Chart (Net Profit)")
+                df_top = p_exp["df_shap"].head(10).sort_values(by="SHAP Value", ascending=True)
+                
+                fig_p_shap = px.bar(
+                    df_top,
+                    x="SHAP Value",
+                    y="Feature",
+                    orientation="h",
+                    color="Direction",
+                    color_discrete_map={"↑ Positive": COLORS["positive"], "↓ Negative": COLORS["negative"]},
+                    title="Top Features Influencing Net Profit Prediction (₹)"
+                )
+                fig_p_shap.update_layout(
+                    paper_bgcolor=COLORS["card_bg"],
+                    plot_bgcolor=COLORS["card_bg"],
+                    font=dict(color=COLORS["text_primary"]),
+                    xaxis=dict(gridcolor="#F1F5F9", tickfont=dict(color=COLORS["text_secondary"])),
+                    yaxis=dict(gridcolor="#F1F5F9", tickfont=dict(color=COLORS["text_primary"], size=12)),
+                    height=360
+                )
+                st.plotly_chart(fig_p_shap, use_container_width=True)
 
-                    # Local SHAP Contribution Bar Chart
-                    st.markdown("### 📊 Local SHAP Feature Contribution Chart (Net Profit)")
-                    df_top = p_exp["df_shap"].head(10).sort_values(by="SHAP Value", ascending=True)
-                    
-                    fig_p_shap = px.bar(
-                        df_top,
-                        x="SHAP Value",
-                        y="Feature",
-                        orientation="h",
-                        color="Direction",
-                        color_discrete_map={"↑ Positive": COLORS["positive"], "↓ Negative": COLORS["negative"]},
-                        title="Top Features Influencing Net Profit Prediction ($)"
-                    )
-                    fig_p_shap.update_layout(
-                        paper_bgcolor=COLORS["card_bg"],
-                        plot_bgcolor=COLORS["card_bg"],
-                        font=dict(color=COLORS["text_primary"]),
-                        xaxis=dict(gridcolor="#F1F5F9", tickfont=dict(color=COLORS["text_secondary"])),
-                        yaxis=dict(gridcolor="#F1F5F9", tickfont=dict(color=COLORS["text_primary"], size=12)),
-                        height=360
-                    )
-                    st.plotly_chart(fig_p_shap, use_container_width=True)
+                # Display SHAP Contribution Table
+                with st.expander("📋 Detailed SHAP Value Contribution Table"):
+                    st.dataframe(p_exp["df_shap"][["Feature", "SHAP Value", "Direction"]], hide_index=True, use_container_width=True)
 
-                    # Display SHAP Contribution Table
-                    with st.expander("📋 Detailed SHAP Value Contribution Table"):
-                        st.dataframe(p_exp["df_shap"][["Feature", "SHAP Value", "Direction"]], hide_index=True, use_container_width=True)
-
-                else:
-                    st.warning("SHAP explainability is currently unavailable for this model configuration.")
-                    st.caption(f"Technical note: {p_exp.get('message', '')}")
-            except Exception as err:
-                st.info("Explainability is temporarily unavailable for this model. The prediction and business analysis remain available.")
-                logger.warning(f"Profit SHAP rendering error: {err}")
-
-    # 2. DEMAND MODEL EXPLANATION
-    with shap_tabs[1]:
-        demand_model_path = os.path.join(MODELS_DIR, "best_demand_model.pkl")
-        if os.path.exists(demand_model_path):
-            try:
-                demand_model = joblib.load(demand_model_path)
-                d_exp = explain_model_prediction_shap(demand_model, X_transformed, feature_names)
-
-                if d_exp["status"] == "SUCCESS":
-                    st.markdown(f"#### Customer Demand Model Attribution &nbsp;|&nbsp; Base Output: `{d_exp['base_value']:.1f} units`")
-                    
-                    pos_col_d, neg_col_d = st.columns(2)
-                    with pos_col_d:
-                        st.markdown("### 🟢 Top Positive Factors (Pushing Demand Higher)")
-                        for f in d_exp["pos_factors"]:
-                            st.markdown(f"- **{f['Feature']}**: <span style='color:#047857; font-weight:700;'>+{f['SHAP Value']:.2f} units</span>", unsafe_allow_html=True)
-                        if not d_exp["pos_factors"]:
-                            st.caption("None identified for this product scenario.")
-
-                    with neg_col_d:
-                        st.markdown("### 🔴 Top Negative Factors (Pushing Demand Lower)")
-                        for f in d_exp["neg_factors"]:
-                            st.markdown(f"- **{f['Feature']}**: <span style='color:#B91C1C; font-weight:700;'>-{abs(f['SHAP Value']):.2f} units</span>", unsafe_allow_html=True)
-                        if not d_exp["neg_factors"]:
-                            st.caption("None identified for this product scenario.")
-
-                    st.markdown("---")
-
-                    # Local SHAP Contribution Bar Chart
-                    st.markdown("### 📊 Local SHAP Feature Contribution Chart (Demand)")
-                    df_top_d = d_exp["df_shap"].head(10).sort_values(by="SHAP Value", ascending=True)
-                    
-                    fig_d_shap = px.bar(
-                        df_top_d,
-                        x="SHAP Value",
-                        y="Feature",
-                        orientation="h",
-                        color="Direction",
-                        color_discrete_map={"↑ Positive": COLORS["positive"], "↓ Negative": COLORS["negative"]},
-                        title="Top Features Influencing Customer Demand Prediction (Units)"
-                    )
-                    fig_d_shap.update_layout(
-                        paper_bgcolor=COLORS["card_bg"],
-                        plot_bgcolor=COLORS["card_bg"],
-                        font=dict(color=COLORS["text_primary"]),
-                        xaxis=dict(gridcolor="#F1F5F9", tickfont=dict(color=COLORS["text_secondary"])),
-                        yaxis=dict(gridcolor="#F1F5F9", tickfont=dict(color=COLORS["text_primary"], size=12)),
-                        height=360
-                    )
-                    st.plotly_chart(fig_d_shap, use_container_width=True)
-
-                    # Display SHAP Contribution Table
-                    with st.expander("📋 Detailed SHAP Value Contribution Table"):
-                        st.dataframe(d_exp["df_shap"][["Feature", "SHAP Value", "Direction"]], hide_index=True, use_container_width=True)
-
-                else:
-                    st.warning("SHAP explainability is currently unavailable for this model configuration.")
-            except Exception as err:
-                st.info("Explainability is temporarily unavailable for this model. The prediction and business analysis remain available.")
-                logger.warning(f"Demand SHAP rendering error: {err}")
+            else:
+                st.warning("SHAP explainability is currently unavailable for this model configuration.")
+                st.caption(f"Technical note: {p_exp.get('message', '')}")
+        except Exception as err:
+            st.info("Explainability is temporarily unavailable for this model. The prediction and business analysis remain available.")
+            logger.warning(f"Profit SHAP rendering error: {err}")
 
     st.caption("ℹ️ **SHAP Research Interpretation**: SHAP values indicate how individual features contribute to the model prediction. Positive SHAP values push the prediction higher, while negative SHAP values push it lower. The magnitude represents the strength of contribution relative to the model's output. SHAP provides model attribution, not causal inference.")
+

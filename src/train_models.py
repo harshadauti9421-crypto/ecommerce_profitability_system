@@ -35,18 +35,15 @@ def train_and_evaluate_all():
     generate_data_quality_report(df, dataset_name="Global E-Commerce Sales Dataset | 2021–2024", dataset_type="REAL-WORLD DATA")
     df_engineered = add_engineered_features(df)
     
-    # Define Targets
+    # Define Target: Profit ONLY
     targets = {
-        "demand": "demand",
         "profit": "profit"
     }
     
     overall_metrics = {
-        "demand": {"models": {}, "best_model": None},
         "profit": {"models": {}, "best_model": None}
     }
     
-    trained_demand_models = {}
     trained_profit_models = {}
     
     preprocessor = build_preprocessing_pipeline()
@@ -69,11 +66,8 @@ def train_and_evaluate_all():
         logger.info(f"Data Split shapes -> Train: {X_train.shape}, Val: {X_val.shape}, Test: {X_test.shape}")
         
         # Fit preprocessor on X_train only
-        if target_key == "demand":
-            X_train_trans = preprocessor.fit_transform(X_train)
-            save_pipeline(preprocessor, os.path.join(MODELS_DIR, "preprocessing_pipeline.pkl"))
-        else:
-            X_train_trans = preprocessor.transform(X_train)
+        X_train_trans = preprocessor.fit_transform(X_train)
+        save_pipeline(preprocessor, os.path.join(MODELS_DIR, "preprocessing_pipeline.pkl"))
             
         X_val_trans = preprocessor.transform(X_val)
         X_test_trans = preprocessor.transform(X_test)
@@ -121,7 +115,7 @@ def train_and_evaluate_all():
         logger.info(f"*** WINNING MODEL for {target_key.upper()}: '{best_model_name}' (Val R2: {best_val_r2}) ***")
         overall_metrics[target_key]["best_model"] = best_model_name
         
-        # Compute empirical conformal prediction quantiles on validation set
+        # Compute empirical conformal prediction quantiles on validation set for PROFIT
         val_preds_win = best_model_obj.predict(X_val_trans)
         val_residuals = np.abs(y_val - val_preds_win)
         q_80 = float(np.percentile(val_residuals, 80))
@@ -129,22 +123,18 @@ def train_and_evaluate_all():
         q_95 = float(np.percentile(val_residuals, 95))
         std_res = float(np.std(y_val - val_preds_win))
         
-        if "conformal" not in overall_metrics:
-            overall_metrics["conformal"] = {}
-        overall_metrics["conformal"][target_key] = {
-            "q_80": q_80,
-            "q_90": q_90,
-            "q_95": q_95,
-            "std_residual": std_res
+        overall_metrics["conformal"] = {
+            "profit": {
+                "q_80": q_80,
+                "q_90": q_90,
+                "q_95": q_95,
+                "std_residual": std_res
+            }
         }
 
-        # Save winning model and all models
-        if target_key == "demand":
-            joblib.dump(best_model_obj, os.path.join(MODELS_DIR, "best_demand_model.pkl"))
-            joblib.dump(target_trained_dict, os.path.join(MODELS_DIR, "all_demand_models.pkl"))
-        else:
-            joblib.dump(best_model_obj, os.path.join(MODELS_DIR, "best_profit_model.pkl"))
-            joblib.dump(target_trained_dict, os.path.join(MODELS_DIR, "all_profit_models.pkl"))
+        # Save winning profit model and all profit models
+        joblib.dump(best_model_obj, os.path.join(MODELS_DIR, "best_profit_model.pkl"))
+        joblib.dump(target_trained_dict, os.path.join(MODELS_DIR, "all_profit_models.pkl"))
             
     # Save conformal quantiles JSON
     conformal_path = os.path.join(MODELS_DIR, "conformal_quantiles.json")

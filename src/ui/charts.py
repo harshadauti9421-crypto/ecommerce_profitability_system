@@ -105,22 +105,23 @@ def build_waterfall_chart(gross_rev, discount_val, net_rev, total_cogs, total_sh
     )
     return fig
 
-def build_price_elasticity_chart(df_sens, col_sp, col_profit, col_demand, opt_sp, opt_profit):
-    """Price Elasticity & Profit Curve Chart with White Enterprise Theme."""
+def build_price_elasticity_chart(df_sens, col_sp, col_profit, opt_sp, opt_profit, *args, **kwargs):
+    """Price Sensitivity & Profit Curve Chart with White Enterprise Theme."""
     fig = go.Figure()
     fig.add_trace(go.Scatter(
         x=df_sens[col_sp], y=df_sens[col_profit],
-        name="Predicted Profit ($)",
+        name="Predicted Net Profit (₹)",
         line=dict(color=COLORS["positive"], width=3),
         mode="lines+markers"
     ))
-    fig.add_trace(go.Scatter(
-        x=df_sens[col_sp], y=df_sens[col_demand],
-        name="Predicted Demand (Units)",
-        line=dict(color=COLORS["primary"], width=3, dash="dash"),
-        mode="lines+markers",
-        yaxis="y2"
-    ))
+    if "Profit Margin (%)" in df_sens.columns:
+        fig.add_trace(go.Scatter(
+            x=df_sens[col_sp], y=df_sens["Profit Margin (%)"],
+            name="Profit Margin (%)",
+            line=dict(color=COLORS["primary"], width=3, dash="dash"),
+            mode="lines+markers",
+            yaxis="y2"
+        ))
     fig.add_trace(go.Scatter(
         x=[opt_sp], y=[opt_profit],
         name="Optimal Price Marker",
@@ -128,17 +129,18 @@ def build_price_elasticity_chart(df_sens, col_sp, col_profit, col_demand, opt_sp
         mode="markers"
     ))
     fig.update_layout(
-        title=dict(text="Interactive Price Elasticity & Profit Curve", font=dict(color=COLORS["text_primary"], size=16, weight="bold")),
+        title=dict(text="Interactive Price Sensitivity & Net Profit Curve", font=dict(color=COLORS["text_primary"], size=16, weight="bold")),
         paper_bgcolor=COLORS["card_bg"],
         plot_bgcolor=COLORS["card_bg"],
         font=dict(color=COLORS["text_primary"]),
-        xaxis=dict(title=dict(text="Selling Price ($)", font=dict(color=COLORS["text_secondary"])), gridcolor="#F1F5F9", tickfont=dict(color=COLORS["text_secondary"])),
-        yaxis=dict(title=dict(text="Predicted Profit ($)", font=dict(color=COLORS["positive"])), gridcolor="#F1F5F9", tickfont=dict(color=COLORS["positive"])),
-        yaxis2=dict(title=dict(text="Predicted Demand (Units)", font=dict(color=COLORS["primary"])), tickfont=dict(color=COLORS["primary"]), overlaying="y", side="right"),
+        xaxis=dict(title=dict(text="Selling Price (₹)", font=dict(color=COLORS["text_secondary"])), gridcolor="#F1F5F9", tickfont=dict(color=COLORS["text_secondary"])),
+        yaxis=dict(title=dict(text="Predicted Profit (₹)", font=dict(color=COLORS["positive"])), gridcolor="#F1F5F9", tickfont=dict(color=COLORS["positive"])),
+        yaxis2=dict(title=dict(text="Profit Margin (%)", font=dict(color=COLORS["primary"])), tickfont=dict(color=COLORS["primary"]), overlaying="y", side="right"),
         height=460,
         hovermode="x unified"
     )
     return fig
+
 
 def build_model_performance_chart(df_models):
     """6 ML Model Test R² Comparison Chart with White Enterprise Theme."""

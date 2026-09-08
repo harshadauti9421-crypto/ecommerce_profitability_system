@@ -42,33 +42,28 @@ def render_product_launch_analyzer_page():
         
         with c1:
             prod_name = st.text_input("Product Name", value="Smart LED Study Lamp", placeholder="e.g. Smart LED Study Lamp")
-            quantity = st.number_input("Target Quantity / Order Volume (Units)", min_value=1, value=500, step=10)
+            selling_price = st.number_input("Selling Price (₹)", min_value=0.01, value=3499.0, step=50.0)
             
         with c2:
-            selling_price = st.number_input("Selling Price ($ / ₹)", min_value=0.01, value=149.0, step=5.0)
-            cost_price = st.number_input("Cost Price / COGS ($ / ₹)", min_value=0.01, value=85.0, step=5.0)
-            discount_pct = st.slider("Discount (%)", min_value=0.0, max_value=100.0, value=10.0, step=1.0)
+            cost_price = st.number_input("Cost Price / COGS (₹)", min_value=0.01, value=1400.0, step=50.0)
+            discount_pct = st.slider("Discount (%)", min_value=0.0, max_value=85.0, value=15.0, step=1.0)
 
         with c3:
-            adv_cost = st.number_input("Advertising Budget ($ / ₹)", min_value=0.0, value=200.0, step=50.0)
-            ship_cost = st.number_input("Shipping Cost ($ / ₹)", min_value=0.0, value=15.0, step=2.0)
+            adv_cost = st.number_input("Advertising Budget (₹)", min_value=0.0, value=0.0, step=50.0)
+            ship_cost = st.number_input("Shipping Cost (₹)", min_value=0.0, value=120.0, step=10.0)
 
         st.markdown("<div style='height:10px;'></div>", unsafe_allow_html=True)
-        btn_submit = st.form_submit_button("ANALYZE PRODUCT →", type="primary", use_container_width=True)
+        btn_submit = st.form_submit_button("ANALYZE PRODUCT PROFITABILITY →", type="primary", use_container_width=True)
 
     # Soft warning if Cost Price > Selling Price
     if cost_price > selling_price:
-        st.warning(f"⚠️ **Cost Price Alert**: Cost Price (${cost_price:,.2f}) exceeds Selling Price (${selling_price:,.2f}), which creates an immediate unit-level loss.")
+        st.warning(f"⚠️ **Cost Price Alert**: Cost Price (₹{cost_price:,.2f}) exceeds Selling Price (₹{selling_price:,.2f}), which creates an immediate unit-level loss.")
 
     # 2. FORM VALIDATION & PREDICTION EXECUTION
     if btn_submit:
         # Input Validation Rules
         if not prod_name or not prod_name.strip():
             st.error("🚨 **Validation Error**: Product Name cannot be empty. Please provide a valid product name.")
-            return
-
-        if quantity <= 0:
-            st.error("🚨 **Validation Error**: Quantity must be greater than 0.")
             return
 
         if selling_price <= 0:
@@ -98,26 +93,12 @@ def render_product_launch_analyzer_page():
             "cost_price": float(cost_price),
             "discount_percent": float(discount_pct),
             "shipping_cost": float(ship_cost),
-            "advertising_cost": float(adv_cost),
-            "quantity": int(quantity)
+            "advertising_cost": float(adv_cost)
         }
 
-        with st.spinner("Analyzing product using trained ML models... Calculating risk & launch decision..."):
+        with st.spinner("Analyzing product profitability using trained ML models... Calculating risk & launch decision..."):
             # Execute EXISTING production prediction pipeline
             res = run_product_analysis(input_payload)
-
-            # Adjust predicted profit if explicit advertising budget was provided
-            if adv_cost > 0:
-                raw_profit = res["predicted_profit"]
-                adj_profit = raw_profit - adv_cost
-                res["predicted_profit"] = adj_profit
-                
-                # Recalculate profit margin safely
-                rev = res["predicted_revenue"]
-                if rev > 0:
-                    res["profit_margin"] = round((adj_profit / rev) * 100.0, 2)
-                else:
-                    res["profit_margin"] = 0.0
 
             st.session_state["analyzer_result"] = res
             st.session_state["analyzer_input"] = input_payload
@@ -134,24 +115,18 @@ def render_product_launch_analyzer_page():
         st.markdown(f"<div class='section-header-title'>📊 PRODUCT BUSINESS ANALYSIS &nbsp;|&nbsp; <b>{res['product_name']}</b></div>", unsafe_allow_html=True)
         
         # Metric KPI Cards
-        k1, k2, k3, k4, k5 = st.columns(5)
+        k1, k2, k3, k4 = st.columns(4)
         
         with k1:
-            st.metric("Predicted Demand", f"{res['predicted_demand']:,} units")
+            st.metric("Predicted Net Profit", f"₹{res['predicted_profit']:,.2f}")
         with k2:
-            st.metric("Predicted Revenue", f"${res['predicted_revenue']:,.2f}")
+            st.metric("Profit Margin", f"{res['profit_margin']:.1f}%")
         with k3:
-            st.metric("Predicted Profit", f"${res['predicted_profit']:,.2f}")
-        with k4:
-            rev = res['predicted_revenue']
-            if rev > 0:
-                st.metric("Profit Margin", f"{res['profit_margin']:.1f}%")
-            else:
-                st.metric("Profit Margin", "N/A")
-                st.caption("Profit margin unavailable because predicted revenue is zero.")
-        with k5:
             risk_lvl = res["risk_analysis"]["risk_level"]
             st.metric("Risk Rating", risk_lvl)
+        with k4:
+            b_score = res["business_score"]["score"]
+            st.metric("Business Score", f"{b_score} / 100")
 
         st.markdown("---")
 
@@ -180,10 +155,10 @@ def render_product_launch_analyzer_page():
                 point_val=res['predicted_profit'],
                 lower_val=prof_unc.get('lower_bound', 0.0),
                 upper_val=prof_unc.get('upper_bound', 0.0),
-                title="90% Prediction Interval ($)"
+                title="90% Prediction Interval (₹)"
             )
             st.plotly_chart(fig_unc, use_container_width=True)
-            st.caption(f"Expected Profit: **${res['predicted_profit']:,.2f}** &nbsp;|&nbsp; 90% Interval: **${prof_unc.get('lower_bound', 0.0):,.2f}** to **${prof_unc.get('upper_bound', 0.0):,.2f}**")
+            st.caption(f"Expected Profit: **₹{res['predicted_profit']:,.2f}** &nbsp;|&nbsp; 90% Conformal Range: **₹{prof_unc.get('lower_bound', 0.0):,.2f}** to **₹{prof_unc.get('upper_bound', 0.0):,.2f}**")
 
         st.markdown("---")
 
@@ -223,28 +198,20 @@ def render_product_launch_analyzer_page():
                         <b style="font-size:15px; color:#0F172A;">{user_prod_name}</b>
                     </div>
                     <div>
-                        <span style="font-size:11px; color:#475569;">RECOMMENDED QUANTITY</span><br>
-                        <b style="font-size:15px; color:#2563EB;">{opt_s['predicted_demand']:,} units</b>
-                    </div>
-                    <div>
                         <span style="font-size:11px; color:#475569;">RECOMMENDED SELLING PRICE</span><br>
-                        <b style="font-size:15px; color:#047857;">${opt_s['price']:,.2f}</b>
+                        <b style="font-size:15px; color:#047857;">₹{opt_s['price']:,.2f}</b>
                     </div>
                     <div>
                         <span style="font-size:11px; color:#475569;">RECOMMENDED COST PRICE</span><br>
-                        <b style="font-size:15px; color:#0F172A;">${user_cp:,.2f}</b>
+                        <b style="font-size:15px; color:#0F172A;">₹{user_cp:,.2f}</b>
                     </div>
                     <div>
                         <span style="font-size:11px; color:#475569;">RECOMMENDED DISCOUNT</span><br>
                         <b style="font-size:15px; color:#2563EB;">{opt_s['discount']:.1f}%</b>
                     </div>
                     <div>
-                        <span style="font-size:11px; color:#475569;">RECOMMENDED ADVERTISING COST</span><br>
-                        <b style="font-size:15px; color:#0F172A;">${user_adv:,.2f}</b>
-                    </div>
-                    <div>
                         <span style="font-size:11px; color:#475569;">RECOMMENDED SHIPPING COST</span><br>
-                        <b style="font-size:15px; color:#0F172A;">${user_ship:,.2f}</b>
+                        <b style="font-size:15px; color:#0F172A;">₹{user_ship:,.2f}</b>
                     </div>
                 </div>
             </div>
@@ -255,11 +222,9 @@ def render_product_launch_analyzer_page():
             
             reasons = []
             if imp["profit_change"] > 0:
-                reasons.append(f"Expected Net Profit increases by <b>+${imp['profit_change']:,.2f}</b> (+{imp['profit_change_pct']:.1f}% lift).")
+                reasons.append(f"Expected Net Profit increases by <b>+₹{imp['profit_change']:,.2f}</b> (+{imp['profit_change_pct']:.1f}% lift).")
             if imp["margin_change"] > 0:
                 reasons.append(f"Profit Margin expands by <b>+{imp['margin_change']:.1f}%</b> under the recommended price and discount point.")
-            if imp["revenue_change"] > 0:
-                reasons.append(f"Expected Revenue increases by <b>+${imp['revenue_change']:,.2f}</b> due to higher customer demand volume.")
             if imp["business_score_change"] > 0:
                 reasons.append(f"Overall Business Score improves by <b>+{imp['business_score_change']} pts</b> (from {cur_s['business_score']} to {opt_s['business_score']} / 100).")
             if opt_s["risk_level"] != cur_s["risk_level"]:
@@ -282,7 +247,7 @@ def render_product_launch_analyzer_page():
             
             c_m1, c_m2, c_m3, c_m4 = st.columns(4)
             with c_m1:
-                st.metric("Expected Profit Lift", f"${opt_s['expected_profit']:,.2f}", delta=f"${imp['profit_change']:,.2f}")
+                st.metric("Expected Profit Lift", f"₹{opt_s['expected_profit']:,.2f}", delta=f"₹{imp['profit_change']:,.2f}")
             with c_m2:
                 st.metric("Profit Lift %", f"+{imp['profit_change_pct']:.1f}%", delta=f"{imp['profit_change_pct']:.1f}%")
             with c_m3:
@@ -294,15 +259,15 @@ def render_product_launch_analyzer_page():
             comp_table_data = [
                 {
                     "Metric / Input": "Selling Price",
-                    "Current Strategy": f"${cur_s['price']:,.2f}",
-                    "Recommended Strategy": f"${opt_s['price']:,.2f}",
-                    "Delta / Impact": f"${opt_s['price'] - cur_s['price']:,.2f}"
+                    "Current Strategy": f"₹{cur_s['price']:,.2f}",
+                    "Recommended Strategy": f"₹{opt_s['price']:,.2f}",
+                    "Delta / Impact": f"₹{opt_s['price'] - cur_s['price']:,.2f}"
                 },
                 {
                     "Metric / Input": "Cost Price",
-                    "Current Strategy": f"${user_cp:,.2f}",
-                    "Recommended Strategy": f"${user_cp:,.2f}",
-                    "Delta / Impact": "$0.00 (Fixed Input)"
+                    "Current Strategy": f"₹{user_cp:,.2f}",
+                    "Recommended Strategy": f"₹{user_cp:,.2f}",
+                    "Delta / Impact": "₹0.00 (Fixed Input)"
                 },
                 {
                     "Metric / Input": "Discount %",
@@ -311,34 +276,16 @@ def render_product_launch_analyzer_page():
                     "Delta / Impact": f"{opt_s['discount'] - cur_s['discount']:.1f}%"
                 },
                 {
-                    "Metric / Input": "Advertising Budget",
-                    "Current Strategy": f"${user_adv:,.2f}",
-                    "Recommended Strategy": f"${user_adv:,.2f}",
-                    "Delta / Impact": "$0.00 (Fixed Budget)"
-                },
-                {
                     "Metric / Input": "Shipping Cost",
-                    "Current Strategy": f"${user_ship:,.2f}",
-                    "Recommended Strategy": f"${user_ship:,.2f}",
-                    "Delta / Impact": "$0.00 (Fixed Input)"
-                },
-                {
-                    "Metric / Input": "Predicted Demand",
-                    "Current Strategy": f"{cur_s['predicted_demand']:,} units",
-                    "Recommended Strategy": f"{opt_s['predicted_demand']:,} units",
-                    "Delta / Impact": f"{opt_s['predicted_demand'] - cur_s['predicted_demand']:+,} units"
-                },
-                {
-                    "Metric / Input": "Expected Revenue",
-                    "Current Strategy": f"${cur_s['expected_revenue']:,.2f}",
-                    "Recommended Strategy": f"${opt_s['expected_revenue']:,.2f}",
-                    "Delta / Impact": f"${imp['revenue_change']:,.2f}"
+                    "Current Strategy": f"₹{user_ship:,.2f}",
+                    "Recommended Strategy": f"₹{user_ship:,.2f}",
+                    "Delta / Impact": "₹0.00 (Fixed Input)"
                 },
                 {
                     "Metric / Input": "Expected Profit",
-                    "Current Strategy": f"${cur_s['expected_profit']:,.2f}",
-                    "Recommended Strategy": f"${opt_s['expected_profit']:,.2f}",
-                    "Delta / Impact": f"${imp['profit_change']:,.2f}"
+                    "Current Strategy": f"₹{cur_s['expected_profit']:,.2f}",
+                    "Recommended Strategy": f"₹{opt_s['expected_profit']:,.2f}",
+                    "Delta / Impact": f"₹{imp['profit_change']:,.2f}"
                 },
                 {
                     "Metric / Input": "Profit Margin",
@@ -361,3 +308,4 @@ def render_product_launch_analyzer_page():
             ]
             df_comp_table = pd.DataFrame(comp_table_data)
             st.dataframe(df_comp_table, hide_index=True, use_container_width=True)
+

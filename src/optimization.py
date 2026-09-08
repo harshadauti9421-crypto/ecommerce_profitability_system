@@ -5,7 +5,7 @@ from utils.helpers import logger
 def run_price_optimization(base_input, run_analysis_fn, price_min=None, price_max=None, steps=15, objective="Maximize Profit", min_margin=0.0):
     """
     Evaluates candidate unit selling prices dynamically around current price.
-    Calculates demand, revenue, profit, margin, risk, score, and uncertainty for each candidate on Real Data models.
+    Calculates profit, margin, risk, score, and uncertainty for each candidate on Real Data models.
     """
     current_price = float(base_input.get("selling_price", 100.0))
     if price_min is None:
@@ -30,8 +30,6 @@ def run_price_optimization(base_input, run_analysis_fn, price_min=None, price_ma
             
             results.append({
                 "selling_price": float(p),
-                "predicted_demand": financials["predicted_demand"],
-                "expected_revenue": financials["predicted_revenue"],
                 "expected_profit": financials["predicted_profit"],
                 "profit_margin": financials["net_profit_margin"],
                 "risk_score": risk_info["risk_score"],
@@ -49,9 +47,7 @@ def run_price_optimization(base_input, run_analysis_fn, price_min=None, price_ma
     if valid_df.empty:
         valid_df = df_results
         
-    if objective == "Maximize Revenue":
-        optimal_idx = valid_df["expected_revenue"].idxmax()
-    elif objective == "Maximize Profit Margin":
+    if objective == "Maximize Profit Margin":
         optimal_idx = valid_df["profit_margin"].idxmax()
     elif objective == "Maximize Business Score":
         optimal_idx = valid_df["business_score"].idxmax()
@@ -86,8 +82,6 @@ def run_discount_optimization(base_input, run_analysis_fn, steps=11, objective="
             
             results.append({
                 "discount_percent": float(d),
-                "predicted_demand": financials["predicted_demand"],
-                "expected_revenue": financials["predicted_revenue"],
                 "expected_profit": financials["predicted_profit"],
                 "profit_margin": financials["net_profit_margin"],
                 "risk_score": risk_info["risk_score"],
@@ -102,9 +96,7 @@ def run_discount_optimization(base_input, run_analysis_fn, steps=11, objective="
     if valid_df.empty:
         valid_df = df_results
         
-    if objective == "Maximize Revenue":
-        optimal_idx = valid_df["expected_revenue"].idxmax()
-    elif objective == "Maximize Profit Margin":
+    if objective == "Maximize Profit Margin":
         optimal_idx = valid_df["profit_margin"].idxmax()
     elif objective == "Maximize Business Score":
         optimal_idx = valid_df["business_score"].idxmax()
@@ -166,8 +158,6 @@ def run_joint_optimization(base_input, run_analysis_fn, objective="Maximize Prof
             "price": float(base_input.get("selling_price", 100.0)),
             "discount": float(base_input.get("discount_percent", 0.0)),
             "advertising": "UNAVAILABLE",
-            "predicted_demand": cur_fin["predicted_demand"],
-            "expected_revenue": cur_fin["predicted_revenue"],
             "expected_profit": cur_fin["predicted_profit"],
             "profit_margin": cur_fin["net_profit_margin"],
             "risk_level": current_res["risk"]["risk_level"],
@@ -177,8 +167,6 @@ def run_joint_optimization(base_input, run_analysis_fn, objective="Maximize Prof
             "price": float(best_price),
             "discount": float(best_disc),
             "advertising": "UNAVAILABLE",
-            "predicted_demand": opt_fin["predicted_demand"],
-            "expected_revenue": opt_fin["predicted_revenue"],
             "expected_profit": opt_fin["predicted_profit"],
             "profit_margin": opt_fin["net_profit_margin"],
             "risk_level": opt_res["risk"]["risk_level"],
@@ -188,7 +176,6 @@ def run_joint_optimization(base_input, run_analysis_fn, objective="Maximize Prof
             "profit_change": opt_fin["predicted_profit"] - cur_fin["predicted_profit"],
             "profit_change_pct": ((opt_fin["predicted_profit"] - cur_fin["predicted_profit"]) / abs(cur_fin["predicted_profit"]) * 100.0) if cur_fin["predicted_profit"] != 0 else 0.0,
             "margin_change": opt_fin["net_profit_margin"] - cur_fin["net_profit_margin"],
-            "revenue_change": opt_fin["predicted_revenue"] - cur_fin["predicted_revenue"],
             "business_score_change": opt_score - cur_score
         }
     }
@@ -208,3 +195,4 @@ def run_run_product_analysis_safe(run_analysis_fn, input_data):
     except Exception as e:
         logger.warning(f"Real data optimization scenario exception: {e}")
         return None
+

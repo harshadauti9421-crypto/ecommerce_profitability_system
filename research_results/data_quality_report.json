@@ -3,7 +3,7 @@
   "dataset_type": "REAL-WORLD DATA",
   "sha256_hash": "8c2f0f11ca3c03e1a98d801db19baa87be1a9ce72f4603f622834df27f6a86de",
   "num_rows": 10000,
-  "num_cols": 40,
+  "num_cols": 39,
   "missing_values": 0,
   "duplicate_rows": 0,
   "numerical_columns": [
@@ -27,7 +27,6 @@
     "advertising_cost",
     "return_rate",
     "product_rating",
-    "demand",
     "revenue"
   ],
   "categorical_columns": [
@@ -70,5 +69,128 @@
     "return_rate": "UNAVAILABLE",
     "marketing_channel": "UNAVAILABLE",
     "competition_level": "UNAVAILABLE"
+  },
+  "data_availability_report": {
+    "report_type": "DATA_AVAILABILITY_LEAKAGE_REPORT",
+    "primary_ml_target": "profit",
+    "demand_prediction_status": "DISABLED (System Predicts Net Profit Exclusively)",
+    "feature_availability": {
+      "selling_price": "DERIVABLE",
+      "cost_price": "DERIVABLE",
+      "discount_percent": "AVAILABLE",
+      "shipping_cost": "AVAILABLE",
+      "category": "AVAILABLE",
+      "subcategory": "AVAILABLE",
+      "market": "AVAILABLE",
+      "region": "AVAILABLE",
+      "segment": "AVAILABLE",
+      "ship_mode": "AVAILABLE",
+      "order_priority": "AVAILABLE",
+      "quantity": "AVAILABLE",
+      "profit": "AVAILABLE",
+      "sales": "AVAILABLE",
+      "advertising_cost": "UNAVAILABLE",
+      "product_rating": "UNAVAILABLE",
+      "return_rate": "UNAVAILABLE",
+      "marketing_channel": "UNAVAILABLE",
+      "competition_level": "UNAVAILABLE"
+    },
+    "availability_details": {
+      "selling_price": {
+        "status": "DERIVABLE",
+        "is_present": true,
+        "leakage_risk": "SAFE"
+      },
+      "cost_price": {
+        "status": "DERIVABLE",
+        "is_present": true,
+        "leakage_risk": "SAFE"
+      },
+      "discount_percent": {
+        "status": "AVAILABLE",
+        "is_present": true,
+        "leakage_risk": "SAFE"
+      },
+      "shipping_cost": {
+        "status": "AVAILABLE",
+        "is_present": true,
+        "leakage_risk": "SAFE"
+      },
+      "category": {
+        "status": "AVAILABLE",
+        "is_present": false,
+        "leakage_risk": "SAFE"
+      },
+      "subcategory": {
+        "status": "AVAILABLE",
+        "is_present": false,
+        "leakage_risk": "SAFE"
+      },
+      "market": {
+        "status": "AVAILABLE",
+        "is_present": false,
+        "leakage_risk": "SAFE"
+      },
+      "region": {
+        "status": "AVAILABLE",
+        "is_present": true,
+        "leakage_risk": "SAFE"
+      },
+      "segment": {
+        "status": "AVAILABLE",
+        "is_present": true,
+        "leakage_risk": "SAFE"
+      },
+      "ship_mode": {
+        "status": "AVAILABLE",
+        "is_present": true,
+        "leakage_risk": "SAFE"
+      },
+      "order_priority": {
+        "status": "AVAILABLE",
+        "is_present": false,
+        "leakage_risk": "SAFE"
+      },
+      "quantity": {
+        "status": "AVAILABLE",
+        "is_present": true,
+        "leakage_risk": "SAFE"
+      },
+      "profit": {
+        "status": "AVAILABLE",
+        "is_present": true,
+        "leakage_risk": "SAFE"
+      },
+      "sales": {
+        "status": "AVAILABLE",
+        "is_present": true,
+        "leakage_risk": "HIGH - Leakage Blocked"
+      },
+      "advertising_cost": {
+        "status": "UNAVAILABLE",
+        "is_present": false,
+        "leakage_risk": "SAFE"
+      },
+      "product_rating": {
+        "status": "UNAVAILABLE",
+        "is_present": false,
+        "leakage_risk": "SAFE"
+      },
+      "return_rate": {
+        "status": "UNAVAILABLE",
+        "is_present": false,
+        "leakage_risk": "SAFE"
+      },
+      "marketing_channel": {
+        "status": "UNAVAILABLE",
+        "is_present": false,
+        "leakage_risk": "SAFE"
+      },
+      "competition_level": {
+        "status": "UNAVAILABLE",
+        "is_present": false,
+        "leakage_risk": "SAFE"
+      }
+    }
   }
 }
