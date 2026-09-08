@@ -242,31 +242,31 @@ st.sidebar.markdown(f'''
 ''', unsafe_allow_html=True)
 
 st.sidebar.markdown("### ⚙️ System Control Center")
-if st.sidebar.button("🔄 Retrain All 6 ML Models", use_container_width=True):
+if st.sidebar.button("🔄 Retrain All 6 ML Models", use_container_width=True, key="global_retrain_models_btn"):
     with st.spinner("Training 6 ML Models on 10,000 real records..."):
         metrics = train_and_evaluate_all()
         st.sidebar.success("✅ Models retrained & conformal quantiles saved!")
 
-auto_run = st.sidebar.checkbox("⚡ Real-Time Scenario Sync", value=True)
+auto_run = st.sidebar.checkbox("⚡ Real-Time Scenario Sync", value=True, key="global_auto_run_sync_chk")
 
 # Top Global Page Navigation Header Bar
 st.markdown("<div class='top-nav-bar-container'>", unsafe_allow_html=True)
 p_col1, p_col2, p_col3 = st.columns(3)
 with p_col1:
     btn_p1_type = "primary" if st.session_state["current_page"] == "project_info" else "secondary"
-    if st.button("📄 PAGE 1: PROJECT OVERVIEW", use_container_width=True, type=btn_p1_type):
+    if st.button("📄 PAGE 1: PROJECT OVERVIEW", use_container_width=True, type=btn_p1_type, key="top_nav_p1_btn"):
         st.session_state["current_page"] = "project_info"
         st.rerun()
 
 with p_col2:
     btn_p2_type = "primary" if st.session_state["current_page"] == "dashboard" else "secondary"
-    if st.button("📊 PAGE 2: BUSINESS DASHBOARD", use_container_width=True, type=btn_p2_type):
+    if st.button("📊 PAGE 2: BUSINESS DASHBOARD", use_container_width=True, type=btn_p2_type, key="top_nav_p2_btn"):
         st.session_state["current_page"] = "dashboard"
         st.rerun()
 
 with p_col3:
     btn_p3_type = "primary" if st.session_state["current_page"] == "analyzer" else "secondary"
-    if st.button("🚀 PAGE 3: PRODUCT LAUNCH ANALYZER", use_container_width=True, type=btn_p3_type):
+    if st.button("🚀 PAGE 3: PRODUCT LAUNCH ANALYZER", use_container_width=True, type=btn_p3_type, key="top_nav_p3_btn"):
         st.session_state["current_page"] = "analyzer"
         st.rerun()
 
@@ -284,22 +284,6 @@ elif st.session_state["current_page"] == "analyzer":
 else:
     # Render Main Dashboard Top Header Banner
     render_top_header()
-
-    st.sidebar.markdown("---")
-    st.sidebar.markdown(f'''
-    <div style="font-size: 13px; color: {COLORS['text_secondary']}; display: flex; flex-direction: column; gap: 10px; padding: 4px 0 12px 0;">
-        <div style="cursor: pointer; display: flex; align-items: center; gap: 8px;">⚙️ <b>Settings</b></div>
-        <div style="cursor: pointer; display: flex; align-items: center; gap: 8px;">❓ <b>Help / Documentation</b></div>
-    </div>
-    ''', unsafe_allow_html=True)
-
-    st.sidebar.markdown("### ⚙️ System Control Center")
-    if st.sidebar.button("🔄 Retrain All 6 ML Models", use_container_width=True):
-        with st.spinner("Training 6 ML Models on 10,000 real records..."):
-            metrics = train_and_evaluate_all()
-            st.sidebar.success("✅ Models retrained & conformal quantiles saved!")
-
-    auto_run = st.sidebar.checkbox("⚡ Real-Time Scenario Sync", value=True)
 
 
 
