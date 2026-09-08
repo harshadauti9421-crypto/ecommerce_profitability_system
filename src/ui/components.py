@@ -2,7 +2,7 @@ import streamlit as st
 import plotly.graph_objects as go
 from src.ui.theme import COLORS, DECISION_CONFIG
 
-def render_top_header(dataset_name="Global Superstore 2016", num_records="51,290", sha256_hash="cfff9e65bb9e..."):
+def render_top_header(dataset_name="Global E-Commerce Sales Dataset | 2021–2024", num_records="10,000", sha256_hash="8c2f0f11ca3c..."):
     """
     Render Clean Top Header for FinTech AI Business Dashboard.
     Left: Business Dashboard title & subtitle.

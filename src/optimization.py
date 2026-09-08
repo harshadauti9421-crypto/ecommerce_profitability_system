@@ -113,14 +113,14 @@ def run_discount_optimization(base_input, run_analysis_fn, steps=11, objective="
 
 def run_advertising_optimization(base_input, run_analysis_fn, max_budget=100000.0, steps=15, objective="Maximize Profit", min_margin=0.0):
     """
-    Advertising expenditure is UNAVAILABLE in real Global Superstore dataset.
+    Advertising expenditure is UNAVAILABLE in real Global E-Commerce Sales Dataset | 2021–2024.
     Returns explicit research unavailable notification without fabricating fake values.
     """
     return {
         "df_curves": pd.DataFrame(),
         "optimal": None,
         "status": "UNAVAILABLE",
-        "message": "Advertising expenditure is unavailable in the real Global Superstore dataset. Fabricating advertising values has been disabled per research policy."
+        "message": "Advertising expenditure is unavailable in the real Global E-Commerce Sales Dataset | 2021–2024. Fabricating advertising values has been disabled per research policy."
     }
 
 def run_joint_optimization(base_input, run_analysis_fn, objective="Maximize Profit", min_margin=0.0):

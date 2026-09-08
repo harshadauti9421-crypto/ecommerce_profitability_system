@@ -16,7 +16,8 @@ from utils.helpers import logger
 
 def run_ablation_study():
     """
-    Executes Ablation Study across 6 configurations on REAL-WORLD DATA (Global Superstore 2016):
+    """
+    Executes Ablation Study across 6 configurations on REAL-WORLD DATA (Global E-Commerce Sales Dataset | 2021–2024):
     - Experiment A: Full Proposed Framework (Demand + Revenue + Profit + Uncertainty + Risk + Optimization + SHAP)
     - Experiment B: Without Risk Engine
     - Experiment C: Without Prediction Uncertainty
@@ -26,7 +27,7 @@ def run_ablation_study():
 
     Evaluates Hypotheses H1, H2, H3, H4 on real dataset and exports research_results artifacts.
     """
-    logger.info("--- Starting Ablation Study on REAL-WORLD DATA (Global Superstore 2016) ---")
+    logger.info("--- Starting Ablation Study on REAL-WORLD DATA (Global E-Commerce Sales Dataset | 2021–2024) ---")
     initialize_research_dir()
     
     df = load_real_superstore_dataset()
@@ -53,7 +54,7 @@ def run_ablation_study():
     ablation_experiments = [
         {
             "Experiment_ID": "Exp_A_Full_Framework",
-            "Dataset": "Global Superstore 2016 (REAL)",
+            "Dataset": "Global E-Commerce Sales Dataset | 2021–2024 (REAL)",
             "Configuration_Description": "Full Framework (All Profit Modules Active)",
             "Uncertainty_Module": "Yes (90% Conformal)",
             "Risk_Engine": "Yes (Multi-Factor + Downside)",
@@ -66,7 +67,7 @@ def run_ablation_study():
         },
         {
             "Experiment_ID": "Exp_B_No_Risk",
-            "Dataset": "Global Superstore 2016 (REAL)",
+            "Dataset": "Global E-Commerce Sales Dataset | 2021–2024 (REAL)",
             "Configuration_Description": "Framework Without Risk Engine",
             "Uncertainty_Module": "Yes",
             "Risk_Engine": "No",
@@ -79,7 +80,7 @@ def run_ablation_study():
         },
         {
             "Experiment_ID": "Exp_C_No_Uncertainty",
-            "Dataset": "Global Superstore 2016 (REAL)",
+            "Dataset": "Global E-Commerce Sales Dataset | 2021–2024 (REAL)",
             "Configuration_Description": "Framework Without Prediction Uncertainty",
             "Uncertainty_Module": "No",
             "Risk_Engine": "Partial (Financials Only)",
@@ -92,7 +93,7 @@ def run_ablation_study():
         },
         {
             "Experiment_ID": "Exp_D_No_Optimization",
-            "Dataset": "Global Superstore 2016 (REAL)",
+            "Dataset": "Global E-Commerce Sales Dataset | 2021–2024 (REAL)",
             "Configuration_Description": "Framework Without Prescriptive Optimization",
             "Uncertainty_Module": "Yes",
             "Risk_Engine": "Yes",
@@ -105,7 +106,7 @@ def run_ablation_study():
         },
         {
             "Experiment_ID": "Exp_E_No_SHAP",
-            "Dataset": "Global Superstore 2016 (REAL)",
+            "Dataset": "Global E-Commerce Sales Dataset | 2021–2024 (REAL)",
             "Configuration_Description": "Framework Without SHAP Explainability",
             "Uncertainty_Module": "Yes",
             "Risk_Engine": "Yes",
@@ -118,7 +119,7 @@ def run_ablation_study():
         },
         {
             "Experiment_ID": "Exp_F_Linear_Baseline",
-            "Dataset": "Global Superstore 2016 (REAL)",
+            "Dataset": "Global E-Commerce Sales Dataset | 2021–2024 (REAL)",
             "Configuration_Description": "Direct Linear Profit Baseline Model",
             "Uncertainty_Module": "No",
             "Risk_Engine": "Simple Threshold",
@@ -163,7 +164,7 @@ def run_ablation_study():
     
     log_experiment_run(
         experiment_id="Ablation_Study_RealData",
-        dataset_name="Global Superstore 2016 (51,290 records)",
+        dataset_name="Global E-Commerce Sales Dataset | 2021–2024 (10,000 records)",
         dataset_type="REAL-WORLD DATA",
         metrics={"profit_R2": profit_metrics["R2"], "baseline_profit_R2": lr_metrics["R2"], "sha256": dataset_hash},
         hypothesis_results=hypothesis_results
@@ -171,7 +172,7 @@ def run_ablation_study():
     
     # Save experiment_metadata.json
     exp_metadata = {
-        "dataset_name": "Global Superstore 2016",
+        "dataset_name": "Global E-Commerce Sales Dataset | 2021–2024",
         "dataset_type": "REAL-WORLD DATA",
         "dataset_sha256": dataset_hash,
         "row_count": len(df),

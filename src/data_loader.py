@@ -66,9 +66,7 @@ def find_dataset_file():
         os.path.join("data", "raw", "ecommerce_sales_dataset.csv"),
         RAW_DATA_PATH,
         FALLBACK_DATA_PATH,
-        os.path.join("data", "ecommerce_data.csv"),
-        os.path.join("data", "raw", "Global Superstore.xlsx"),
-        os.path.join("data", "Global Superstore.xlsx")
+        os.path.join("data", "ecommerce_data.csv")
     ]
     for p in candidates:
         if os.path.exists(p):
@@ -86,7 +84,7 @@ def load_real_superstore_dataset(file_path=None):
     if not file_path or not os.path.exists(file_path):
         raise FileNotFoundError(
             "REAL RESEARCH DATASET NOT FOUND.\n"
-            "Please place 'ecommerce_sales_dataset.csv' or 'global_superstore_2016.xlsx' inside the 'data/' directory."
+            "Please place 'ecommerce_sales_dataset.csv' inside the 'data/' directory."
         )
         
     logger.info(f"Loading real-world dataset from: {file_path}")

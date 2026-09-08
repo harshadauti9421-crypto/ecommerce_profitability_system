@@ -145,7 +145,7 @@ def render_project_info_landing_page(df_dataset):
             sha256 = df_dataset.attrs.get("sha256", "cfff9e65bb9e...")[:16]
             st.markdown(f'''
             <div class="premium-card">
-                <div style="font-size:13px; color:#A9A1AA; margin-bottom:4px;">DATASET NAME: <b style="color:#F5F0F5;">Global Superstore 2016</b></div>
+                <div style="font-size:13px; color:#A9A1AA; margin-bottom:4px;">DATASET NAME: <b style="color:#F5F0F5;">Global E-Commerce Sales Dataset | 2021–2024</b></div>
                 <div style="font-size:13px; color:#A9A1AA; margin-bottom:4px;">DATASET TYPE: <b style="color:#4FC58A; background:rgba(79,197,138,0.15); padding:2px 6px; border-radius:4px;">REAL-WORLD DATA</b></div>
                 <div style="font-size:13px; color:#A9A1AA; margin-bottom:4px;">TRANSACTION RECORDS: <b style="color:#F5F0F5;">{num_rows}</b></div>
                 <div style="font-size:13px; color:#A9A1AA; margin-bottom:4px;">COLUMNS / FEATURES: <b style="color:#F5F0F5;">{num_cols}</b></div>

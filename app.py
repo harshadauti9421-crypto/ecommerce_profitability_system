@@ -465,7 +465,7 @@ else:
 
 
 
-            product_name = st.session_state.get("p_select_name") if unique_products else st.session_state.get("p_name", "Superstore Product")
+            product_name = st.session_state.get("p_select_name") if unique_products else st.session_state.get("p_name", "E-Commerce Product")
 
             product_category = st.session_state.get("p_cat", "Technology")
 
