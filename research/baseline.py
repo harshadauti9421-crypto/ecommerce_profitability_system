@@ -54,25 +54,24 @@ def run_baseline_comparison():
             "RMSE": round(baseline_metrics["RMSE"], 2),
             "R2_Score": round(baseline_metrics["R2"], 4),
             "MAPE_pct": round(baseline_metrics["MAPE"], 2),
-            "Decomposed_Pipeline": "No",
             "Uncertainty_Estimation": "No",
             "Prescriptive_Optimization": "No",
             "Risk_Engine": "Rule-Threshold Only"
         },
         {
-            "System": "Proposed Framework (Multi-Stage Demand-Driven + Risk + Optimization)",
+            "System": "Proposed Framework (Profit Prediction + Conformal Uncertainty + Risk + Optimization)",
             "Dataset": "Global Superstore 2016 (REAL DATA)",
-            "Predictive_Model": "CatBoost / XGBoost / ANN",
+            "Predictive_Model": "XGBoost / CatBoost / Random Forest",
             "MAE": round(proposed_metrics["MAE"], 2),
             "RMSE": round(proposed_metrics["RMSE"], 2),
             "R2_Score": round(proposed_metrics["R2"], 4),
             "MAPE_pct": round(proposed_metrics["MAPE"], 2),
-            "Decomposed_Pipeline": "Yes (Quantity -> Sales -> Profit)",
             "Uncertainty_Estimation": "Yes (Conformal 90% CI)",
             "Prescriptive_Optimization": "Yes (Price/Discount Grid)",
             "Risk_Engine": "Multi-Factor + Downside Risk"
         }
     ]
+
     
     df_comp = pd.DataFrame(comparison_data)
     out_path = os.path.join(RESULTS_DIR, "baseline_results.csv")

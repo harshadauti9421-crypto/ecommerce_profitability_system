@@ -32,7 +32,7 @@ def render_project_info_landing_page(df_dataset):
         <div class="premium-card" style="height:100%;">
             <div class="card-label" style="color:#2563EB;">📌 PROJECT OVERVIEW</div>
             <p style="font-size:14px; color:#0F172A; line-height:1.6; margin:6px 0 0 0;">
-                An AI-based decision intelligence system designed to help e-commerce businesses evaluate a product before launch or promotion by predicting demand, estimating revenue and profit, quantifying prediction uncertainty, assessing business risk, and identifying profitable pricing, discount and advertising strategies.
+                An AI-based decision intelligence system designed to help e-commerce businesses evaluate a product before launch or promotion by predicting net profit, quantifying prediction uncertainty, assessing business risk, and identifying profit-maximizing pricing and discount strategies.
             </p>
         </div>
         ''', unsafe_allow_html=True)
@@ -42,7 +42,7 @@ def render_project_info_landing_page(df_dataset):
         <div class="premium-card" style="height:100%;">
             <div class="card-label" style="color:#2563EB;">⚠️ PROBLEM STATEMENT</div>
             <p style="font-size:14px; color:#0F172A; line-height:1.6; margin:6px 0 0 0;">
-                E-commerce businesses must make product decisions under uncertainty. Traditional approaches focus on individual metrics (such as sales or profit prediction) but lack an integrated framework for demand prediction, profitability estimation, uncertainty quantification, risk assessment, business scoring, strategy optimization, and risk-aware launch decisions.
+                E-commerce businesses must make product decisions under uncertainty. Traditional approaches fail to integrate machine learning profit predictions with prediction uncertainty quantification, multi-factor risk scoring, business suitability scoring, strategy optimization, and risk-aware launch decisions.
             </p>
         </div>
         ''', unsafe_allow_html=True)
@@ -57,16 +57,16 @@ def render_project_info_landing_page(df_dataset):
     with obj_col1:
         st.markdown(f'''
         <div class="premium-card">
-            <div class="card-label" style="color:#2563EB;">OBJECTIVE 1 &nbsp;|&nbsp; MACHINE LEARNING MODELS</div>
-            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Develop machine-learning models for predicting e-commerce product demand and profitability using real-world business data.</p>
+            <div class="card-label" style="color:#2563EB;">OBJECTIVE 1 &nbsp;|&nbsp; PROFIT PREDICTION MODELS</div>
+            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Develop machine-learning profit regression models for predicting e-commerce product profitability using pre-sale features.</p>
         </div>
         <div class="premium-card">
             <div class="card-label" style="color:#2563EB;">OBJECTIVE 2 &nbsp;|&nbsp; INTEGRATED DECISION FRAMEWORK</div>
-            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Develop an integrated framework for estimating revenue, profit margin, business score and product-level business potential.</p>
+            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Develop an integrated framework for estimating profit margin, 0-100 business score, and product-level commercial potential.</p>
         </div>
         <div class="premium-card">
             <div class="card-label" style="color:#2563EB;">OBJECTIVE 3 &nbsp;|&nbsp; UNCERTAINTY QUANTIFICATION</div>
-            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Incorporate prediction uncertainty to quantify the reliability and potential downside of demand, revenue and profit predictions.</p>
+            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Incorporate split conformal prediction uncertainty to quantify interval bounds and downside loss probability P(Profit < 0).</p>
         </div>
         ''', unsafe_allow_html=True)
 
@@ -74,15 +74,15 @@ def render_project_info_landing_page(df_dataset):
         st.markdown(f'''
         <div class="premium-card">
             <div class="card-label" style="color:#2563EB;">OBJECTIVE 4 &nbsp;|&nbsp; PRESCRIPTIVE OPTIMIZATION</div>
-            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Develop a prescriptive optimization framework for identifying profitable price, discount and advertising strategies.</p>
+            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Develop a prescriptive optimization framework for identifying profit-maximizing price and discount strategies.</p>
         </div>
         <div class="premium-card">
             <div class="card-label" style="color:#2563EB;">OBJECTIVE 5 &nbsp;|&nbsp; EXPERIMENTAL EVALUATION</div>
-            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Evaluate the proposed framework against baseline approaches and conduct ablation experiments to determine component contributions.</p>
+            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Evaluate the proposed framework against baseline approaches and conduct ablation experiments across 6 configurations.</p>
         </div>
         <div class="premium-card">
             <div class="card-label" style="color:#2563EB;">OBJECTIVE 6 &nbsp;|&nbsp; DECISION-SUPPORT DASHBOARD</div>
-            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Develop an interactive decision-support dashboard that converts ML predictions into risk-aware launch decisions and recommendations.</p>
+            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Develop an interactive decision-support dashboard that converts ML profit predictions into risk-aware launch decisions and recommendations.</p>
         </div>
         ''', unsafe_allow_html=True)
 
@@ -95,15 +95,11 @@ def render_project_info_landing_page(df_dataset):
         <div style="display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:10px; font-size:12px; font-weight:700;">
             <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">PRODUCT INPUT</span>
             <span style="color:#94A3B8;">→</span>
-            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">DATA VALIDATION</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">DATA QUALITY & LEAKAGE CHECK</span>
             <span style="color:#94A3B8;">→</span>
-            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">DEMAND PREDICTION</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">PROFIT PREDICTION MODEL (XGBOOST/CATBOOST/RF)</span>
             <span style="color:#94A3B8;">→</span>
-            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">REVENUE ESTIMATION</span>
-            <span style="color:#94A3B8;">→</span>
-            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">PROFIT PREDICTION</span>
-            <span style="color:#94A3B8;">→</span>
-            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">CONFORMAL UNCERTAINTY</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">CONFORMAL PROFIT UNCERTAINTY</span>
         </div>
         <div style="margin:12px 0 4px 0; color:#94A3B8; font-size:16px;">↓</div>
         <div style="display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:10px; font-size:12px; font-weight:700;">
@@ -113,12 +109,13 @@ def render_project_info_landing_page(df_dataset):
             <span style="color:#94A3B8;">←</span>
             <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">PRESCRIPTIVE OPTIMIZATION</span>
             <span style="color:#94A3B8;">←</span>
-            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">BUSINESS SCORE</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">0-100 BUSINESS SCORE</span>
             <span style="color:#94A3B8;">←</span>
             <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">RISK ANALYSIS</span>
         </div>
     </div>
     ''', unsafe_allow_html=True)
+
 
     st.markdown("---")
 

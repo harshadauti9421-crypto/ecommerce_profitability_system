@@ -54,8 +54,7 @@ def run_ablation_study():
         {
             "Experiment_ID": "Exp_A_Full_Framework",
             "Dataset": "Global Superstore 2016 (REAL)",
-            "Configuration_Description": "Full Framework (All Modules Active)",
-            "Demand_Decomposition": "Yes",
+            "Configuration_Description": "Full Framework (All Profit Modules Active)",
             "Uncertainty_Module": "Yes (90% Conformal)",
             "Risk_Engine": "Yes (Multi-Factor + Downside)",
             "Optimization_Engine": "Yes (Price/Discount Grid)",
@@ -69,7 +68,6 @@ def run_ablation_study():
             "Experiment_ID": "Exp_B_No_Risk",
             "Dataset": "Global Superstore 2016 (REAL)",
             "Configuration_Description": "Framework Without Risk Engine",
-            "Demand_Decomposition": "Yes",
             "Uncertainty_Module": "Yes",
             "Risk_Engine": "No",
             "Optimization_Engine": "Yes",
@@ -83,7 +81,6 @@ def run_ablation_study():
             "Experiment_ID": "Exp_C_No_Uncertainty",
             "Dataset": "Global Superstore 2016 (REAL)",
             "Configuration_Description": "Framework Without Prediction Uncertainty",
-            "Demand_Decomposition": "Yes",
             "Uncertainty_Module": "No",
             "Risk_Engine": "Partial (Financials Only)",
             "Optimization_Engine": "Yes",
@@ -97,7 +94,6 @@ def run_ablation_study():
             "Experiment_ID": "Exp_D_No_Optimization",
             "Dataset": "Global Superstore 2016 (REAL)",
             "Configuration_Description": "Framework Without Prescriptive Optimization",
-            "Demand_Decomposition": "Yes",
             "Uncertainty_Module": "Yes",
             "Risk_Engine": "Yes",
             "Optimization_Engine": "No",
@@ -111,7 +107,6 @@ def run_ablation_study():
             "Experiment_ID": "Exp_E_No_SHAP",
             "Dataset": "Global Superstore 2016 (REAL)",
             "Configuration_Description": "Framework Without SHAP Explainability",
-            "Demand_Decomposition": "Yes",
             "Uncertainty_Module": "Yes",
             "Risk_Engine": "Yes",
             "Optimization_Engine": "Yes",
@@ -122,10 +117,9 @@ def run_ablation_study():
             "Expected_Profit_Gain_pct": 14.2
         },
         {
-            "Experiment_ID": "Exp_F_Direct_Profit",
+            "Experiment_ID": "Exp_F_Linear_Baseline",
             "Dataset": "Global Superstore 2016 (REAL)",
-            "Configuration_Description": "Framework Without Demand Decomposition (Direct Linear Profit)",
-            "Demand_Decomposition": "No (Direct Linear)",
+            "Configuration_Description": "Direct Linear Profit Baseline Model",
             "Uncertainty_Module": "No",
             "Risk_Engine": "Simple Threshold",
             "Optimization_Engine": "No",
@@ -136,6 +130,7 @@ def run_ablation_study():
             "Expected_Profit_Gain_pct": 0.0
         }
     ]
+
     
     df_ablation = pd.DataFrame(ablation_experiments)
     ablation_path = os.path.join(RESULTS_DIR, "ablation_results.csv")
