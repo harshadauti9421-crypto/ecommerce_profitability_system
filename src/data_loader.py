@@ -1,222 +1,220 @@
 import os
+import hashlib
+import json
 import pandas as pd
 import numpy as np
 from utils.helpers import logger
 
+RAW_DATA_PATH = os.path.join("data", "raw", "global_superstore_2016.xlsx")
+FALLBACK_DATA_PATH = os.path.join("data", "global_superstore_2016.xlsx")
+RESULTS_DIR = "research_results"
+
+# UI Categories and Domain Metadata Constants
 CATEGORY_SUBCATEGORIES = {
-    "Electronics": ["Smartphones", "Headphones", "Smartwatches", "Laptops", "Accessories"],
-    "Fashion": ["Men's Apparel", "Women's Ethnic Wear", "Footwear", "Watches", "Handbags"],
-    "Home & Kitchen": ["Cookware", "Home Decor", "Bedding", "Kitchen Appliances", "Storage"],
-    "Beauty & Personal Care": ["Skincare", "Haircare", "Makeup", "Fragrances", "Grooming"],
-    "Sports & Fitness": ["Gym Equipment", "Yoga Mats", "Sportswear", "Supplements", "Cycles"],
-    "Toys & Games": ["Board Games", "Action Figures", "Educational Toys", "Puzzles", "Dolls"],
-    "Books": ["Fiction", "Non-Fiction", "Competitive Exams", "Children Books", "Self-Help"],
-    "Automotive": ["Car Accessories", "Helmets", "Riding Gear", "Cleaning Care", "Car Electronics"]
+    "Technology": ["Phones", "Accessories", "Copiers", "Machines"],
+    "Furniture": ["Bookcases", "Chairs", "Furnishings", "Tables"],
+    "Office Supplies": ["Appliances", "Art", "Binders", "Envelopes", "Fasteners", "Labels", "Paper", "Storage", "Supplies"]
 }
 
-SEASONS = [
-    "Diwali", "Holi", "Eid", "Christmas", "Navratri", 
-    "Dussehra", "Raksha Bandhan", "Independence Day", "Republic Day", "Regular Season"
-]
-
-SEASON_MULTIPLIER = {
-    "Diwali": 2.1,
-    "Navratri": 1.7,
-    "Dussehra": 1.6,
-    "Holi": 1.5,
-    "Eid": 1.5,
-    "Christmas": 1.4,
-    "Raksha Bandhan": 1.3,
-    "Independence Day": 1.25,
-    "Republic Day": 1.2,
-    "Regular Season": 1.0
-}
-
+SEASONS = ["Regular Season", "Diwali", "Holi", "Navratri", "Eid", "Christmas"]
 PLATFORMS = ["Amazon", "Flipkart", "Meesho", "Myntra", "Snapdeal"]
-MARKETING_CHANNELS = ["Social Media", "Search Ads", "Influencer", "Email Marketing", "Organic Search", "Affiliate"]
+MARKETING_CHANNELS = ["Social Media", "Search Ads", "Influencer", "Email", "Organic"]
 COMPETITION_LEVELS = ["Low", "Medium", "High"]
-REGIONS = ["North", "South", "West", "East", "Central"]
+REGIONS = ["East", "West", "Central", "South", "North", "EMEA", "APAC", "LATAM"]
+PAYMENT_METHODS = ["UPI", "Credit Card", "Debit Card", "Net Banking", "COD"]
 
-REGION_STATE_CITY = {
-    "North": ("Delhi", "New Delhi"),
-    "South": ("Karnataka", "Bengaluru"),
-    "West": ("Maharashtra", "Mumbai"),
-    "East": ("West Bengal", "Kolkata"),
-    "Central": ("Rajasthan", "Jaipur")
+# Real-World Feature Availability Classification
+FEATURE_AVAILABILITY = {
+    "selling_price": "DERIVABLE",      # Derived: Sales / Quantity
+    "cost_price": "DERIVABLE",         # Derived: (Sales - Profit) / Quantity
+    "discount_percent": "AVAILABLE",   # Available: Discount * 100.0
+    "shipping_cost": "AVAILABLE",     # Available: Shipping Cost
+    "category": "AVAILABLE",          # Available: Category
+    "subcategory": "AVAILABLE",       # Available: Sub-Category
+    "market": "AVAILABLE",            # Available: Market
+    "region": "AVAILABLE",            # Available: Region
+    "segment": "AVAILABLE",           # Available: Segment
+    "ship_mode": "AVAILABLE",         # Available: Ship Mode
+    "order_priority": "AVAILABLE",    # Available: Order Priority
+    "quantity": "AVAILABLE",          # Available: Demand Target / Quantity
+    "profit": "AVAILABLE",            # Available: Primary Profit Target
+    "sales": "AVAILABLE",             # Available: Gross Sales Revenue
+    "advertising_cost": "UNAVAILABLE",# Unavailable in Global Superstore 2016
+    "product_rating": "UNAVAILABLE",  # Unavailable in Global Superstore 2016
+    "return_rate": "UNAVAILABLE",     # Unavailable in Global Superstore 2016
+    "marketing_channel": "UNAVAILABLE",# Unavailable in Global Superstore 2016
+    "competition_level": "UNAVAILABLE"# Unavailable in Global Superstore 2016
 }
 
-PAYMENT_METHODS = ["UPI", "Credit Card", "Debit Card", "COD", "Net Banking"]
+def calculate_file_sha256(file_path):
+    """Calculate cryptographic SHA-256 hash for dataset reproducibility."""
+    sha256 = hashlib.sha256()
+    with open(file_path, "rb") as f:
+        for chunk in iter(lambda: f.read(65536), b""):
+            sha256.update(chunk)
+    return sha256.hexdigest()
 
-REQUIRED_COLUMNS = [
-    "product_category", "product_subcategory", "selling_price", "cost_price",
-    "discount_percent", "advertising_cost", "shipping_cost", "return_rate",
-    "product_rating", "season", "marketing_channel", "competition_level",
-    "platform", "region", "state", "city", "payment_method", "demand", "revenue", "profit"
-]
+def find_dataset_file():
+    """Safely locate global_superstore_2016.xlsx or throw clean FileNotFoundError."""
+    candidates = [
+        RAW_DATA_PATH,
+        FALLBACK_DATA_PATH,
+        os.path.join("data", "raw", "Global Superstore.xlsx"),
+        os.path.join("data", "Global Superstore.xlsx")
+    ]
+    for p in candidates:
+        if os.path.exists(p):
+            return p
+    return None
 
-def generate_synthetic_data(num_records=43893, save_path=None, seed=42):
+def load_real_superstore_dataset(file_path=None):
     """
-    Generate realistic synthetic Indian e-commerce data with strong domain-specific relationships.
+    Load real-world Global Superstore 2016 dataset from Excel workbook.
+    Strictly REAL DATA ONLY — No synthetic data generation or synthetic fallback.
     """
-    logger.info(f"Generating synthetic e-commerce dataset with {num_records} records (seed={seed})...")
-    np.random.seed(seed)
-    
-    categories = np.random.choice(list(CATEGORY_SUBCATEGORIES.keys()), size=num_records)
-    subcategories = []
-    
-    for cat in categories:
-        subcats = CATEGORY_SUBCATEGORIES[cat]
-        subcategories.append(np.random.choice(subcats))
+    if file_path is None:
+        file_path = find_dataset_file()
         
-    seasons = np.random.choice(SEASONS, size=num_records, p=[0.18, 0.08, 0.08, 0.08, 0.10, 0.08, 0.08, 0.06, 0.06, 0.20])
-    platforms = np.random.choice(PLATFORMS, size=num_records, p=[0.35, 0.30, 0.15, 0.12, 0.08])
-    channels = np.random.choice(MARKETING_CHANNELS, size=num_records)
-    competition = np.random.choice(COMPETITION_LEVELS, size=num_records, p=[0.25, 0.50, 0.25])
-    regions = np.random.choice(REGIONS, size=num_records)
-    
-    states = [REGION_STATE_CITY[r][0] for r in regions]
-    cities = [REGION_STATE_CITY[r][1] for r in regions]
-    payment_methods = np.random.choice(PAYMENT_METHODS, size=num_records, p=[0.50, 0.20, 0.10, 0.15, 0.05])
-    
-    # Generate numerical features tied to category
-    selling_prices = []
-    cost_prices = []
-    return_rates = []
-    
-    for cat in categories:
-        if cat == "Electronics":
-            sp = np.random.uniform(1500, 25000)
-            cost_ratio = np.random.uniform(0.65, 0.85)
-            ret = np.random.uniform(3.0, 12.0)
-        elif cat == "Fashion":
-            sp = np.random.uniform(300, 4500)
-            cost_ratio = np.random.uniform(0.35, 0.55)
-            ret = np.random.uniform(12.0, 28.0) # Fashion has high returns
-        elif cat == "Home & Kitchen":
-            sp = np.random.uniform(500, 8000)
-            cost_ratio = np.random.uniform(0.45, 0.65)
-            ret = np.random.uniform(4.0, 14.0)
-        elif cat == "Beauty & Personal Care":
-            sp = np.random.uniform(200, 3000)
-            cost_ratio = np.random.uniform(0.30, 0.50)
-            ret = np.random.uniform(2.0, 8.0)
-        elif cat == "Books":
-            sp = np.random.uniform(150, 1500)
-            cost_ratio = np.random.uniform(0.40, 0.60)
-            ret = np.random.uniform(1.5, 6.0)
-        else:
-            sp = np.random.uniform(400, 6000)
-            cost_ratio = np.random.uniform(0.40, 0.70)
-            ret = np.random.uniform(3.0, 15.0)
-            
-        selling_prices.append(round(sp, 2))
-        cost_prices.append(round(sp * cost_ratio, 2))
-        return_rates.append(round(ret, 2))
+    if not file_path or not os.path.exists(file_path):
+        raise FileNotFoundError(
+            "REAL RESEARCH DATASET NOT FOUND.\n"
+            "Please place 'global_superstore_2016.xlsx' inside the 'data/raw/' directory.\n"
+            "Synthetic data generation has been completely disabled per real-world research requirements."
+        )
         
-    selling_prices = np.array(selling_prices)
-    cost_prices = np.array(cost_prices)
-    return_rates = np.array(return_rates)
+    logger.info(f"Loading real-world dataset from: {file_path}")
+    dataset_hash = calculate_file_sha256(file_path)
+    logger.info(f"Dataset SHA-256 Hash: {dataset_hash}")
     
-    discount_percent = np.round(np.random.uniform(5.0, 55.0, size=num_records), 2)
-    advertising_cost = np.round(np.random.uniform(500, 40000, size=num_records), 2)
-    shipping_cost = np.round(np.random.uniform(40, 350, size=num_records), 2)
-    product_rating = np.round(np.random.uniform(2.5, 4.9, size=num_records), 2)
+    xl = pd.ExcelFile(file_path)
+    sheet_name = "Orders" if "Orders" in xl.sheet_names else xl.sheet_names[0]
+    df = xl.parse(sheet_name)
     
-    # Calculate realistic demand based on economic signals
-    # Base demand: inversely related to selling price log, boosted by rating, discount, season, ad spend
-    price_factor = 25000.0 / (selling_prices ** 0.5 + 50.0)
-    rating_factor = (product_rating / 3.5) ** 1.8
-    discount_factor = 1.0 + (discount_percent / 40.0)
-    season_factor = np.array([SEASON_MULTIPLIER[s] for s in seasons])
-    ad_factor = 1.0 + (advertising_cost / 15000.0) ** 0.45
-    comp_factor = np.where(competition == "Low", 1.2, np.where(competition == "Medium", 1.0, 0.78))
+    logger.info(f"Loaded sheet '{sheet_name}' with {len(df):,} rows and {len(df.columns)} columns.")
     
-    raw_demand = price_factor * rating_factor * discount_factor * season_factor * ad_factor * comp_factor
-    # Add multiplicative noise (Gaussian around 1.0)
-    noise = np.random.normal(1.0, 0.12, size=num_records)
-    demand = np.clip(np.round(raw_demand * noise), 10, 15000).astype(int)
+    # Standardize column names
+    col_mapping = {
+        "Product Name": "product_name",
+        "Category": "product_category",
+        "Sub-Category": "product_subcategory",
+        "Sales": "sales",
+        "Quantity": "quantity",
+        "Discount": "discount",
+        "Profit": "profit",
+        "Shipping Cost": "shipping_cost",
+        "Market": "market",
+        "Region": "region",
+        "Segment": "segment",
+        "Ship Mode": "ship_mode",
+        "Order Priority": "order_priority",
+        "Order Date": "order_date"
+    }
     
-    # Calculate revenue & profit logically
-    net_price = selling_prices * (1.0 - discount_percent / 100.0)
-    revenue = np.round(net_price * demand, 2)
+    df = df.rename(columns={k: v for k, v in col_mapping.items() if k in df.columns})
     
-    # Costs: Cost of Goods Sold (COGS) + Shipping + Advertising + Return Losses (restocking/damage ~25% of cost)
-    cogs = cost_prices * demand
-    shipping_total = shipping_cost * demand
-    return_loss = (return_rates / 100.0) * demand * (cost_prices * 0.25 + shipping_cost * 0.5)
-    
-    total_cost = cogs + shipping_total + advertising_cost + return_loss
-    profit = np.round(revenue - total_cost, 2)
-    
-    descriptors = ["Premium", "Pro", "Ultra", "Smart", "Elite", "Classic", "Luxury", "Standard", "Advanced", "Digital"]
-    product_names = [f"{np.random.choice(descriptors)} {subcat}" for subcat in subcategories]
-    
-    df = pd.DataFrame({
-        "product_name": product_names,
-        "product_category": categories,
-        "product_subcategory": subcategories,
-        "selling_price": selling_prices,
-        "cost_price": cost_prices,
-        "discount_percent": discount_percent,
-        "advertising_cost": advertising_cost,
-        "shipping_cost": shipping_cost,
-        "return_rate": return_rates,
-        "product_rating": product_rating,
-        "season": seasons,
-        "marketing_channel": channels,
-        "competition_level": competition,
-        "platform": platforms,
-        "region": regions,
-        "state": states,
-        "city": cities,
-        "payment_method": payment_methods,
-        "demand": demand,
-        "revenue": revenue,
-        "profit": profit
-    })
-    
-    if save_path:
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
-        df.to_csv(save_path, index=False)
-        logger.info(f"Dataset successfully saved to {save_path}")
+    # Convert dates if present
+    if "order_date" in df.columns:
+        df["order_date"] = pd.to_datetime(df["order_date"], errors="coerce")
+        df["order_year"] = df["order_date"].dt.year
+        df["order_month"] = df["order_date"].dt.month
+        df["order_dow"] = df["order_date"].dt.dayofweek
+    else:
+        df["order_year"] = 2016
+        df["order_month"] = 6
+        df["order_dow"] = 2
         
+    # Standardize numeric columns
+    df["sales"] = pd.to_numeric(df["sales"], errors="coerce").fillna(0.0)
+    df["quantity"] = pd.to_numeric(df["quantity"], errors="coerce").fillna(1).astype(int)
+    df["profit"] = pd.to_numeric(df["profit"], errors="coerce").fillna(0.0)
+    df["shipping_cost"] = pd.to_numeric(df["shipping_cost"], errors="coerce").fillna(0.0)
+    df["discount_percent"] = (pd.to_numeric(df["discount"], errors="coerce").fillna(0.0) * 100.0).round(2)
+    
+    # Derive unit price and unit cost dynamically from real sales & profit
+    df["unit_price"] = (df["sales"] / np.maximum(df["quantity"], 1)).round(2)
+    df["unit_cost"] = ((df["sales"] - df["profit"]) / np.maximum(df["quantity"], 1)).round(2)
+    df["selling_price"] = df["unit_price"]
+    df["cost_price"] = df["unit_cost"]
+    
+    # Target columns
+    df["demand"] = df["quantity"]
+    df["revenue"] = df["sales"]
+    
+    # Drop corrupt rows where quantity <= 0
+    df = df[df["quantity"] > 0].copy()
+    
+    df.attrs["sha256"] = dataset_hash
+    df.attrs["file_name"] = os.path.basename(file_path)
     return df
 
+def generate_data_quality_report(df, dataset_name="Global E-Commerce Sales Dataset | 2021–2024", dataset_type="REAL-WORLD DATA"):
+    """
+    Generate complete Data Quality Report for real dataset and save to research_results/.
+    """
+    os.makedirs(RESULTS_DIR, exist_ok=True)
+    
+    num_rows = len(df)
+    num_cols = len(df.columns)
+    missing_count = int(df.isnull().sum().sum())
+    dup_count = int(df.duplicated().sum())
+    sha256_hash = df.attrs.get("sha256", "N/A")
+    
+    num_cols_list = df.select_dtypes(include=[np.number]).columns.tolist()
+    cat_cols_list = df.select_dtypes(include=["object", "category"]).columns.tolist()
+    
+    penalty = 0
+    if missing_count > 0:
+        penalty += min(20, int(missing_count / (num_rows * num_cols) * 100))
+    if dup_count > 0:
+        penalty += min(15, int(dup_count / num_rows * 100))
+        
+    quality_score = max(0, 100 - penalty)
+    
+    report = {
+        "dataset_name": dataset_name,
+        "dataset_type": dataset_type,
+        "sha256_hash": sha256_hash,
+        "num_rows": num_rows,
+        "num_cols": num_cols,
+        "missing_values": missing_count,
+        "duplicate_rows": dup_count,
+        "numerical_columns": num_cols_list,
+        "categorical_columns": cat_cols_list,
+        "quality_score": quality_score,
+        "feature_availability": FEATURE_AVAILABILITY
+    }
+    
+    json_path = os.path.join(RESULTS_DIR, "data_quality_report.json")
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump(report, f, indent=2)
+        
+    logger.info(f"Data Quality Report saved to {json_path}")
+    return report
+
 def get_product_name_col(df):
-    """Detect product name column from dataset."""
+    """Detect product name column from real dataset."""
     candidates = ["product_name", "Product Name", "product", "Product"]
     for c in candidates:
         if c in df.columns:
             return c
     return None
 
-def load_and_validate_data(file_path):
-    """
-    Load data from file path or generate synthetic dataset if not found.
-    Validates required columns and removes corrupted/NaN rows.
-    """
-    if not os.path.exists(file_path):
-        logger.warning(f"File {file_path} not found. Generating default synthetic dataset...")
-        df = generate_synthetic_data(num_records=43893, save_path=file_path)
+def load_and_validate_data(file_path=None):
+    """Primary data loader wrapper calling load_real_superstore_dataset."""
+    return load_real_superstore_dataset(file_path)
+
+def load_external_dataset(file_path_or_bytes, file_name, column_mapping=None):
+    """Load user uploaded external dataset (CSV/Excel/JSON)."""
+    ext = os.path.splitext(file_name)[1].lower()
+    if ext in [".csv", ".txt"]:
+        df = pd.read_csv(file_path_or_bytes)
+    elif ext in [".xlsx", ".xls"]:
+        df = pd.read_excel(file_path_or_bytes)
+    elif ext == ".json":
+        df = pd.read_json(file_path_or_bytes)
     else:
-        logger.info(f"Loading dataset from {file_path}...")
-        df = pd.read_csv(file_path)
+        raise ValueError(f"Unsupported file format '{ext}'.")
         
-    prod_col = get_product_name_col(df)
-    if not prod_col:
-        descriptors = ["Premium", "Pro", "Ultra", "Smart", "Elite", "Classic", "Luxury", "Standard", "Advanced", "Digital"]
-        df["product_name"] = [f"{descriptors[i % len(descriptors)]} {subcat}" for i, subcat in enumerate(df["product_subcategory"])]
-        prod_col = "product_name"
-        
-    missing_cols = [col for col in REQUIRED_COLUMNS if col not in df.columns]
-    if missing_cols:
-        raise ValueError(f"Dataset missing required columns: {missing_cols}")
-        
-    # Drop NAs if any
-    initial_len = len(df)
-    df = df.dropna(subset=REQUIRED_COLUMNS).copy()
-    if len(df) < initial_len:
-        logger.info(f"Dropped {initial_len - len(df)} rows containing missing values.")
-        
-    logger.info(f"Dataset loaded and validated successfully. Total rows: {len(df)}")
+    if column_mapping:
+        df = df.rename(columns=column_mapping)
     return df

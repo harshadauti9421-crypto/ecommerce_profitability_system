@@ -1,0 +1,208 @@
+"""
+Professional Project Information Landing Page (Page 1)
+White Enterprise UI Theme
+"""
+
+import streamlit as st
+from src.ui.theme import COLORS
+
+def render_project_info_landing_page(df_dataset):
+    """
+    Renders Page 1: Professional Project Information & Research Landing Screen.
+    Uses dynamic dataset stats from df_dataset.
+    """
+    # 1. Main Header Title
+    st.markdown(f'''
+    <div style="text-align:center; padding: 30px 20px 20px 20px; background:#FFFFFF; border:1px solid #E2E8F0; border-radius:14px; margin-bottom:24px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+        <span style="font-size:12px; font-weight:700; color:#2563EB; text-transform:uppercase; letter-spacing:0.1em; background:#EFF6FF; padding:4px 14px; border-radius:9999px; border:1px solid rgba(37,99,235,0.3);">RESEARCH-GRADE DECISION INTELLIGENCE SYSTEM</span>
+        <h1 style="font-size:32px; font-weight:800; color:#0F172A; margin:14px 0 8px 0; letter-spacing:-0.02em;">
+            AI-BASED E-COMMERCE PRODUCT PROFITABILITY & BUSINESS DECISION INTELLIGENCE SYSTEM
+        </h1>
+        <p style="font-size:15px; color:#475569; max-width:850px; margin:0 auto; line-height:1.6;">
+            An AI-powered predictive and prescriptive framework for e-commerce product profitability, risk assessment and business decision-making.
+        </p>
+    </div>
+    ''', unsafe_allow_html=True)
+
+    # 2. Project Overview & Problem Statement
+    col_ov, col_ps = st.columns(2)
+    
+    with col_ov:
+        st.markdown(f'''
+        <div class="premium-card" style="height:100%;">
+            <div class="card-label" style="color:#2563EB;">📌 PROJECT OVERVIEW</div>
+            <p style="font-size:14px; color:#0F172A; line-height:1.6; margin:6px 0 0 0;">
+                An AI-based decision intelligence system designed to help e-commerce businesses evaluate a product before launch or promotion by predicting demand, estimating revenue and profit, quantifying prediction uncertainty, assessing business risk, and identifying profitable pricing, discount and advertising strategies.
+            </p>
+        </div>
+        ''', unsafe_allow_html=True)
+        
+    with col_ps:
+        st.markdown(f'''
+        <div class="premium-card" style="height:100%;">
+            <div class="card-label" style="color:#2563EB;">⚠️ PROBLEM STATEMENT</div>
+            <p style="font-size:14px; color:#0F172A; line-height:1.6; margin:6px 0 0 0;">
+                E-commerce businesses must make product decisions under uncertainty. Traditional approaches focus on individual metrics (such as sales or profit prediction) but lack an integrated framework for demand prediction, profitability estimation, uncertainty quantification, risk assessment, business scoring, strategy optimization, and risk-aware launch decisions.
+            </p>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # 3. Research Objectives (6 Cards Grid)
+    st.markdown("<div class='section-header-title'>🎯 RESEARCH OBJECTIVES</div>", unsafe_allow_html=True)
+    
+    obj_col1, obj_col2 = st.columns(2)
+    
+    with obj_col1:
+        st.markdown(f'''
+        <div class="premium-card">
+            <div class="card-label" style="color:#2563EB;">OBJECTIVE 1 &nbsp;|&nbsp; MACHINE LEARNING MODELS</div>
+            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Develop machine-learning models for predicting e-commerce product demand and profitability using real-world business data.</p>
+        </div>
+        <div class="premium-card">
+            <div class="card-label" style="color:#2563EB;">OBJECTIVE 2 &nbsp;|&nbsp; INTEGRATED DECISION FRAMEWORK</div>
+            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Develop an integrated framework for estimating revenue, profit margin, business score and product-level business potential.</p>
+        </div>
+        <div class="premium-card">
+            <div class="card-label" style="color:#2563EB;">OBJECTIVE 3 &nbsp;|&nbsp; UNCERTAINTY QUANTIFICATION</div>
+            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Incorporate prediction uncertainty to quantify the reliability and potential downside of demand, revenue and profit predictions.</p>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    with obj_col2:
+        st.markdown(f'''
+        <div class="premium-card">
+            <div class="card-label" style="color:#2563EB;">OBJECTIVE 4 &nbsp;|&nbsp; PRESCRIPTIVE OPTIMIZATION</div>
+            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Develop a prescriptive optimization framework for identifying profitable price, discount and advertising strategies.</p>
+        </div>
+        <div class="premium-card">
+            <div class="card-label" style="color:#2563EB;">OBJECTIVE 5 &nbsp;|&nbsp; EXPERIMENTAL EVALUATION</div>
+            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Evaluate the proposed framework against baseline approaches and conduct ablation experiments to determine component contributions.</p>
+        </div>
+        <div class="premium-card">
+            <div class="card-label" style="color:#2563EB;">OBJECTIVE 6 &nbsp;|&nbsp; DECISION-SUPPORT DASHBOARD</div>
+            <p style="font-size:13px; color:#0F172A; margin:4px 0 0 0;">Develop an interactive decision-support dashboard that converts ML predictions into risk-aware launch decisions and recommendations.</p>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # 4. Proposed Framework Visual Diagram
+    st.markdown("<div class='section-header-title'>🔄 PROPOSED DECISION FRAMEWORK ARCHITECTURE</div>", unsafe_allow_html=True)
+    st.markdown(f'''
+    <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:12px; padding:20px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+        <div style="display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:10px; font-size:12px; font-weight:700;">
+            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">PRODUCT INPUT</span>
+            <span style="color:#94A3B8;">→</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">DATA VALIDATION</span>
+            <span style="color:#94A3B8;">→</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">DEMAND PREDICTION</span>
+            <span style="color:#94A3B8;">→</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">REVENUE ESTIMATION</span>
+            <span style="color:#94A3B8;">→</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">PROFIT PREDICTION</span>
+            <span style="color:#94A3B8;">→</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">CONFORMAL UNCERTAINTY</span>
+        </div>
+        <div style="margin:12px 0 4px 0; color:#94A3B8; font-size:16px;">↓</div>
+        <div style="display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:10px; font-size:12px; font-weight:700;">
+            <span style="background:#ECFDF5; color:#047857; padding:8px 12px; border-radius:8px; border:1px solid #A7F3D0;">BUSINESS RECOMMENDATIONS</span>
+            <span style="color:#94A3B8;">←</span>
+            <span style="background:#ECFDF5; color:#047857; padding:8px 12px; border-radius:8px; border:1px solid #A7F3D0;">LAUNCH DECISION</span>
+            <span style="color:#94A3B8;">←</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">PRESCRIPTIVE OPTIMIZATION</span>
+            <span style="color:#94A3B8;">←</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">BUSINESS SCORE</span>
+            <span style="color:#94A3B8;">←</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:8px 12px; border-radius:8px; border:1px solid #BFDBFE;">RISK ANALYSIS</span>
+        </div>
+    </div>
+    ''', unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # 5. ML Models & Data Source Statistics
+    col_m, col_d = st.columns(2)
+    
+    with col_m:
+        st.markdown("<div class='section-header-title'>🤖 MODELS EVALUATED</div>", unsafe_allow_html=True)
+        st.markdown(f'''
+        <div class="premium-card">
+            <ul style="margin:0; padding-left:20px; font-size:14px; color:#0F172A; line-height:1.8;">
+                <li>Multiple Linear Regression</li>
+                <li>Random Forest Regressor</li>
+                <li>XGBoost Regressor</li>
+                <li>LightGBM Regressor</li>
+                <li>CatBoost Regressor</li>
+                <li>Artificial Neural Network (ANN)</li>
+            </ul>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    with col_d:
+        st.markdown("<div class='section-header-title'>📊 DATA SOURCE STATISTICS</div>", unsafe_allow_html=True)
+        if df_dataset is not None:
+            num_rows = f"{len(df_dataset):,}"
+            num_cols = f"{len(df_dataset.columns)}"
+            sha256 = df_dataset.attrs.get("sha256", "cfff9e65bb9e...")[:16]
+            st.markdown(f'''
+            <div class="premium-card">
+                <div style="font-size:13px; color:#475569; margin-bottom:4px;">DATASET NAME: <b style="color:#0F172A;">Global Superstore 2016</b></div>
+                <div style="font-size:13px; color:#475569; margin-bottom:4px;">DATASET TYPE: <b style="color:#047857; background:#ECFDF5; padding:2px 6px; border-radius:4px;">REAL-WORLD DATA</b></div>
+                <div style="font-size:13px; color:#475569; margin-bottom:4px;">TRANSACTION RECORDS: <b style="color:#0F172A;">{num_rows}</b></div>
+                <div style="font-size:13px; color:#475569; margin-bottom:4px;">COLUMNS / FEATURES: <b style="color:#0F172A;">{num_cols}</b></div>
+                <div style="font-size:11px; color:#64748B; margin-top:6px;">SHA-256 HASH: <code style="background:#F8FAFC; color:#2563EB;">{sha256}...</code></div>
+            </div>
+            ''', unsafe_allow_html=True)
+        else:
+            st.info("Dataset information will be available after the dataset is loaded.")
+
+    st.markdown("---")
+
+    # 6. Research Components & Tech Stack
+    col_c, col_t = st.columns(2)
+    
+    with col_c:
+        st.markdown("<div class='section-header-title'>🔬 RESEARCH COMPONENTS</div>", unsafe_allow_html=True)
+        st.markdown(f'''
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <span style="background:#EFF6FF; color:#2563EB; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #BFDBFE;">Demand & Profit Prediction</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #BFDBFE;">Split Conformal Uncertainty</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #BFDBFE;">Multi-Factor Risk Engine</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #BFDBFE;">0-100 Business Scoring</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #BFDBFE;">Prescriptive Optimization</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #BFDBFE;">What-If Simulator</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #BFDBFE;">Baseline System Evaluation</span>
+            <span style="background:#EFF6FF; color:#2563EB; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #BFDBFE;">Ablation Experiments (A - F)</span>
+            <span style="background:#ECFDF5; color:#047857; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #A7F3D0;">Real-World Dataset Support</span>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    with col_t:
+        st.markdown("<div class='section-header-title'>🛠️ TECHNOLOGY STACK</div>", unsafe_allow_html=True)
+        st.markdown(f'''
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <span style="background:#F8FAFC; color:#0F172A; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #E2E8F0;">Python 3.12</span>
+            <span style="background:#F8FAFC; color:#0F172A; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #E2E8F0;">Pandas</span>
+            <span style="background:#F8FAFC; color:#0F172A; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #E2E8F0;">NumPy</span>
+            <span style="background:#F8FAFC; color:#0F172A; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #E2E8F0;">Scikit-learn</span>
+            <span style="background:#F8FAFC; color:#0F172A; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #E2E8F0;">XGBoost</span>
+            <span style="background:#F8FAFC; color:#0F172A; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #E2E8F0;">LightGBM</span>
+            <span style="background:#F8FAFC; color:#0F172A; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #E2E8F0;">CatBoost</span>
+            <span style="background:#F8FAFC; color:#0F172A; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #E2E8F0;">Streamlit</span>
+            <span style="background:#F8FAFC; color:#0F172A; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; border:1px solid #E2E8F0;">Plotly</span>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # 7. Research Note & Primary CTA Button
+    st.caption("ℹ️ **Research Note**: Research-oriented system using reproducible machine-learning experiments, real-world data support, prediction uncertainty, prescriptive optimization, baseline comparison, and ablation analysis.")
+    
+    st.markdown("<div style='height:16px;'></div>", unsafe_allow_html=True)
+    
+    btn_next = st.button("NEXT → EXPLORE BUSINESS DASHBOARD", use_container_width=True, type="primary")
+    if btn_next:
+        st.session_state["current_page"] = "dashboard"
+        st.rerun()

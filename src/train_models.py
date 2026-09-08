@@ -14,7 +14,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.neural_network import MLPRegressor
 from xgboost import XGBRegressor
 
-from src.data_loader import load_and_validate_data
+from src.data_loader import load_and_validate_data, generate_data_quality_report
 from src.feature_engineering import add_engineered_features, prepare_feature_matrices
 from src.preprocessing import build_preprocessing_pipeline, save_pipeline
 from src.evaluate_models import calculate_metrics
@@ -25,21 +25,14 @@ MODELS_DIR = "models"
 
 def train_and_evaluate_all():
     """
-    Main training workflow:
-    1. Load & validate dataset
-    2. Add engineered features
-    3. Split 70% Train, 15% Val, 15% Test
-    4. Fit ColumnTransformer on Train
-    5. Train 4 regression models for Demand & Profit
-    6. Evaluate on Validation set to pick best model
-    7. Evaluate on Test set for final reporting table
-    8. Save all models, best models, preprocessor, and metrics JSON
+    Main training workflow for Global E-Commerce Sales Dataset | 2021–2024 (10,000 records)
     """
     logger.info("--- Starting Model Training & Evaluation Workflow ---")
     os.makedirs(MODELS_DIR, exist_ok=True)
     
     # 1. Load dataset
     df = load_and_validate_data(DATA_PATH)
+    generate_data_quality_report(df, dataset_name="Global E-Commerce Sales Dataset | 2021–2024", dataset_type="REAL-WORLD DATA")
     df_engineered = add_engineered_features(df)
     
     # Define Targets
