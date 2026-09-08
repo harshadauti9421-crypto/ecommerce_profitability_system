@@ -129,15 +129,17 @@ def render_shap_explainability_section(analysis_result, df_dataset=None):
                 pos_col, neg_col = st.columns(2)
                 with pos_col:
                     st.markdown("### 🟢 Top Positive Factors (Pushing Profit Higher)")
+                    pos_color = COLORS['positive']
                     for f in p_exp["pos_factors"]:
-                        st.markdown(f"- **{f['Feature']}**: <span style='color:#4FC58A; font-weight:700;'>+₹{f['SHAP Value']:,.2f}</span>", unsafe_allow_html=True)
+                        st.markdown(f"- **{f['Feature']}**: <span style='color:{pos_color}; font-weight:700;'>+₹{f['SHAP Value']:,.2f}</span>", unsafe_allow_html=True)
                     if not p_exp["pos_factors"]:
                         st.caption("None identified for this product scenario.")
 
                 with neg_col:
                     st.markdown("### 🔴 Top Negative Factors (Pushing Profit Lower)")
+                    neg_color = COLORS['negative']
                     for f in p_exp["neg_factors"]:
-                        st.markdown(f"- **{f['Feature']}**: <span style='color:#D96570; font-weight:700;'>-₹{abs(f['SHAP Value']):,.2f}</span>", unsafe_allow_html=True)
+                        st.markdown(f"- **{f['Feature']}**: <span style='color:{neg_color}; font-weight:700;'>-₹{abs(f['SHAP Value']):,.2f}</span>", unsafe_allow_html=True)
                     if not p_exp["neg_factors"]:
                         st.caption("None identified for this product scenario.")
 
@@ -160,8 +162,8 @@ def render_shap_explainability_section(analysis_result, df_dataset=None):
                     paper_bgcolor=COLORS["card_bg"],
                     plot_bgcolor=COLORS["card_bg"],
                     font=dict(color=COLORS["text_primary"]),
-                    xaxis=dict(gridcolor="#2A252D", tickfont=dict(color=COLORS["text_secondary"])),
-                    yaxis=dict(gridcolor="#2A252D", tickfont=dict(color=COLORS["text_primary"], size=12)),
+                    xaxis=dict(gridcolor="rgba(255, 255, 255, 0.06)", tickfont=dict(color=COLORS["text_secondary"])),
+                    yaxis=dict(gridcolor="rgba(255, 255, 255, 0.06)", tickfont=dict(color=COLORS["text_primary"], size=12)),
                     height=360
                 )
                 st.plotly_chart(fig_p_shap, use_container_width=True)
