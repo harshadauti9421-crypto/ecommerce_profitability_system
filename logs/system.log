@@ -1207,3 +1207,16 @@
 2026-09-08 16:57:39,045 - ecommerce_system - INFO - -> Artificial Neural Network | Val R2: 0.7079 | Test R2: 0.7098 | Test MAE: 98.56
 2026-09-08 16:57:39,045 - ecommerce_system - INFO - *** WINNING MODEL for PROFIT: 'XGBoost' (Val R2: 0.8283) ***
 2026-09-08 16:57:39,161 - ecommerce_system - INFO - All training complete. Metrics saved to models\model_metrics.json
+2026-09-08 16:58:30,494 - ecommerce_system - INFO - Loading real-world dataset from: data\ecommerce_sales_dataset.csv
+2026-09-08 16:58:30,516 - ecommerce_system - INFO - Dataset SHA-256 Hash: 8c2f0f11ca3c03e1a98d801db19baa87be1a9ce72f4603f622834df27f6a86de
+2026-09-08 16:58:30,671 - ecommerce_system - INFO - Loaded CSV dataset with 10,000 rows and 26 columns.
+2026-09-08 16:58:55,521 - ecommerce_system - INFO - Starting product analysis for: ASUS ZenBook
+2026-09-08 17:00:12,340 - ecommerce_system - INFO - Loading real-world dataset from: data\ecommerce_sales_dataset.csv
+2026-09-08 17:00:12,368 - ecommerce_system - INFO - Dataset SHA-256 Hash: 8c2f0f11ca3c03e1a98d801db19baa87be1a9ce72f4603f622834df27f6a86de
+2026-09-08 17:00:12,536 - ecommerce_system - INFO - Loaded CSV dataset with 10,000 rows and 26 columns.
+2026-09-08 17:00:21,738 - ecommerce_system - INFO - Starting product analysis for: ASUS ZenBook
+2026-09-08 17:01:49,595 - ecommerce_system - INFO - Starting product analysis for: ASUS ZenBook
+2026-09-08 17:01:49,637 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-09-08 17:02:24,996 - ecommerce_system - INFO - Starting product analysis for: ASUS ZenBook
+2026-09-08 17:02:25,064 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl
+2026-09-08 17:02:40,109 - ecommerce_system - INFO - Loaded preprocessing pipeline from models\preprocessing_pipeline.pkl

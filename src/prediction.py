@@ -80,15 +80,21 @@ def run_product_analysis(input_data):
     predicted_profit = float(predicted_profit_raw)
     
     # Financial Calculations
-    selling_price = float(df_input["selling_price"].iloc[0])
-    cost_price = float(df_input["cost_price"].iloc[0])
-    discount_percent = float(df_input["discount_percent"].iloc[0])
-    advertising_cost = float(df_input["advertising_cost"].iloc[0])
-    shipping_cost = float(df_input["shipping_cost"].iloc[0])
-    return_rate = float(df_input["return_rate"].iloc[0])
-    product_rating = float(df_input["product_rating"].iloc[0])
-    competition_level = str(df_input["competition_level"].iloc[0])
-    product_name = str(df_input.get("product_name", pd.Series(["Product"])).iloc[0])
+    selling_price = float(df_engineered["selling_price"].iloc[0])
+    cost_price = float(df_engineered["cost_price"].iloc[0])
+    discount_percent = float(df_engineered["discount_percent"].iloc[0])
+    advertising_cost = float(df_engineered["advertising_cost"].iloc[0])
+    shipping_cost = float(df_engineered["shipping_cost"].iloc[0])
+    return_rate = float(df_engineered["return_rate"].iloc[0])
+    product_rating = float(df_engineered["product_rating"].iloc[0])
+    competition_level = str(df_engineered["competition_level"].iloc[0])
+    
+    if "product_name" in df_input.columns:
+        product_name = str(df_input["product_name"].iloc[0])
+    elif "Product_Name" in df_input.columns:
+        product_name = str(df_input["Product_Name"].iloc[0])
+    else:
+        product_name = "Commercial Product"
     
     net_price = selling_price * (1.0 - discount_percent / 100.0)
     predicted_revenue = round(net_price * predicted_demand, 2)
