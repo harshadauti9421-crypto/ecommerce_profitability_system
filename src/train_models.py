@@ -17,7 +17,7 @@ from xgboost import XGBRegressor
 from src.data_loader import load_and_validate_data, generate_data_quality_report
 from src.feature_engineering import add_engineered_features, prepare_feature_matrices
 from src.preprocessing import build_preprocessing_pipeline, save_pipeline
-from src.evaluate_models import calculate_metrics
+from src.evaluate_models import calculate_metrics, rank_and_select_models
 from utils.helpers import logger
 
 DATA_PATH = os.path.join("data", "ecommerce_sales_dataset.csv")
@@ -72,48 +72,70 @@ def train_and_evaluate_all():
         X_val_trans = preprocessor.transform(X_val)
         X_test_trans = preprocessor.transform(X_test)
         
-        # Define the 4 models
+        # Define supported ML Regressors dynamically
         models = {
             "Multiple Linear Regression": LinearRegression(),
             "Random Forest": RandomForestRegressor(n_estimators=50, max_depth=12, random_state=42, n_jobs=-1),
-            "XGBoost": XGBRegressor(n_estimators=60, max_depth=6, random_state=42, n_jobs=-1, learning_rate=0.1),
-            "Artificial Neural Network": MLPRegressor(hidden_layer_sizes=(64, 32), max_iter=40, batch_size=256, random_state=42)
+            "XGBoost": XGBRegressor(n_estimators=60, max_depth=6, random_state=42, n_jobs=-1, learning_rate=0.1)
         }
-        
-        best_val_r2 = -float("inf")
-        best_model_name = None
-        best_model_obj = None
-        
+
+        try:
+            from lightgbm import LGBMRegressor
+            models["LightGBM"] = LGBMRegressor(n_estimators=60, max_depth=6, random_state=42, verbose=-1)
+        except Exception:
+            pass
+
+        try:
+            from catboost import CatBoostRegressor
+            models["CatBoost"] = CatBoostRegressor(iterations=60, depth=6, random_state=42, verbose=0)
+        except Exception:
+            pass
+
+        models["Artificial Neural Network"] = MLPRegressor(hidden_layer_sizes=(64, 32), max_iter=40, batch_size=256, random_state=42)
+
         target_trained_dict = {}
         
         for name, model in models.items():
-            logger.info(f"Training {name}...")
-            model.fit(X_train_trans, y_train)
-            
-            # Predict on Val and Test
-            val_preds = model.predict(X_val_trans)
-            test_preds = model.predict(X_test_trans)
-            
-            val_metrics = calculate_metrics(y_val, val_preds)
-            test_metrics = calculate_metrics(y_test, test_preds)
-            
-            logger.info(f"-> {name} | Val R2: {val_metrics['R2']} | Test R2: {test_metrics['R2']} | Test MAE: {test_metrics['MAE']}")
-            
-            overall_metrics[target_key]["models"][name] = {
-                "val": val_metrics,
-                "test": test_metrics
-            }
-            
-            target_trained_dict[name] = model
-            
-            # Model selection based on Validation R2
-            if val_metrics["R2"] > best_val_r2:
-                best_val_r2 = val_metrics["R2"]
-                best_model_name = name
-                best_model_obj = model
+            try:
+                logger.info(f"Training {name}...")
+                model.fit(X_train_trans, y_train)
                 
-        logger.info(f"*** WINNING MODEL for {target_key.upper()}: '{best_model_name}' (Val R2: {best_val_r2}) ***")
-        overall_metrics[target_key]["best_model"] = best_model_name
+                # Predict on Val and Test
+                val_preds = model.predict(X_val_trans)
+                test_preds = model.predict(X_test_trans)
+                
+                val_metrics = calculate_metrics(y_val, val_preds)
+                test_metrics = calculate_metrics(y_test, test_preds)
+                
+                logger.info(f"-> {name} | Val R2: {val_metrics['R2']} | Test R2: {test_metrics['R2']} | Test MAE: {test_metrics['MAE']} | Test RMSE: {test_metrics['RMSE']}")
+                
+                overall_metrics[target_key]["models"][name] = {
+                    "val": val_metrics,
+                    "test": test_metrics
+                }
+                
+                target_trained_dict[name] = model
+            except Exception as train_err:
+                logger.error(f"Failed training for model {name}: {str(train_err)}")
+                overall_metrics[target_key]["models"][name] = {
+                    "status": "Failed",
+                    "error": str(train_err)
+                }
+
+        # Select winner dynamically using strict 4-tier decision hierarchy
+        best_model_name, selection_reason, _ = rank_and_select_models(overall_metrics[target_key]["models"])
+        
+        if best_model_name is not None and best_model_name in target_trained_dict:
+            best_model_obj = target_trained_dict[best_model_name]
+            logger.info(f"*** WINNING MODEL for {target_key.upper()}: '{best_model_name}' ***")
+            logger.info(f"    Selection Reason: {selection_reason}")
+            overall_metrics[target_key]["best_model"] = best_model_name
+            overall_metrics[target_key]["selection_reason"] = selection_reason
+        else:
+            best_model_obj = None
+            logger.error(f"No valid winning model could be selected for {target_key.upper()}.")
+            overall_metrics[target_key]["best_model"] = None
+            overall_metrics[target_key]["selection_reason"] = "No valid model evaluated."
         
         # Compute empirical conformal prediction quantiles on validation set for PROFIT
         val_preds_win = best_model_obj.predict(X_val_trans)

@@ -43,6 +43,34 @@
           "MAPE": 99.89
         }
       },
+      "LightGBM": {
+        "val": {
+          "R2": 0.8031,
+          "MAE": 56.81,
+          "RMSE": 169.73,
+          "MAPE": 231.56
+        },
+        "test": {
+          "R2": 0.8031,
+          "MAE": 64.5,
+          "RMSE": 222.3,
+          "MAPE": 105.02
+        }
+      },
+      "CatBoost": {
+        "val": {
+          "R2": 0.804,
+          "MAE": 60.04,
+          "RMSE": 169.35,
+          "MAPE": 222.32
+        },
+        "test": {
+          "R2": 0.78,
+          "MAE": 68.13,
+          "RMSE": 235.0,
+          "MAPE": 132.0
+        }
+      },
       "Artificial Neural Network": {
         "val": {
           "R2": 0.7079,
@@ -58,14 +86,15 @@
         }
       }
     },
-    "best_model": "XGBoost"
+    "best_model": "LightGBM",
+    "selection_reason": "Selected because it achieved the lowest Test RMSE (222.30 vs runner-up 'Random Forest' 223.19)."
   },
   "conformal": {
     "profit": {
-      "q_80": 49.86914132690431,
-      "q_90": 111.73553203582773,
-      "q_95": 219.13815991210922,
-      "std_residual": 158.4560463265561
+      "q_80": 52.33337173018869,
+      "q_90": 112.00953744945608,
+      "q_95": 228.28279181053307,
+      "std_residual": 169.672957422833
     }
   }
 }
