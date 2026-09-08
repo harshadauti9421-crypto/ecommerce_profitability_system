@@ -121,196 +121,173 @@ inject_custom_styles()
 
 
 # Initialize Session State Page Navigation
-
 if "current_page" not in st.session_state:
-
-    st.session_state["current_page"] = "project_info"
+    st.session_state["current_page"] = "dashboard"
 
 if "analysis_result" not in st.session_state:
-
     st.session_state["analysis_result"] = None
 
 if "current_input" not in st.session_state:
-
     st.session_state["current_input"] = None
 
 if "last_input_tuple" not in st.session_state:
-
     st.session_state["last_input_tuple"] = None
 
-
-
 # Pre-initialize widget keys safely
-
 default_keys = {
-
     "p_cat": list(CATEGORY_SUBCATEGORIES.keys())[0],
-
     "p_subcat": list(CATEGORY_SUBCATEGORIES.values())[0][0],
-
     "p_sp": 3499.0,
-
     "p_cp": 1400.0,
-
     "p_disc": 15.0,
-
     "p_ad": 12000.0,
-
     "p_ship": 120.0,
-
     "p_ret": 6.0,
-
     "p_rating": 4.4,
-
     "p_season": SEASONS[0],
-
     "p_channel": MARKETING_CHANNELS[0],
-
     "p_comp": COMPETITION_LEVELS[1],
-
     "p_plat": PLATFORMS[0],
-
     "p_reg": REGIONS[0],
-
     "p_pay": PAYMENT_METHODS[0]
-
 }
-
 for dk, dv in default_keys.items():
-
     if dk not in st.session_state:
-
         st.session_state[dk] = dv
 
-
-
 # Cache real dataset loading
-
 @st.cache_data
-
 def load_cached_real_dataset():
-
     try:
-
         return load_and_validate_data()
-
     except Exception:
-
         return None
-
-
 
 df_dataset = load_cached_real_dataset()
 
+# ==============================================================================
+# GLOBAL SIDEBAR NAVIGATION PANEL
+# ==============================================================================
+st.sidebar.markdown(f'''
+<div style="padding: 6px 0 16px 0; border-bottom: 1px solid {COLORS['border']}; margin-bottom: 16px;">
+    <h2 style="font-size: 20px; font-weight: 800; color: {COLORS['text_primary']}; margin: 0; display: flex; align-items: center; gap: 8px;">
+        ⚡ AI E-Commerce
+    </h2>
+    <p style="font-size: 13px; color: {COLORS['purple']}; font-weight: 700; margin: 2px 0 0 0; letter-spacing: 0.04em;">
+        Profitability Intelligence
+    </p>
+</div>
+''', unsafe_allow_html=True)
 
+nav_options = [
+    "Business Dashboard",
+    "Product Launch Analyzer",
+    "Product Analysis",
+    "Profit Prediction",
+    "Model Comparison",
+    "Explainability",
+    "Price Optimization",
+    "Risk Analysis",
+    "Research / Experiments",
+    "Prediction History",
+    "Project Overview",
+    "Settings"
+]
+
+# Sync radio index with current_page
+nav_index_map = {
+    "dashboard": 0,
+    "analyzer": 1,
+    "product_analysis": 2,
+    "prediction": 3,
+    "model_comparison": 4,
+    "explainability": 5,
+    "optimization": 6,
+    "risk": 7,
+    "research": 8,
+    "history": 9,
+    "project_info": 10,
+    "settings": 11
+}
+current_nav_index = nav_index_map.get(st.session_state.get("current_page", "dashboard"), 0)
+
+nav_choice = st.sidebar.radio(
+    "NAVIGATION",
+    nav_options,
+    index=current_nav_index,
+    key="global_sidebar_nav"
+)
+
+# Update session state based on sidebar selection
+nav_page_map = {
+    "Business Dashboard": "dashboard",
+    "Product Launch Analyzer": "analyzer",
+    "Product Analysis": "product_analysis",
+    "Profit Prediction": "prediction",
+    "Model Comparison": "model_comparison",
+    "Explainability": "explainability",
+    "Price Optimization": "optimization",
+    "Risk Analysis": "risk",
+    "Research / Experiments": "research",
+    "Prediction History": "history",
+    "Project Overview": "project_info",
+    "Settings": "settings"
+}
+selected_page = nav_page_map.get(nav_choice, "dashboard")
+if st.session_state["current_page"] != selected_page:
+    st.session_state["current_page"] = selected_page
+
+st.sidebar.markdown("---")
+st.sidebar.markdown(f'''
+<div style="font-size: 13px; color: {COLORS['text_secondary']}; display: flex; flex-direction: column; gap: 10px; padding: 4px 0 12px 0;">
+    <div style="cursor: pointer; display: flex; align-items: center; gap: 8px;">⚙️ <b>Settings</b></div>
+    <div style="cursor: pointer; display: flex; align-items: center; gap: 8px;">❓ <b>Help / Documentation</b></div>
+</div>
+''', unsafe_allow_html=True)
+
+st.sidebar.markdown("### ⚙️ System Control Center")
+if st.sidebar.button("🔄 Retrain All 6 ML Models", use_container_width=True):
+    with st.spinner("Training 6 ML Models on 10,000 real records..."):
+        metrics = train_and_evaluate_all()
+        st.sidebar.success("✅ Models retrained & conformal quantiles saved!")
+
+auto_run = st.sidebar.checkbox("⚡ Real-Time Scenario Sync", value=True)
 
 # Top Global Page Navigation Header Bar
-
 st.markdown("<div class='top-nav-bar-container'>", unsafe_allow_html=True)
-
 p_col1, p_col2, p_col3 = st.columns(3)
-
 with p_col1:
-
     btn_p1_type = "primary" if st.session_state["current_page"] == "project_info" else "secondary"
-
-    if st.button("📄 PAGE 1: PROJECT INFORMATION", use_container_width=True, type=btn_p1_type):
-
+    if st.button("📄 PAGE 1: PROJECT OVERVIEW", use_container_width=True, type=btn_p1_type):
         st.session_state["current_page"] = "project_info"
-
         st.rerun()
-
-
 
 with p_col2:
-
     btn_p2_type = "primary" if st.session_state["current_page"] == "dashboard" else "secondary"
-
     if st.button("📊 PAGE 2: BUSINESS DASHBOARD", use_container_width=True, type=btn_p2_type):
-
         st.session_state["current_page"] = "dashboard"
-
         st.rerun()
-
-
 
 with p_col3:
-
     btn_p3_type = "primary" if st.session_state["current_page"] == "analyzer" else "secondary"
-
     if st.button("🚀 PAGE 3: PRODUCT LAUNCH ANALYZER", use_container_width=True, type=btn_p3_type):
-
         st.session_state["current_page"] = "analyzer"
-
         st.rerun()
-
-
 
 st.markdown("</div>", unsafe_allow_html=True)
 
-
-
 # ==============================================================================
-
-# PAGE 1: PROJECT INFORMATION LANDING PAGE
-
+# PAGE ROUTING & DISPLAY
 # ==============================================================================
-
 if st.session_state["current_page"] == "project_info":
-
     render_project_info_landing_page(df_dataset)
 
-
-
-# ==============================================================================
-
-# PAGE 3: PRODUCT LAUNCH ANALYZER
-
-# ==============================================================================
-
 elif st.session_state["current_page"] == "analyzer":
-
     render_product_launch_analyzer_page()
 
-
-
-# ==============================================================================
-
-# PAGE 2: MAIN BUSINESS DASHBOARD
-
-# ==============================================================================
-
 else:
-    # Render Header Banner
+    # Render Main Dashboard Top Header Banner
     render_top_header()
-
-    # Premium Sidebar Navigation Panel
-    st.sidebar.markdown(f'''
-    <div style="padding: 6px 0 16px 0; border-bottom: 1px solid {COLORS['border']}; margin-bottom: 16px;">
-        <h2 style="font-size: 20px; font-weight: 800; color: {COLORS['text_primary']}; margin: 0; display: flex; align-items: center; gap: 8px;">
-            ⚡ AI E-Commerce
-        </h2>
-        <p style="font-size: 13px; color: {COLORS['purple']}; font-weight: 700; margin: 2px 0 0 0; letter-spacing: 0.04em;">
-            Profitability Intelligence
-        </p>
-    </div>
-    ''', unsafe_allow_html=True)
-
-    nav_choice = st.sidebar.radio(
-        "NAVIGATION",
-        [
-            "Business Dashboard",
-            "Product Analysis",
-            "Profit Prediction",
-            "Model Comparison",
-            "Explainability",
-            "Price Optimization",
-            "Risk Analysis",
-            "Research / Experiments",
-            "Prediction History",
-            "Settings"
-        ]
-    )
 
     st.sidebar.markdown("---")
     st.sidebar.markdown(f'''
