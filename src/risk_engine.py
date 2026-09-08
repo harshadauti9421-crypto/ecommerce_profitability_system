@@ -9,11 +9,12 @@ def analyze_product_risk(
     shipping_cost,
     discount_percent,
     return_rate,
-    competition_level
+    competition_level,
+    uncertainty_dict=None
 ):
     """
-    Calculate dynamic multi-factor risk score and extract positive/negative drivers.
-    Does NOT use random numbers. Fully deterministic based on business financial metrics.
+    Calculate dynamic multi-factor risk score incorporating prediction uncertainty & downside loss probability.
+    Does NOT use random numbers. Fully deterministic based on business financial metrics & conformal prediction intervals.
     """
     positive_factors = []
     negative_factors = []
@@ -79,6 +80,33 @@ def analyze_product_risk(
         negative_factors.append("High market competition may trigger price wars.")
     elif competition_level == "Low":
         positive_factors.append("Low competition offers market capture opportunity.")
+
+    # 8. Prediction Uncertainty & Downside Risk Incorporation
+    if uncertainty_dict:
+        loss_prob = uncertainty_dict.get("loss_probability", 0.0)
+        loss_prob_pct = uncertainty_dict.get("loss_probability_pct", loss_prob * 100.0)
+        profit_interval = uncertainty_dict.get("profit", {})
+        lower_bound = profit_interval.get("lower_bound", predicted_profit)
+        interval_width = profit_interval.get("interval_width", 0.0)
+        
+        if loss_prob > 0.30:
+            risk_score += 25
+            negative_factors.append(f"High risk of operating loss: P(Profit < 0) = {loss_prob_pct:.1f}%.")
+        elif loss_prob > 0.10:
+            risk_score += 15
+            negative_factors.append(f"Moderate risk of operating loss: P(Profit < 0) = {loss_prob_pct:.1f}%.")
+        else:
+            positive_factors.append(f"Low downside risk: P(Profit < 0) = {loss_prob_pct:.1f}%.")
+            
+        if lower_bound < 0:
+            risk_score += 15
+            negative_factors.append(f"Lower 90% conformal bound is negative (₹{lower_bound:,.2f}).")
+        else:
+            positive_factors.append(f"Lower 90% conformal profit bound remains positive (₹{lower_bound:,.2f}).")
+            
+        if interval_width > abs(predicted_profit) * 1.5 and predicted_profit > 0:
+            risk_score += 15
+            negative_factors.append(f"High prediction volatility (90% CI width: ₹{interval_width:,.2f}).")
 
     # Categorize final risk level
     if risk_score <= 25:

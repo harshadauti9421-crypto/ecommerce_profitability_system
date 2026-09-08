@@ -121,6 +121,23 @@ def train_and_evaluate_all():
         logger.info(f"*** WINNING MODEL for {target_key.upper()}: '{best_model_name}' (Val R2: {best_val_r2}) ***")
         overall_metrics[target_key]["best_model"] = best_model_name
         
+        # Compute empirical conformal prediction quantiles on validation set
+        val_preds_win = best_model_obj.predict(X_val_trans)
+        val_residuals = np.abs(y_val - val_preds_win)
+        q_80 = float(np.percentile(val_residuals, 80))
+        q_90 = float(np.percentile(val_residuals, 90))
+        q_95 = float(np.percentile(val_residuals, 95))
+        std_res = float(np.std(y_val - val_preds_win))
+        
+        if "conformal" not in overall_metrics:
+            overall_metrics["conformal"] = {}
+        overall_metrics["conformal"][target_key] = {
+            "q_80": q_80,
+            "q_90": q_90,
+            "q_95": q_95,
+            "std_residual": std_res
+        }
+
         # Save winning model and all models
         if target_key == "demand":
             joblib.dump(best_model_obj, os.path.join(MODELS_DIR, "best_demand_model.pkl"))
@@ -129,6 +146,12 @@ def train_and_evaluate_all():
             joblib.dump(best_model_obj, os.path.join(MODELS_DIR, "best_profit_model.pkl"))
             joblib.dump(target_trained_dict, os.path.join(MODELS_DIR, "all_profit_models.pkl"))
             
+    # Save conformal quantiles JSON
+    conformal_path = os.path.join(MODELS_DIR, "conformal_quantiles.json")
+    with open(conformal_path, "w", encoding="utf-8") as f:
+        json.dump(overall_metrics.get("conformal", {}), f, indent=2)
+    logger.info(f"Conformal prediction quantiles saved to {conformal_path}")
+
     # Save overall metrics JSON
     metrics_path = os.path.join(MODELS_DIR, "model_metrics.json")
     with open(metrics_path, "w", encoding="utf-8") as f:

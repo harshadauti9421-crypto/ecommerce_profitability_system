@@ -105,7 +105,17 @@ def run_product_analysis(input_data):
     else:
         profit_margin = 0.0
         
-    # Risk Analysis
+    # Prediction Uncertainty
+    from src.uncertainty import estimate_uncertainty_all
+    uncertainty_res = estimate_uncertainty_all(
+        point_demand=predicted_demand,
+        point_profit=predicted_profit,
+        selling_price=selling_price,
+        discount_percent=discount_percent,
+        confidence=0.90
+    )
+
+    # Risk Analysis (incorporating uncertainty & downside risk)
     risk_res = analyze_product_risk(
         predicted_demand=predicted_demand,
         predicted_revenue=predicted_revenue,
@@ -117,7 +127,8 @@ def run_product_analysis(input_data):
         shipping_cost=shipping_cost,
         discount_percent=discount_percent,
         return_rate=return_rate,
-        competition_level=competition_level
+        competition_level=competition_level,
+        uncertainty_dict=uncertainty_res
     )
     
     # Business Score
@@ -169,6 +180,16 @@ def run_product_analysis(input_data):
         top_recommendation=top_rec
     )
     
+    financials = {
+        "predicted_demand": predicted_demand,
+        "predicted_revenue": predicted_revenue,
+        "predicted_profit": predicted_profit,
+        "net_profit_margin": profit_margin,
+        "selling_price": selling_price,
+        "cost_price": cost_price,
+        "discount_percent": discount_percent
+    }
+
     return {
         "product_name": product_name,
         "predicted_demand": predicted_demand,
@@ -176,10 +197,13 @@ def run_product_analysis(input_data):
         "predicted_profit": predicted_profit,
         "profit_margin": profit_margin,
         "risk_analysis": risk_res,
+        "risk": risk_res,
         "business_score": score_res,
         "launch_decision": decision_res,
         "recommendations": recommendations,
         "conclusion": conclusion,
+        "uncertainty": uncertainty_res,
+        "financials": financials,
         "X_input": X_input,
         "X_transformed": X_transformed
     }

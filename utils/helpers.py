@@ -67,10 +67,18 @@ def save_prediction_to_history(record, history_file_path):
                 except json.JSONDecodeError:
                     history = []
         
-        # Add timestamp
-        record_copy = dict(record)
-        record_copy["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        history.insert(0, record_copy) # newest first
+        # Filter out non-serializable fields (DataFrame, ndarray) before JSON dumping
+        import pandas as pd
+        import numpy as np
+        clean_record = {}
+        for k, v in record.items():
+            if k in ["X_input", "X_transformed"]:
+                continue
+            if isinstance(v, (pd.DataFrame, pd.Series, np.ndarray)):
+                continue
+            clean_record[k] = v
+        clean_record["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        history.insert(0, clean_record) # newest first
         
         # Keep maximum 100 entries
         history = history[:100]
