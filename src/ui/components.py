@@ -3,7 +3,7 @@ import plotly.graph_objects as go
 from src.ui.theme import COLORS, DECISION_CONFIG
 
 def render_top_header(dataset_name="Global Superstore 2016", num_records="51,290", sha256_hash="cfff9e65bb9e..."):
-    """Render Modern Enterprise SaaS top header banner with live dataset status badge."""
+    """Render Modern Enterprise SaaS top header banner with live dataset status badge in Premium Dark Theme."""
     st.markdown(f'''
     <div class="top-header-container">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
@@ -11,12 +11,12 @@ def render_top_header(dataset_name="Global Superstore 2016", num_records="51,290
                 <h1 class="top-header-title">AI E-COMMERCE PROFITABILITY INTELLIGENCE</h1>
                 <p class="top-header-subtitle">AI-powered product profitability & business decision intelligence</p>
                 <div class="status-pill">
-                    <span>●</span> REAL-WORLD DATA &nbsp;|&nbsp; {dataset_name} ({num_records} transaction records)
+                    <span style="color:{COLORS['primary']};">●</span> REAL-WORLD DATA &nbsp;|&nbsp; {dataset_name} ({num_records} transaction records)
                 </div>
             </div>
             <div style="text-align:right;">
-                <span style="font-size:11px; color:#64748B; font-weight:600;">DATASET SHA-256</span><br>
-                <code style="font-size:11px; background:#F8FAFC; padding:3px 8px; border-radius:6px; border:1px solid #E2E8F0; color:#2563EB; font-weight:700;">{sha256_hash[:16]}...</code>
+                <span style="font-size:11px; color:{COLORS['text_secondary']}; font-weight:600;">DATASET SHA-256</span><br>
+                <code style="font-size:11px; background:{COLORS['input_bg']}; padding:3px 8px; border-radius:6px; border:1px solid {COLORS['border']}; color:{COLORS['primary']}; font-weight:700;">{sha256_hash[:16]}...</code>
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@ def render_top_header(dataset_name="Global Superstore 2016", num_records="51,290
 def render_hero_launch_card(decision_res, risk_res, profit_val=0.0, score_val=0):
     """
     Render Executive Hero Launch Decision Card (🟢 LAUNCH / 🟡 MODIFY / 🔴 DO NOT LAUNCH)
-    along with Business Score, Risk, and Expected Profit.
+    along with Business Score, Risk, and Expected Profit in Premium Dark Theme.
     """
     decision = decision_res.get("decision", "🔴 DO NOT LAUNCH")
     config = DECISION_CONFIG.get(decision, DECISION_CONFIG["🔴 DO NOT LAUNCH"])
@@ -41,12 +41,12 @@ def render_hero_launch_card(decision_res, risk_res, profit_val=0.0, score_val=0)
                     <span>{config['icon']}</span> {decision.replace("🟢 ", "").replace("🟡 ", "").replace("🔴 ", "")}
                 </h2>
             </div>
-            <div style="display:flex; gap:16px; background-color:#FFFFFF; border:1px solid {config['border_color']}; padding:12px 20px; border-radius:10px; text-align:center; box-shadow:0 2px 8px rgba(15,23,42,0.03);">
+            <div style="display:flex; gap:16px; background-color:{COLORS['input_bg']}; border:1px solid {COLORS['border']}; padding:12px 20px; border-radius:12px; text-align:center; box-shadow:0 4px 16px rgba(0,0,0,0.3);">
                 <div>
                     <span style="font-size:11px; font-weight:600; color:{COLORS['text_secondary']};">EXPECTED PROFIT</span><br>
-                    <span style="font-size:18px; font-weight:800; color:{COLORS['positive']};">${profit_val:,.2f}</span>
+                    <span style="font-size:18px; font-weight:800; color:{COLORS['positive']};">₹{profit_val:,.2f}</span>
                 </div>
-                <div style="border-left:1px solid #E2E8F0; padding-left:16px;">
+                <div style="border-left:1px solid {COLORS['border']}; padding-left:16px;">
                     <span style="font-size:11px; font-weight:600; color:{COLORS['text_secondary']};">BUSINESS SCORE</span><br>
                     <span style="font-size:18px; font-weight:800; color:{COLORS['primary']};">{score_val} / 100</span>
                 </div>
@@ -56,7 +56,7 @@ def render_hero_launch_card(decision_res, risk_res, profit_val=0.0, score_val=0)
     ''', unsafe_allow_html=True)
 
 def render_business_score_gauge(score_res):
-    """Render Radial Business Score Gauge (0 - 100) for Light White Enterprise Background."""
+    """Render Radial Business Score Gauge (0 - 100) for Premium Dark Theme Background."""
     score = score_res.get("score", 0)
     label = score_res.get("label", "Moderate")
     breakdown = score_res.get("breakdown", {})
@@ -79,27 +79,27 @@ def render_business_score_gauge(score_res):
         gauge={
             'axis': {'range': [None, 100], 'tickwidth': 1, 'tickcolor': COLORS['border']},
             'bar': {'color': score_color, 'thickness': 0.3},
-            'bgcolor': "#FFFFFF",
+            'bgcolor': COLORS['card_bg'],
             'bordercolor': COLORS['border'],
             'steps': [
-                {'range': [0, 50], 'color': '#FEF2F2'},
-                {'range': [50, 65], 'color': '#FFFBEB'},
-                {'range': [65, 80], 'color': '#EFF6FF'},
-                {'range': [80, 100], 'color': '#ECFDF5'}
+                {'range': [0, 50], 'color': COLORS['negative_bg']},
+                {'range': [50, 65], 'color': COLORS['warning_bg']},
+                {'range': [65, 80], 'color': COLORS['card_secondary']},
+                {'range': [80, 100], 'color': COLORS['positive_bg']}
             ]
         }
     ))
     fig_gauge.update_layout(
         height=220,
         margin=dict(l=20, r=20, t=40, b=20),
-        paper_bgcolor="#FFFFFF",
-        plot_bgcolor="#FFFFFF"
+        paper_bgcolor=COLORS['card_bg'],
+        plot_bgcolor=COLORS['card_bg']
     )
     
     return fig_gauge, breakdown
 
 def render_recommendation_cards(recommendations):
-    """Render Actionable AI Recommendation Cards grouped by category for Light Enterprise Theme."""
+    """Render Actionable AI Recommendation Cards grouped by category for Dark Investment Theme."""
     st.markdown("<div class='section-header-title'>💡 AI BUSINESS ACTION PLAN</div>", unsafe_allow_html=True)
     
     for i, r in enumerate(recommendations):
@@ -110,3 +110,4 @@ def render_recommendation_cards(recommendations):
             <div class="rec-text">💡 {r}</div>
         </div>
         ''', unsafe_allow_html=True)
+
