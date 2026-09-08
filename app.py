@@ -45,6 +45,7 @@ from src.data_loader import (
 )
 
 from src.train_models import train_and_evaluate_all, MODELS_DIR, DATA_PATH
+from src.evaluate_models import rank_and_select_models
 
 from src.prediction import run_product_analysis, simulate_price_sensitivity
 
@@ -239,8 +240,8 @@ st.sidebar.markdown(f'''
 ''', unsafe_allow_html=True)
 
 st.sidebar.markdown("### ⚙️ System Control Center")
-if st.sidebar.button("🔄 Retrain All 6 ML Models", use_container_width=True, key="global_retrain_models_btn"):
-    with st.spinner("Training 6 ML Models on 10,000 real records..."):
+if st.sidebar.button("🔄 Retrain All ML Models", use_container_width=True, key="global_retrain_models_btn"):
+    with st.spinner("Training ML Models on real records..."):
         metrics = train_and_evaluate_all()
         st.sidebar.success("✅ Models retrained & conformal quantiles saved!")
 
@@ -727,40 +728,52 @@ else:
                 metrics = json.load(f)
             
             p_models = metrics.get("profit", {}).get("models", {})
-            if p_models:
-                sorted_p = sorted(
-                    p_models.items(),
-                    key=lambda item: (
-                        item[1]["test"]["RMSE"],
-                        item[1]["test"]["MAE"],
-                        -item[1]["test"]["R2"],
-                        abs(item[1]["val"]["R2"] - item[1]["test"]["R2"])
-                    )
-                )
-                p_best = metrics.get("profit", {}).get("best_model") or sorted_p[0][0]
-            else:
-                p_best = "Random Forest"
             
-            st.success(f"🏆 **WINNING PROFIT PREDICTION MODEL**: **'{p_best}'** (Trained & Evaluated on 6 ML Regressors)")
+            # Dynamically calculate winner via strict 4-tier decision hierarchy
+            p_best, p_reason, p_ranked = rank_and_select_models(p_models)
+            
+            num_eval_models = len(p_ranked) if p_ranked else len(p_models)
+            
+            if p_best is not None:
+                st.success(f"🏆 **WINNING PROFIT PREDICTION MODEL**: **'{p_best}'** (Trained & Evaluated on {num_eval_models} ML Regressors)")
 
-            p_rows = []
-            for name, r_data in p_models.items():
-                p_rows.append({
-                    "Model": name,
-                    "Validation R²": round(r_data["val"]["R2"], 4),
-                    "Test R²": round(r_data["test"]["R2"], 4),
-                    "MAE (₹)": round(r_data["test"]["MAE"], 2),
-                    "RMSE (₹)": round(r_data["test"]["RMSE"], 2),
-                    "Status": "🏆 Best Model" if name == p_best else "Evaluated"
-                })
-            df_p_models = pd.DataFrame(p_rows)
-            st.dataframe(df_p_models, hide_index=True, use_container_width=True)
-            
-            st.info("ℹ️ **Best Model Selection Criterion**: Primary: Lowest Test RMSE → Secondary: Lowest Test MAE → Tertiary: Highest Test R² → Quaternary: Lowest Overfitting Gap. All 6 models evaluated on exact same test set.")
-            
-            if not df_p_models.empty:
-                fig_p = build_model_performance_chart(df_p_models)
-                st.plotly_chart(fig_p, use_container_width=True)
+                p_rows = []
+                for rec in p_ranked:
+                    m_name = rec["model_name"]
+                    p_rows.append({
+                        "Model": m_name,
+                        "Validation R²": round(rec["val_r2"], 4),
+                        "Test R²": round(rec["test_r2"], 4),
+                        "MAE (₹)": round(rec["test_mae"], 2),
+                        "RMSE (₹)": round(rec["test_rmse"], 2),
+                        "Overfitting Gap": round(rec["overfitting_gap"], 4),
+                        "Status": "🏆 Best Model" if m_name == p_best else "Evaluated"
+                    })
+                
+                # Include failed or skipped models if any exist
+                for m_name, m_info in p_models.items():
+                    if not any(r["model_name"] == m_name for r in p_ranked):
+                        status_str = m_info.get("status") or "Failed"
+                        p_rows.append({
+                            "Model": m_name,
+                            "Validation R²": None,
+                            "Test R²": None,
+                            "MAE (₹)": None,
+                            "RMSE (₹)": None,
+                            "Overfitting Gap": None,
+                            "Status": status_str
+                        })
+
+                df_p_models = pd.DataFrame(p_rows)
+                st.dataframe(df_p_models, hide_index=True, use_container_width=True)
+                
+                st.info(f"ℹ️ **Best Model Selection Hierarchy**: Primary: Lowest Test RMSE → Secondary: Lowest Test MAE → Tertiary: Highest Test R² → Quaternary: Lowest Overfitting Gap.\n\n📌 **Selection Rationale**: {p_reason}\n\nAll {num_eval_models} models evaluated on exact same held-out test set.")
+                
+                if not df_p_models.empty:
+                    fig_p = build_model_performance_chart(df_p_models)
+                    st.plotly_chart(fig_p, use_container_width=True)
+            else:
+                st.warning("⚠️ No valid model available for selection. Please check model training and evaluation results.")
 
     # --------------------------------------------------------------------------
     # MODULE 5: EXPLAINABILITY (WHY THIS PREDICTION?)
@@ -898,12 +911,12 @@ else:
         st.markdown("<div class='section-header-title'>⚙️ SYSTEM SETTINGS & MODEL RE-TRAINING CONTROL CENTER</div>", unsafe_allow_html=True)
         
         st.markdown("### 🤖 ML Pipeline Re-Training")
-        st.write("Click below to retrain all 6 ML Regressors on the live dataset records and update conformal prediction bounds.")
+        st.write("Click below to retrain all ML Regressors on the live dataset records and update conformal prediction bounds.")
         
-        if st.button("🔄 Retrain All 6 ML Models", type="primary"):
-            with st.spinner("Training 6 ML Models on 10,000 real records..."):
+        if st.button("🔄 Retrain All ML Models", type="primary"):
+            with st.spinner("Training ML Models on real records..."):
                 metrics = train_and_evaluate_all()
-                st.success("✅ All 6 ML models retrained and saved successfully!")
+                st.success("✅ All ML models retrained and saved successfully!")
                 
         st.markdown("---")
         st.markdown("### 📊 Dataset Integrity & Info")
