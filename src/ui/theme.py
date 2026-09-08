@@ -1,51 +1,56 @@
 """
 Centralized Theme & Semantic Color System
-Sky Blue Enterprise AI Business Intelligence Palette
+Premium Dark Investment Dashboard Palette
 """
 
 COLORS = {
-    "primary": "#0284C7",        # Sky Blue Primary Accent (Sky 600)
-    "primary_dark": "#0369A1",   # Deep Sky Blue (Sky 700)
-    "primary_light": "#E0F2FE",  # Soft Sky Blue Tint (Sky 100)
-    "background_light": "#F0F9FF",# Soft Sky Blue Main Canvas Background (Sky 50)
-    "card_bg": "#FFFFFF",        # Pure White Elevated Card Surface
-    "sidebar_bg": "#E0F2FE",     # Light Sky Blue Sidebar (Sky 100)
-    "border": "#BAE6FD",         # Subtle Sky Slate Border (Sky 200)
-    "text_primary": "#0F172A",   # Deep Slate 900 / Dark Navy
-    "text_secondary": "#0369A1", # Muted Sky Navy
-    "text_muted": "#64748B",     # Dimmed Slate 400
-    "positive": "#10B981",       # Emerald Green
-    "positive_bg": "#ECFDF5",    # Soft Green Tint
-    "warning": "#F59E0B",        # Amber Gold
-    "warning_bg": "#FFFBEB",    # Soft Amber Tint
-    "negative": "#EF4444",       # Rose Red
-    "negative_bg": "#FEF2F2",    # Soft Red Tint
-    "neutral": "#64748B"         # Slate 500
+    "primary": "#C58BB9",        # Soft Lavender / Pink Primary Accent
+    "primary_hover": "#D7A6CA",  # Accent Hover
+    "primary_dark": "#9A658E",   # Deep Lavender
+    "primary_light": "#1C1820",  # Secondary Card Tint
+    "background_main": "#08070A",# Primary Background (Almost-Black)
+    "sidebar_bg": "#0D0B10",     # Dark Sidebar
+    "card_bg": "#151217",        # Dark Charcoal Card Surface
+    "card_secondary": "#1C1820",   # Secondary Card Surface
+    "input_bg": "#100E13",       # Input Field Background
+    "border": "#3A303B",         # Subtle Charcoal/Lavender Border
+    "muted_purple": "#806A7D",   # Muted Purple Accent
+    "text_primary": "#F5F0F5",   # Crisp Light Typography
+    "text_secondary": "#A9A1AA", # Muted Gray-Purple Secondary Text
+    "text_muted": "#806A7D",     # Muted Text
+    "positive": "#4FC58A",       # Success / Profit Green
+    "positive_bg": "#0E2419",    # Dark Green Tint
+    "warning": "#D6B36A",        # Warm Gold / Warning
+    "warning_bg": "#241D0E",     # Dark Gold Tint
+    "negative": "#D96570",       # Loss / Negative Red
+    "negative_bg": "#261114",    # Dark Red Tint
+    "neutral": "#806A7D"         # Neutral Purple Slate
 }
 
 DECISION_CONFIG = {
     "🟢 LAUNCH": {
         "badge_class": "badge-launch",
-        "bg_color": "#ECFDF5",
-        "border_color": "#10B981",
-        "text_color": "#047857",
+        "bg_color": "#0E2419",
+        "border_color": "#4FC58A",
+        "text_color": "#4FC58A",
         "icon": "🟢",
         "label": "COMMERCIAL LAUNCH APPROVED"
     },
     "🟡 LAUNCH WITH MODIFICATIONS": {
         "badge_class": "badge-modify",
-        "bg_color": "#FFFBEB",
-        "border_color": "#F59E0B",
-        "text_color": "#B45309",
+        "bg_color": "#241D0E",
+        "border_color": "#D6B36A",
+        "text_color": "#D6B36A",
         "icon": "🟡",
         "label": "MODIFY COMMERCIAL STRATEGY"
     },
     "🔴 DO NOT LAUNCH": {
         "badge_class": "badge-nolaunch",
-        "bg_color": "#FEF2F2",
-        "border_color": "#EF4444",
-        "text_color": "#B91C1C",
+        "bg_color": "#261114",
+        "border_color": "#D96570",
+        "text_color": "#D96570",
         "icon": "🔴",
         "label": "DO NOT LAUNCH"
     }
 }
+

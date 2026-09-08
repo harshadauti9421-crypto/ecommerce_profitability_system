@@ -23,12 +23,12 @@ def render_product_launch_analyzer_page():
     using the existing trained ML model pipeline and prescriptive optimizer.
     """
     st.markdown(f'''
-    <div style="text-align:center; padding: 24px 20px 18px 20px; background:#FFFFFF; border:1px solid #E2E8F0; border-radius:14px; margin-bottom:24px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
-        <span style="font-size:12px; font-weight:700; color:#2563EB; text-transform:uppercase; letter-spacing:0.1em; background:#EFF6FF; padding:4px 14px; border-radius:9999px; border:1px solid rgba(37,99,235,0.3);">BUSINESS LAUNCH EVALUATOR</span>
-        <h1 style="font-size:28px; font-weight:800; color:#0F172A; margin:10px 0 6px 0; letter-spacing:-0.02em;">
+    <div style="text-align:center; padding: 24px 20px 18px 20px; background:#151217; border:1px solid #3A303B; border-radius:14px; margin-bottom:24px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
+        <span style="font-size:12px; font-weight:700; color:#C58BB9; text-transform:uppercase; letter-spacing:0.1em; background:rgba(197,139,185,0.12); padding:4px 14px; border-radius:9999px; border:1px solid rgba(197,139,185,0.3);">BUSINESS LAUNCH EVALUATOR</span>
+        <h1 style="font-size:28px; font-weight:800; color:#F5F0F5; margin:10px 0 6px 0; letter-spacing:-0.02em;">
             🚀 PRODUCT LAUNCH ANALYZER
         </h1>
-        <p style="font-size:14px; color:#475569; max-width:750px; margin:0 auto; line-height:1.5;">
+        <p style="font-size:14px; color:#A9A1AA; max-width:750px; margin:0 auto; line-height:1.5;">
             Enter your product commercial details to evaluate business potential, demand, revenue, profit margin, risk rating, and launch recommendation using our trained AI models.
         </p>
     </div>
@@ -190,35 +190,35 @@ def render_product_launch_analyzer_page():
 
             # 1. Recommended Product Strategy Card
             st.markdown(f'''
-            <div class="premium-card" style="border-left:5px solid #2563EB; background:linear-gradient(135deg, #EFF6FF 0%, #FFFFFF 100%);">
-                <div class="card-label" style="color:#2563EB;">RECOMMENDED STRATEGY FOR: <b style="color:#0F172A;">{user_prod_name}</b></div>
+            <div class="premium-card" style="border-left:5px solid #C58BB9; background:#151217; border-top:1px solid #3A303B; border-right:1px solid #3A303B; border-bottom:1px solid #3A303B;">
+                <div class="card-label" style="color:#C58BB9;">RECOMMENDED STRATEGY FOR: <b style="color:#F5F0F5;">{user_prod_name}</b></div>
                 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:16px; margin-top:12px;">
                     <div>
-                        <span style="font-size:11px; color:#475569;">PRODUCT NAME</span><br>
-                        <b style="font-size:15px; color:#0F172A;">{user_prod_name}</b>
+                        <span style="font-size:11px; color:#A9A1AA;">PRODUCT NAME</span><br>
+                        <b style="font-size:15px; color:#F5F0F5;">{user_prod_name}</b>
                     </div>
                     <div>
-                        <span style="font-size:11px; color:#475569;">RECOMMENDED SELLING PRICE</span><br>
-                        <b style="font-size:15px; color:#047857;">₹{opt_s['price']:,.2f}</b>
+                        <span style="font-size:11px; color:#A9A1AA;">RECOMMENDED SELLING PRICE</span><br>
+                        <b style="font-size:15px; color:#4FC58A;">₹{opt_s['price']:,.2f}</b>
                     </div>
                     <div>
-                        <span style="font-size:11px; color:#475569;">RECOMMENDED COST PRICE</span><br>
-                        <b style="font-size:15px; color:#0F172A;">₹{user_cp:,.2f}</b>
+                        <span style="font-size:11px; color:#A9A1AA;">RECOMMENDED COST PRICE</span><br>
+                        <b style="font-size:15px; color:#F5F0F5;">₹{user_cp:,.2f}</b>
                     </div>
                     <div>
-                        <span style="font-size:11px; color:#475569;">RECOMMENDED DISCOUNT</span><br>
-                        <b style="font-size:15px; color:#2563EB;">{opt_s['discount']:.1f}%</b>
+                        <span style="font-size:11px; color:#A9A1AA;">RECOMMENDED DISCOUNT</span><br>
+                        <b style="font-size:15px; color:#C58BB9;">{opt_s['discount']:.1f}%</b>
                     </div>
                     <div>
-                        <span style="font-size:11px; color:#475569;">RECOMMENDED SHIPPING COST</span><br>
-                        <b style="font-size:15px; color:#0F172A;">₹{user_ship:,.2f}</b>
+                        <span style="font-size:11px; color:#A9A1AA;">RECOMMENDED SHIPPING COST</span><br>
+                        <b style="font-size:15px; color:#F5F0F5;">₹{user_ship:,.2f}</b>
                     </div>
                 </div>
             </div>
             ''', unsafe_allow_html=True)
 
             # 2. WHY THIS STRATEGY IS RECOMMENDED
-            st.markdown("<h4 style='font-size:15px; font-weight:700; color:#0F172A; margin:16px 0 10px 0;'>💡 WHY THIS STRATEGY IS RECOMMENDED</h4>", unsafe_allow_html=True)
+            st.markdown("<h4 style='font-size:15px; font-weight:700; color:#F5F0F5; margin:16px 0 10px 0;'>💡 WHY THIS STRATEGY IS RECOMMENDED</h4>", unsafe_allow_html=True)
             
             reasons = []
             if imp["profit_change"] > 0:
@@ -233,9 +233,9 @@ def render_product_launch_analyzer_page():
             if not reasons:
                 reasons.append("The current strategy is already near-optimal for your commercial configuration.")
 
-            reason_html = "".join([f"<li style='margin-bottom:6px; color:#0F172A;'>• {r}</li>" for r in reasons])
+            reason_html = "".join([f"<li style='margin-bottom:6px; color:#F5F0F5;'>• {r}</li>" for r in reasons])
             st.markdown(f'''
-            <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:10px; padding:16px 20px; box-shadow:0 2px 6px rgba(0,0,0,0.02);">
+            <div style="background:#151217; border:1px solid #3A303B; border-radius:10px; padding:16px 20px; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
                 <ul style="margin:0; padding-left:16px; font-size:14px; line-height:1.6; list-style-type:none;">
                     {reason_html}
                 </ul>
@@ -243,7 +243,7 @@ def render_product_launch_analyzer_page():
             ''', unsafe_allow_html=True)
 
             # 3. CURRENT VS RECOMMENDED STRATEGY COMPARISON
-            st.markdown("<h4 style='font-size:15px; font-weight:700; color:#0F172A; margin:20px 0 10px 0;'>⚖️ CURRENT VS RECOMMENDED STRATEGY COMPARISON</h4>", unsafe_allow_html=True)
+            st.markdown("<h4 style='font-size:15px; font-weight:700; color:#F5F0F5; margin:20px 0 10px 0;'>⚖️ CURRENT VS RECOMMENDED STRATEGY COMPARISON</h4>", unsafe_allow_html=True)
             
             c_m1, c_m2, c_m3, c_m4 = st.columns(4)
             with c_m1:
