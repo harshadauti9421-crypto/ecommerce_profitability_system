@@ -96,3 +96,4 @@ ecommerce_profitability_system/
 │   └── experiment_tracker.py   # Reproducible experiment logging system
 └── research_results/           # Exported CSVs and JSON research artifacts
 ```
+# ecommerce_profitability_system
