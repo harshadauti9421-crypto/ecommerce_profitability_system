@@ -116,7 +116,7 @@ inject_custom_styles()
 
 # Initialize Session State Page Navigation
 if "current_page" not in st.session_state:
-    st.session_state["current_page"] = "dashboard"
+    st.session_state["current_page"] = "project_info"
 
 if "analysis_result" not in st.session_state:
     st.session_state["analysis_result"] = None
@@ -174,6 +174,7 @@ st.sidebar.markdown(f'''
 ''', unsafe_allow_html=True)
 
 nav_options = [
+    "Project Overview",
     "Business Dashboard",
     "Product Launch Analyzer",
     "Product Analysis",
@@ -184,26 +185,25 @@ nav_options = [
     "Risk Analysis",
     "Research / Experiments",
     "Prediction History",
-    "Project Overview",
     "Settings"
 ]
 
 # Sync radio index with current_page
 nav_index_map = {
-    "dashboard": 0,
-    "analyzer": 1,
-    "product_analysis": 2,
-    "prediction": 3,
-    "model_comparison": 4,
-    "explainability": 5,
-    "optimization": 6,
-    "risk": 7,
-    "research": 8,
-    "history": 9,
-    "project_info": 10,
+    "project_info": 0,
+    "dashboard": 1,
+    "analyzer": 2,
+    "product_analysis": 3,
+    "prediction": 4,
+    "model_comparison": 5,
+    "explainability": 6,
+    "optimization": 7,
+    "risk": 8,
+    "research": 9,
+    "history": 10,
     "settings": 11
 }
-current_nav_index = nav_index_map.get(st.session_state.get("current_page", "dashboard"), 0)
+current_nav_index = nav_index_map.get(st.session_state.get("current_page", "project_info"), 0)
 
 nav_choice = st.sidebar.radio(
     "NAVIGATION",
@@ -214,6 +214,7 @@ nav_choice = st.sidebar.radio(
 
 # Update session state based on sidebar selection
 nav_page_map = {
+    "Project Overview": "project_info",
     "Business Dashboard": "dashboard",
     "Product Launch Analyzer": "analyzer",
     "Product Analysis": "product_analysis",
@@ -224,10 +225,9 @@ nav_page_map = {
     "Risk Analysis": "risk",
     "Research / Experiments": "research",
     "Prediction History": "history",
-    "Project Overview": "project_info",
     "Settings": "settings"
 }
-selected_page = nav_page_map.get(nav_choice, "dashboard")
+selected_page = nav_page_map.get(nav_choice, "project_info")
 if st.session_state["current_page"] != selected_page:
     st.session_state["current_page"] = selected_page
 
