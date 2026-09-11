@@ -10,12 +10,13 @@ warnings.filterwarnings("ignore")
 
 
 
-# Ensure root project directory is in sys.path (cross-platform pathlib resolution)
+# Ensure root project directory is unconditionally in sys.path for Streamlit Cloud
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+if ROOT_DIR not in sys.path:
+    sys.path.insert(0, ROOT_DIR)
 
 PROJECT_ROOT = Path(__file__).resolve().parent
-
 if str(PROJECT_ROOT) not in sys.path:
-
     sys.path.insert(0, str(PROJECT_ROOT))
 
 
