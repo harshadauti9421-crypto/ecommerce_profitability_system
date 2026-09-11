@@ -1,1 +1,1 @@
-# Source code package for E-Commerce Profitability System
+# AI E-Commerce Profitability System - Core Package
